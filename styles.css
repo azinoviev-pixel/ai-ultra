@@ -160,3 +160,8 @@ a:hover { color: var(--acid); }
 .plain { list-style: none; }
 .plain li { padding: 0.35rem 0; border-top: 1px solid var(--line); }
 .plain li:first-child { border-top: 0; }
+
+.verdict { margin-top: 1.1rem; padding: 0.85rem 0.9rem; background: var(--paper); border-left: 3px solid var(--acid); font-size: 1.08rem; }
+.numbered { list-style: decimal; padding-left: 1.2rem; }
+.numbered li { padding-left: 0.2rem; }
+.facts { grid-template-columns: 7.2rem 1fr; }
