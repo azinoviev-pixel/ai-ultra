@@ -9,73 +9,41 @@
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 ui-sans-serif,system-ui,sans-serif}
 main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3rem}
 h1{font-size:1.6rem;letter-spacing:-.03em;margin:.2rem 0}
-h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:2rem 0 .6rem}
-h3{font-size:1.05rem;margin:.8rem 0 .35rem}
-p,li{color:var(--ink)} .dim{color:var(--dim)}
-.kicker{color:var(--dim);font-size:.85rem;margin:0 0 1rem}
-hr{border:0;border-top:1px solid var(--line);margin:1.4rem 0}
-ol,ul{padding-left:1.15rem;margin:.3rem 0}
-li{margin:.25rem 0}
-.box{border:1px solid var(--line);padding:.85rem 1rem;margin:.7rem 0}
-a{color:var(--acc)}
-.week{display:grid;grid-template-columns:2.2rem 1fr;gap:.35rem .7rem;margin:.4rem 0}
-.week b{color:var(--acc)}
+h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:2rem 0 .55rem}
+h3{font-size:1.12rem;margin:.55rem 0 .35rem}
+.kicker{color:var(--dim);font-size:.85rem}
+.box{border:1px solid var(--line);padding:.85rem 1rem;margin:.75rem 0}
+ul,ol{padding-left:1.15rem;margin:.3rem 0}li{margin:.28rem 0}
+a{color:var(--acc)}.dim{color:var(--dim)}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">17 августа 2026 · неделя 1 · Verify</p>
+<p class="kicker">17 августа 2026 · сбор Verify</p>
 <h1>AI Ultra</h1>
-<p>Ежедневная машина, чтобы стать top of top. Не курс. Читаешь здесь и в чате в 8:21. Больше никуда.</p>
+<p>Супер-топ с полок, склеенный по смыслу. Не отчёт. Не курс.</p>
 
-<h2>Сегодня</h2>
-<h3>Rank-before-run</h3>
-<p>Агент пишет кандидата за минуты. Прогон стоит часы. Узкое место не генерация, а кому дать бюджет.</p>
-<p>Не угадывай абсолютный скор. Сначала турнир по ещё не исполненному. Потом один прогон.</p>
+<h2>Смысл</h2>
+<h3>Топ упирается не в «напиши ещё», а в то, что доказано до прогона.</h3>
+<p>Лабы за 48 часов по этой теме пустые. Гранты и маркетинг — мимо.</p>
+
+<h2>С полки</h2>
+<p><b>Бумага.</b> FAIR · <a href="https://arxiv.org/abs/2608.13940">AI Research Preference Models</a>. Турнир по неисполненному. 0.684 → 0.711, pilot 0.729, 24ч скор за ~15ч, 15 кандидатов → 1 прогон. Абсолютный прогноз гнилой.</p>
+<p><b>Репо.</b> Стенд, не пересказ: <a href="https://github.com/facebookresearch/aira-dojo">aira-dojo</a>, <a href="https://github.com/facebookresearch/airs-bench">AIRS-Bench</a>.</p>
+<p><b>Рядом.</b> <a href="https://arxiv.org/abs/2608.12097">Graph-Structured Rubrics</a> — рубрику судьи собирают до ответов. <a href="https://arxiv.org/abs/2608.12036">Mechanist</a> — verify проверяет, что цифра из прогона, не из текста.</p>
 
 <div class="box">
-<p><b>Протокол</b></p>
+<p><b>Ход</b></p>
 <ol>
-<li>2–3 хода на бумаге. Ещё не делать.</li>
-<li>Турнир: что уже гоняли / цена прогона / бьёт только в ai-ultra или hole-fix.</li>
-<li>Один победитель идёт в работу.</li>
-<li>Остальное не в чат.</li>
+<li>Несколько планов, ещё не бежать.</li>
+<li>Сравнивать их между собой, не с идеальным скором.</li>
+<li>Один прогон. След в трейсе.</li>
 </ol>
 </div>
 
-<p class="dim">FAIR / Meta · AI Research Preference Models · <a href="https://arxiv.org/abs/2608.13940">arXiv:2608.13940</a></p>
-<ul>
-<li>скор 0.684 → 0.711 (судья без дообучения)</li>
-<li>короткий pilot 0.729</li>
-<li>тот же 24ч-скор за ~15ч, меньше 2/3 бюджета прогона</li>
-<li>N=15 кандидатов → 1 прогон</li>
-<li>абсолютный прогноз они сами назвали гнилым. Только относительный rank.</li>
-</ul>
+<p>У тебя hole-fix уже держит PASS/FAIL. На learningpath дыра та же: нет своих evals. Не ещё один агент. Рубрика до прогона.</p>
 
-<p><b>Пропустить сегодня</b></p>
-<ul>
-<li>2608.14290 Intern-S2-Mobius — архитектура памяти, не этот джоб</li>
-<li>2608.13787 SocialRL — мультиагентный RL, не сегодня</li>
-</ul>
-
-<h2>Программа</h2>
-<div class="week"><b>1</b><span>Verify — eval и rank до прогона</span></div>
-<div class="week"><b>2</b><span>Route — какой модели какой твой джоб</span></div>
-<div class="week"><b>3</b><span>Taste — что выглядит умно и является водой</span></div>
-<div class="week"><b>4</b><span>Computer — агент с машиной плюс verify</span></div>
-<div class="week"><b>5</b><span>Ship — один публичный proof</span></div>
-<div class="week"><b>6</b><span>Pack — evidence pack, которым можно торговаться</span></div>
-
-<h2>Библиотека</h2>
-<ul>
-<li>сегодня — rank-before-run</li>
-<li>hole-fix — агент нашёл дыру, есть PASS и FAIL трейсы</li>
-<li>писать только в ai-ultra и hole-fix. Магазины, papa, dawa не трогать</li>
-</ul>
-
-<h2>Как крутится</h2>
-<p>Radar смотрит лабы. Probe — бумаги и репо. Atlas — что ты уже умеешь, чтобы не совать известное. Sensei режет одну пачку. Я собираю и в 8:21 кидаю сюда и в чат.</p>
-<p class="dim">Notion не для тебя.</p>
+<p class="dim">Не сегодня: Mobius (память модели), SocialRL (мультиагентный RL), водяные знаки Claude.</p>
 </main>
 </body>
 </html>
