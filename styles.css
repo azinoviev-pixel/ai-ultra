@@ -8,7 +8,6 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -22,7 +21,7 @@ body {
   max-width: 42rem;
   margin: 0 auto;
   padding: 1.5rem 1.25rem 3rem;
-  border-left: 1px solid var(--line);
+  border-left: 3px solid var(--acid);
 }
 
 .top {
@@ -32,55 +31,82 @@ body {
   gap: 0.4rem 1.25rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--line);
-  font-family: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.hero { padding: 2.4rem 0 2rem; }
-
-.wordmark {
+.hero { padding: 2.2rem 0 1.6rem; }
+.kicker {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--acid);
+  margin-bottom: 0.7rem;
+}
+h1 {
   font-size: clamp(3.4rem, 16vw, 5.6rem);
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.9;
 }
-
 .bolt {
   color: var(--acid);
   font-size: 0.62em;
   margin: 0 0.04em;
   vertical-align: 0.08em;
 }
+.line { margin-top: 1.1rem; font-size: 1.28rem; max-width: 22ch; }
+.frontier { margin-top: 1rem; color: var(--muted); max-width: 36ch; }
 
-.line {
-  margin-top: 1.15rem;
-  font-size: 1.28rem;
-  max-width: 22ch;
+.now {
+  padding: 1.2rem 1rem 1.3rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--acid);
+  margin-bottom: 0.4rem;
 }
-
-.frontier {
-  margin-top: 1.1rem;
-  color: var(--muted);
-  max-width: 34ch;
-}
-
-.block { padding: 1.6rem 0; border-top: 1px solid var(--line); }
-
 h2 {
-  font-family: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.85rem;
 }
+.now-hit { font-size: 1.15rem; }
+.now-note { color: var(--muted); margin: 0.35rem 0 1rem; }
 
+.ship {
+  display: block;
+  padding: 0.85rem 0.9rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+.ship:hover { border-color: var(--acid); }
+.ship-tag {
+  display: inline-block;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111;
+  background: var(--acid);
+  padding: 0.12rem 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.ship-name { display: block; font-size: 1.25rem; }
+.ship-meta { display: block; margin-top: 0.25rem; color: var(--muted); font-size: 0.92rem; }
+.now-fri { margin-top: 1rem; color: var(--muted); font-size: 0.95rem; }
+
+.block { padding: 1.6rem 0; border-top: 1px solid var(--line); }
 .tracks { list-style: none; }
-
 .tracks li {
   display: grid;
   grid-template-columns: 2.4rem 1fr;
@@ -88,26 +114,17 @@ h2 {
   padding: 0.85rem 0;
   border-top: 1px solid var(--line);
 }
-
 .tracks li:first-child { border-top: 0; padding-top: 0; }
-
 .n {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.75rem;
   color: var(--acid);
   padding-top: 0.28rem;
 }
-
 h3 { font-size: 1.2rem; font-weight: 400; }
-
 .tracks p { color: var(--muted); margin-top: 0.15rem; }
 
-.team {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
+.team { display: grid; grid-template-columns: 1fr; }
 .team div {
   display: grid;
   grid-template-columns: 6.5rem 1fr;
@@ -115,28 +132,19 @@ h3 { font-size: 1.2rem; font-weight: 400; }
   padding: 0.55rem 0;
   border-top: 1px solid var(--line);
 }
-
 .team div:first-child { border-top: 0; padding-top: 0; }
-
 dt {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.82rem;
-  letter-spacing: 0.02em;
 }
-
 dd { color: var(--muted); }
-
-.note {
-  margin-top: 1.15rem;
-  color: var(--ink);
-}
+.note { margin-top: 1.15rem; }
 
 .rule {
   margin-top: 0.4rem;
   padding: 1.15rem 1rem;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--acid);
   font-size: 1.15rem;
 }
 
@@ -147,15 +155,10 @@ footer {
   margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.78rem;
 }
-
-a {
-  color: var(--ink);
-  text-underline-offset: 0.2em;
-}
-
+a { color: var(--ink); text-underline-offset: 0.2em; }
 a:hover { color: var(--acid); }
 
 @media (min-width: 640px) {
