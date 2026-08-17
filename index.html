@@ -6,44 +6,29 @@
 <title>AI Ultra</title>
 <style>
 :root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 ui-sans-serif,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
 main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3rem}
-h1{font-size:1.6rem;letter-spacing:-.03em;margin:.2rem 0}
-h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:2rem 0 .55rem}
-h3{font-size:1.12rem;margin:.55rem 0 .35rem}
+h1{font-size:1.7rem;letter-spacing:-.03em;margin:.15rem 0}
+a{color:var(--acc)} .dim{color:var(--dim)}
 .kicker{color:var(--dim);font-size:.85rem}
-.box{border:1px solid var(--line);padding:.85rem 1rem;margin:.75rem 0}
-ul,ol{padding-left:1.15rem;margin:.3rem 0}li{margin:.28rem 0}
-a{color:var(--acc)}.dim{color:var(--dim)}
+.card{border:1px solid var(--line);padding:1rem;margin:1rem 0}
+ul{padding-left:1.1rem}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">17 августа 2026 · сбор Verify</p>
-<h1>AI Ultra</h1>
-<p>Супер-топ с полок, склеенный по смыслу. Не отчёт. Не курс.</p>
-
-<h2>Смысл</h2>
-<h3>Топ упирается не в «напиши ещё», а в то, что доказано до прогона.</h3>
-<p>Лабы за 48 часов по этой теме пустые. Гранты и маркетинг — мимо.</p>
-
-<h2>С полки</h2>
-<p><b>Бумага.</b> FAIR · <a href="https://arxiv.org/abs/2608.13940">AI Research Preference Models</a>. Турнир по неисполненному. 0.684 → 0.711, pilot 0.729, 24ч скор за ~15ч, 15 кандидатов → 1 прогон. Абсолютный прогноз гнилой.</p>
-<p><b>Репо.</b> Стенд, не пересказ: <a href="https://github.com/facebookresearch/aira-dojo">aira-dojo</a>, <a href="https://github.com/facebookresearch/airs-bench">AIRS-Bench</a>.</p>
-<p><b>Рядом.</b> <a href="https://arxiv.org/abs/2608.12097">Graph-Structured Rubrics</a> — рубрику судьи собирают до ответов. <a href="https://arxiv.org/abs/2608.12036">Mechanist</a> — verify проверяет, что цифра из прогона, не из текста.</p>
-
-<div class="box">
-<p><b>Ход</b></p>
-<ol>
-<li>Несколько планов, ещё не бежать.</li>
-<li>Сравнивать их между собой, не с идеальным скором.</li>
-<li>Один прогон. След в трейсе.</li>
-</ol>
+<p class="kicker">AI Ultra · каждый будний день</p>
+<h1>Сбор с полок. Разбор здесь. Источник — если полезешь.</h1>
+<p>Лабы, бумаги, репо. Склеиваем по смыслу. Не курс. Не отчёт.</p>
+<div class="card">
+<p class="dim">Сегодня · 17.08.2026 · Verify</p>
+<p><b>Что доказано до дорогого прогона.</b> Четыре разбора: турнир планов, стенд FAIR, рубрика судьи до ответа, проверка что цифра из прогона.</p>
+<p><a href="d/2026-08-17.html">Открыть пачку 17.08</a></p>
 </div>
-
-<p>У тебя hole-fix уже держит PASS/FAIL. На learningpath дыра та же: нет своих evals. Не ещё один агент. Рубрика до прогона.</p>
-
-<p class="dim">Не сегодня: Mobius (память модели), SocialRL (мультиагентный RL), водяные знаки Claude.</p>
+<p class="dim">Архив</p>
+<ul>
+<li><a href="d/2026-08-17.html">17.08 · Verify · rank до прогона</a></li>
+</ul>
 </main>
 </body>
 </html>
