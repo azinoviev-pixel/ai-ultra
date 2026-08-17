@@ -3,116 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Ultra — лог трека</title>
-  <meta name="description" content="Публичный лог трека AI Ultra. Что сегодня и что уже собрано.">
+  <title>AI Ultra — табло дня</title>
+  <meta name="description" content="Табло дня. Что сегодня, что пропустить, что сделано.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="frame">
     <header class="top">
-      <p>AI Ultra · Anton Zinoviev</p>
-      <p>17 августа 2026 · неделя 1</p>
+      <p>AI Ultra</p>
+      <p>каждый будний день</p>
     </header>
 
-    <section class="what" id="what">
-      <h1>Что это</h1>
-      <p>Публичный лог трека. Не курс. Не школа.</p>
-      <p>Сюда смотреть две вещи: <strong>что сегодня</strong> и <strong>что уже собрано</strong>.</p>
+    <section class="day" id="today">
+      <h1>Сегодня</h1>
+      <p class="date">понедельник 17 августа 2026</p>
     </section>
 
-    <section class="log" id="today">
-      <h2>Сегодня / сделано · 17.08</h2>
-      <p class="hit">Карта фронтира. Разведка, 60–90 мин. Первичные источники, не продукт.</p>
+    <section class="row" id="skip">
+      <h2>Пропустить</h2>
+      <p class="empty">лента пустая</p>
+    </section>
 
-      <h3>Маршрут моделей</h3>
+    <section class="row" id="done">
+      <h2>Сделано</h2>
       <ul class="facts">
-        <li><span>daily</span> Claude Opus 5</li>
-        <li><span>длинный агент</span> GPT-5.6 Sol / Terra</li>
-        <li><span>объём</span> Luna</li>
-      </ul>
-
-      <h3>Хайп, не брать</h3>
-      <ul class="plain">
-        <li>один «лучший» модель</li>
-        <li>мультиагенты ради галочки</li>
-        <li>компьютер без verify</li>
+        <li><span>репо</span> <a href="https://github.com/azinoviev-pixel/hole-fix">hole-fix</a> — агент нашёл дыру, починил, PASS + FAIL трейсы</li>
+        <li><span>сайт</span> это табло запущено</li>
       </ul>
     </section>
 
+    <section class="hit" id="hit">
+      <h2>Удар дня</h2>
+      <p class="result">Табло запущено.</p>
+      <p class="next">Завтра 8:21 здесь появится следующий ход.</p>
+    </section>
 
-    <section class="log" id="harness">
-      <h2>17.08 · Модель vs harness</h2>
-      <p class="hit">Закрыто здесь, не домашка. Источник: <a href="https://github.com/karpathy/nanochat">karpathy/nanochat</a> · <code>runs/speedrun.sh</code>.</p>
-
-      <h3>Цепочка nanochat</h3>
+    <section class="where">
+      <h2>Где читать</h2>
       <ul class="facts">
-        <li><span>data</span> веса — шарды корпуса (<code>nanochat.dataset</code>, ~2B символов на токенизатор, ~170 шардов на pretrain)</li>
-        <li><span>tokenizer</span> веса — <code>tok_train</code>, vocab 32768 на этих данных</li>
-        <li><span>train</span> веса — <code>base_train</code>, чекпоинт d24 / GPT-2 grade</li>
-        <li><span>SFT</span> веса — <code>chat_sft</code>, разговор и tool tokens</li>
-        <li><span>eval</span> harness — <code>base_eval</code> / <code>chat_eval</code>, CORE и BPB, веса не пишет</li>
-        <li><span>serve</span> harness — <code>chat_cli</code>, цикл inference, не новые веса</li>
-      </ul>
-
-      <h3>hole-fix · 5 мест, где жрутся токены</h3>
-      <ol class="plain numbered">
-        <li>Инструкции агента + промпт на каждый ход Runner.</li>
-        <li>JSON-схемы трёх tools (<code>read_file</code> / <code>run_cmd</code> / <code>write_file</code>) в каждом запросе к модели.</li>
-        <li><code>read_file</code> кладёт весь файл в контекст (в success — calc.py и test_calc.py подряд).</li>
-        <li><code>run_cmd</code> возвращает весь stdout+stderr без обрезки.</li>
-        <li><code>write_file</code> гоняет полный текст файла туда-обратно; <code>trace_include_sensitive_data=True</code> пишет все I/O в трейс.</li>
-      </ol>
-
-      <p class="verdict">Падение = data / контекст / tool schema / inference / eval.</p>
-    </section>
-    <section class="log" id="built">
-      <h2>Собрано</h2>
-      <a class="ship" href="https://github.com/azinoviev-pixel/hole-fix">
-        <span class="ship-name">hole-fix</span>
-        <span class="ship-meta">github.com/azinoviev-pixel/hole-fix</span>
-        <span class="ship-meta">Агент нашёл дыру в <code>add()</code>, починил. Verifier: PASS и FAIL трейсы.</span>
-        <span class="ship-meta">OpenAI Agents SDK · read_file / run_cmd / write_file</span>
-      </a>
-    </section>
-
-    <section class="log" id="next">
-      <h2>Дальше</h2>
-      <ul class="facts">
-        <li><span>пт 21.08</span> живой URL обязателен</li>
-        <li><span>домен</span> ultra.dscff.es — ждёт одну CNAME</li>
-        <li><span>не трогать</span> корень dscff.es (магазин кофе)</li>
+        <li><span>сайт</span> эта страница, каждый будний день</li>
+        <li><span>чат</span> AI OPT в 8:21</li>
+        <li><span>не сюда</span> Notion не для Anton</li>
       </ul>
     </section>
-
-    <section class="block dim">
-      <h2>Команда</h2>
-      <dl class="team">
-        <div><dt>Radar</dt><dd>разведка фронтира</dd></div>
-        <div><dt>Sensei</dt><dd>программа и дневной удар</dd></div>
-        <div><dt>Hands</dt><dd>код / GitHub, только новые репо</dd></div>
-        <div><dt>Vault</dt><dd>память в Notion HQ</dd></div>
-        <div><dt>Ship</dt><dd>живой URL / Vercel</dd></div>
-        <div><dt>Atlas</dt><dd>как Anton работает и какие скиллы</dd></div>
-        <div><dt>AI OPT</dt><dd>дирижёр. Anton говорит только с ним</dd></div>
-      </dl>
-      <p class="note">Anton думает и делает reps. Боты — остальное.</p>
-    </section>
-
-    <section class="block dim">
-      <h2>Четыре трека</h2>
-      <ol class="tracks">
-        <li><span class="n">01</span><div><h3>Вкус и фронтир</h3><p>Отличать релиз от хайпа.</p></div></li>
-        <li><span class="n">02</span><div><h3>Агенты и системы</h3><p>Tools, memory, evals. Не чат.</p></div></li>
-        <li><span class="n">03</span><div><h3>Модели изнутри</h3><p>Data, harness, inference, цена.</p></div></li>
-        <li><span class="n">04</span><div><h3>Shipping</h3><p>Каждую пятницу — живой URL.</p></div></li>
-      </ol>
-    </section>
-
-    <footer>
-      <a href="https://github.com/azinoviev-pixel/ai-ultra">этот репо</a>
-      <a href="https://github.com/azinoviev-pixel/hole-fix">hole-fix</a>
-      <a href="https://github.com/azinoviev-pixel">azinoviev-pixel</a>
-    </footer>
   </div>
 </body>
 </html>
