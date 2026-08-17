@@ -39,6 +39,32 @@
       </ul>
     </section>
 
+
+    <section class="log" id="harness">
+      <h2>17.08 · Модель vs harness</h2>
+      <p class="hit">Закрыто здесь, не домашка. Источник: <a href="https://github.com/karpathy/nanochat">karpathy/nanochat</a> · <code>runs/speedrun.sh</code>.</p>
+
+      <h3>Цепочка nanochat</h3>
+      <ul class="facts">
+        <li><span>data</span> веса — шарды корпуса (<code>nanochat.dataset</code>, ~2B символов на токенизатор, ~170 шардов на pretrain)</li>
+        <li><span>tokenizer</span> веса — <code>tok_train</code>, vocab 32768 на этих данных</li>
+        <li><span>train</span> веса — <code>base_train</code>, чекпоинт d24 / GPT-2 grade</li>
+        <li><span>SFT</span> веса — <code>chat_sft</code>, разговор и tool tokens</li>
+        <li><span>eval</span> harness — <code>base_eval</code> / <code>chat_eval</code>, CORE и BPB, веса не пишет</li>
+        <li><span>serve</span> harness — <code>chat_cli</code>, цикл inference, не новые веса</li>
+      </ul>
+
+      <h3>hole-fix · 5 мест, где жрутся токены</h3>
+      <ol class="plain numbered">
+        <li>Инструкции агента + промпт на каждый ход Runner.</li>
+        <li>JSON-схемы трёх tools (<code>read_file</code> / <code>run_cmd</code> / <code>write_file</code>) в каждом запросе к модели.</li>
+        <li><code>read_file</code> кладёт весь файл в контекст (в success — calc.py и test_calc.py подряд).</li>
+        <li><code>run_cmd</code> возвращает весь stdout+stderr без обрезки.</li>
+        <li><code>write_file</code> гоняет полный текст файла туда-обратно; <code>trace_include_sensitive_data=True</code> пишет все I/O в трейс.</li>
+      </ol>
+
+      <p class="verdict">Падение = data / контекст / tool schema / inference / eval.</p>
+    </section>
     <section class="log" id="built">
       <h2>Собрано</h2>
       <a class="ship" href="https://github.com/azinoviev-pixel/hole-fix">
