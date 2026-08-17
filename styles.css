@@ -13,14 +13,14 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font: 18px/1.45 "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+  font: 17px/1.45 "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
   min-height: 100vh;
 }
 
 .frame {
-  max-width: 34rem;
+  max-width: 38rem;
   margin: 0 auto;
-  padding: 1.25rem 1.15rem 3rem;
+  padding: 1.2rem 1.1rem 2.8rem;
   border-left: 3px solid var(--acid);
 }
 
@@ -29,48 +29,97 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.3rem 1rem;
-  padding-bottom: 0.9rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--line);
   font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.block { padding: 1.05rem 0; border-bottom: 1px solid var(--line); }
-.block h1 {
-  font-size: 1.55rem;
+.hero { padding: 1.15rem 0 0.3rem; }
+.hero h1 {
+  font-size: 1.65rem;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
-.date { margin-top: 0.2rem; color: var(--muted); }
+.hero p { margin-top: 0.4rem; color: var(--muted); }
+
+.pack, .block {
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--line);
+}
 
 h2 {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--acid);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.7rem;
 }
 
-.empty { color: var(--muted); }
-
-.prog { padding: 1.15rem 0 0; }
-.line {
+h3 {
   font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
-  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1rem 0 0.4rem;
 }
 
-@media (min-width: 640px) {
-  .frame { padding: 2rem 2rem 4rem; }
+.lead { font-size: 1.15rem; }
+
+.proto { list-style: none; counter-reset: p; }
+.proto li {
+  counter-increment: p;
+  padding: 0.4rem 0 0.4rem 1.7rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.proto li:first-child { border-top: 0; }
+.proto li::before {
+  content: counter(p);
+  position: absolute;
+  left: 0;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--acid);
+  top: 0.5rem;
 }
 
-ul { list-style: none; }
-li { padding: 0.2rem 0; }
+.nums, .skip, .lib, .weeks { list-style: none; }
+.nums li, .lib li, .weeks li {
+  display: grid;
+  grid-template-columns: 5.4rem 1fr;
+  gap: 0.55rem;
+  padding: 0.38rem 0;
+  border-top: 1px solid var(--line);
+}
+.nums li:first-child, .lib li:first-child, .weeks li:first-child { border-top: 0; }
+.nums span, .lib span, .weeks span {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.weeks .now span { color: var(--acid); }
+
+.skip li {
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--line);
+}
+.skip li:first-child { border-top: 0; }
+
+.note { margin-top: 0.65rem; color: var(--muted); }
+
 a { color: var(--ink); text-underline-offset: 0.2em; }
 a:hover { color: var(--acid); }
+
+@media (min-width: 640px) {
+  .frame { padding: 1.8rem 2rem 3.5rem; }
+  .hero h1 { font-size: 2rem; }
+}
