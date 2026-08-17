@@ -1,13 +1,9 @@
 # AI Ultra
 
-Публичная витрина трека Anton Zinoviev. Не курс. Не школа. Август 2026.
+Табло дня. Не курс. Не статья.
 
-Сегодня на странице: удар «Карта фронтира» и собранный [hole-fix](https://github.com/azinoviev-pixel/hole-fix).
+Каждый будний день: сегодня / пропустить / сделано / удар-итог.
 
-Открыть `index.html`. Сборки нет.
+Читать здесь и в чате с AI OPT в 8:21. Notion не для Anton.
 
-```
-python3 -m http.server 4173
-```
-
-Репо: https://github.com/azinoviev-pixel/ai-ultra
+Открыть `index.html`.
