@@ -1,86 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Ultra — ежедневная машина</title>
-  <meta name="description" content="Ежедневная машина top of top. Не курс. Verify: rank-before-run.">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Ultra</title>
+<style>
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3rem}
+h1{font-size:1.6rem;letter-spacing:-.03em;margin:.2rem 0}
+h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:2rem 0 .6rem}
+h3{font-size:1.05rem;margin:.8rem 0 .35rem}
+p,li{color:var(--ink)} .dim{color:var(--dim)}
+.kicker{color:var(--dim);font-size:.85rem;margin:0 0 1rem}
+hr{border:0;border-top:1px solid var(--line);margin:1.4rem 0}
+ol,ul{padding-left:1.15rem;margin:.3rem 0}
+li{margin:.25rem 0}
+.box{border:1px solid var(--line);padding:.85rem 1rem;margin:.7rem 0}
+a{color:var(--acc)}
+.week{display:grid;grid-template-columns:2.2rem 1fr;gap:.35rem .7rem;margin:.4rem 0}
+.week b{color:var(--acc)}
+</style>
 </head>
 <body>
-  <div class="frame">
-    <header class="top">
-      <p>AI Ultra</p>
-      <p>17 августа 2026 · неделя 1 Verify</p>
-    </header>
+<main>
+<p class="kicker">17 августа 2026 · неделя 1 · Verify</p>
+<h1>AI Ultra</h1>
+<p>Ежедневная машина, чтобы стать top of top. Не курс. Читаешь здесь и в чате в 8:21. Больше никуда.</p>
 
-    <section class="hero">
-      <h1>Ежедневная машина top of top</h1>
-      <p>Не курс. Сюда и в чат с OPT в 8:21. Больше никуда.</p>
-    </section>
+<h2>Сегодня</h2>
+<h3>Rank-before-run</h3>
+<p>Агент пишет кандидата за минуты. Прогон стоит часы. Узкое место не генерация, а кому дать бюджет.</p>
+<p>Не угадывай абсолютный скор. Сначала турнир по ещё не исполненному. Потом один прогон.</p>
 
-    <section class="pack" id="today">
-      <h2>Сегодня 17.08 · Verify</h2>
+<div class="box">
+<p><b>Протокол</b></p>
+<ol>
+<li>2–3 хода на бумаге. Ещё не делать.</li>
+<li>Турнир: что уже гоняли / цена прогона / бьёт только в ai-ultra или hole-fix.</li>
+<li>Один победитель идёт в работу.</li>
+<li>Остальное не в чат.</li>
+</ol>
+</div>
 
-      <h3>Секрет</h3>
-      <p class="lead">Rank-before-run. Не исполняй все ветки.</p>
-      <ol class="proto">
-        <li>2–3 неисполненных хода на бумаге.</li>
-        <li>Турнир: что уже прогонялось / цена прогона / бьёт ли в ai-ultra.</li>
-        <li>Один победитель в работу.</li>
-        <li>Остальное не в чат.</li>
-      </ol>
+<p class="dim">FAIR / Meta · AI Research Preference Models · <a href="https://arxiv.org/abs/2608.13940">arXiv:2608.13940</a></p>
+<ul>
+<li>скор 0.684 → 0.711 (судья без дообучения)</li>
+<li>короткий pilot 0.729</li>
+<li>тот же 24ч-скор за ~15ч, меньше 2/3 бюджета прогона</li>
+<li>N=15 кандидатов → 1 прогон</li>
+<li>абсолютный прогноз они сами назвали гнилым. Только относительный rank.</li>
+</ul>
 
-      <h3>Источник</h3>
-      <p>FAIR / Meta · AI Research Preference Models · <a href="https://arxiv.org/abs/2608.13940">arXiv:2608.13940</a></p>
-      <ul class="nums">
-        <li><span>скор</span> 0.684 → 0.711</li>
-        <li><span>pilot</span> 0.729</li>
-        <li><span>время</span> 24ч скор за ~15ч</li>
-        <li><span>отбор</span> N=15 → 1</li>
-      </ul>
-      <p class="note">Абсолютный прогноз гнилой. Только относительный rank.</p>
+<p><b>Пропустить сегодня</b></p>
+<ul>
+<li>2608.14290 Intern-S2-Mobius — архитектура памяти, не этот джоб</li>
+<li>2608.13787 SocialRL — мультиагентный RL, не сегодня</li>
+</ul>
 
-      <h3>Пропустить</h3>
-      <ul class="skip">
-        <li><a href="https://arxiv.org/abs/2608.14290">2608.14290</a> Mobius — не про его агентов сегодня, не rank-before-run.</li>
-        <li><a href="https://arxiv.org/abs/2608.13787">2608.13787</a> SocialRL — мультиагентный RL, не его джоб на 17.08.</li>
-      </ul>
-    </section>
+<h2>Программа</h2>
+<div class="week"><b>1</b><span>Verify — eval и rank до прогона</span></div>
+<div class="week"><b>2</b><span>Route — какой модели какой твой джоб</span></div>
+<div class="week"><b>3</b><span>Taste — что выглядит умно и является водой</span></div>
+<div class="week"><b>4</b><span>Computer — агент с машиной плюс verify</span></div>
+<div class="week"><b>5</b><span>Ship — один публичный proof</span></div>
+<div class="week"><b>6</b><span>Pack — evidence pack, которым можно торговаться</span></div>
 
-    <section class="block" id="program">
-      <h2>Программа 6 недель</h2>
-      <ol class="weeks">
-        <li class="now"><span>1 Verify</span> eval / rank до прогона</li>
-        <li><span>2 Route</span> какой модели какой его джоб</li>
-        <li><span>3 Taste</span> что резать как воду</li>
-        <li><span>4 Computer</span> агент с машиной + verify</li>
-        <li><span>5 Ship</span> публичный proof</li>
-        <li><span>6 Pack</span> evidence pack</li>
-      </ol>
-    </section>
+<h2>Библиотека</h2>
+<ul>
+<li>сегодня — rank-before-run</li>
+<li>hole-fix — агент нашёл дыру, есть PASS и FAIL трейсы</li>
+<li>писать только в ai-ultra и hole-fix. Магазины, papa, dawa не трогать</li>
+</ul>
 
-    <section class="block" id="lib">
-      <h2>Библиотека</h2>
-      <ul class="lib">
-        <li><span>сегодня</span> rank-before-run</li>
-        <li><span>репо</span> <a href="https://github.com/azinoviev-pixel/hole-fix">hole-fix</a> — агент нашёл дыру, PASS + FAIL трейсы</li>
-        <li><span>правило</span> писать только ai-ultra / hole-fix. Магазины и papa / dawa не трогать</li>
-      </ul>
-    </section>
-
-    <section class="block" id="how">
-      <h2>Как крутится</h2>
-      <ul class="lib">
-        <li><span>Radar</span> лабы</li>
-        <li><span>Probe</span> бумаги / репо</li>
-        <li><span>Atlas</span> стек</li>
-        <li><span>Sensei</span> режет пачку</li>
-        <li><span>Hands</span> кладёт сюда</li>
-        <li><span>OPT</span> в чат 8:21</li>
-      </ul>
-      <p class="note">Anton никуда не ходит кроме этой страницы и чата.</p>
-    </section>
-  </div>
+<h2>Как крутится</h2>
+<p>Radar смотрит лабы. Probe — бумаги и репо. Atlas — что ты уже умеешь, чтобы не совать известное. Sensei режет одну пачку. Я собираю и в 8:21 кидаю сюда и в чат.</p>
+<p class="dim">Notion не для тебя.</p>
+</main>
 </body>
 </html>
