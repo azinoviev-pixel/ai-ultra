@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>17.08 · Verify · AI Ultra</title>
+<style>
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.2rem}
+h1{font-size:1.45rem;letter-spacing:-.03em;margin:.2rem 0 0.6rem}
+h2{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.kicker,.src{color:var(--dim);font-size:.88rem}
+a{color:var(--acc)}
+hr{border:0;border-top:1px solid var(--line);margin:1.4rem 0}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker"><a href="../">AI Ultra</a> · 17 августа 2026 · Verify</p>
+<h1>Что считать доказанным до прогона</h1>
+<p>Смысл дня один. Агент пишет быстрее, чем успевает проверить. Кто на фронтире, тот не запускает всё подряд. Сначала решает, что вообще стоит денег.</p>
+
+<h2>1. Турнир по ещё не запущенному</h2>
+<p>FAIR смотрели research-агентов: план пишется минутами, прогон на GPU — часами. Если гонять всех кандидатов, бюджет сгорает на мусоре. Они не просят модель угадать будущий скор (этот прогноз у них самих гнилой). Модель сравнивает два неисполненных плана и выкидывает слабый. Из 15 веток в прогон уходит одна. Скор 0.684 → 0.711. Если перед выбором дать короткий pilot — 0.729. Тот же результат, что за 24 часа вслепую, приходит за ~15 часов.</p>
+<p>Тебе это не «ещё бумага про агентов». Это правило на любой дорогой ход: несколько планов на столе, один run, след что он вообще отработал.</p>
+<p class="src">Дальше, если надо: <a href="https://arxiv.org/abs/2608.13940">arXiv:2608.13940</a> · FAIR / Meta</p>
+
+<h2>2. Стенд, на котором это мерили</h2>
+<p>Статья без стенда — рассказ. Стенд FAIR открытый: AIRS-Bench — 20 задач «агент сам ставит ML-эксперимент». aira-dojo — обвязка, которая гоняет дерево кандидатов, а не один чат. Смотреть репо имеет смысл не чтобы «прочитать README», а чтобы увидеть, где у них отделены generate / select / execute. Select — как раз турнир. Execute — единственное дорогое место.</p>
+<p class="src">Дальше, если надо: <a href="https://github.com/facebookresearch/aira-dojo">aira-dojo</a> · <a href="https://github.com/facebookresearch/airs-bench">AIRS-Bench</a></p>
+
+<h2>3. Судью собирают до ответа</h2>
+<p>Graph-Structured Rubrics: рубрику не держат как абзац в промпте. Её компилируют в граф критериев заранее, до того как увидели ответы. Потом по этому графу судят и одного, и пару. Смысл тот же, что у FAIR: правила проверки не подгоняются под уже полученный текст. Сначала замок, потом работа.</p>
+<p class="src">Дальше, если надо: <a href="https://arxiv.org/abs/2608.12097">arXiv:2608.12097</a></p>
+
+<h2>4. Цифра должна торчать из прогона</h2>
+<p>Mechanist добавляет verify-агента: откуда метка, нет ли утечки, метрика валидна, результат можно проследить до сохранённого прогона. Если цифра живёт только в абзаце модели — это не доказательство. Твой hole-fix уже в эту сторону: PASS и FAIL трейсы. На learningpath дыра та же, ты её сам написал: нет своих evals.</p>
+<p class="src">Дальше, если надо: <a href="https://arxiv.org/abs/2608.12036">arXiv:2608.12036</a></p>
+
+<hr>
+<p><b>Не сегодня.</b> Intern-S2-Mobius — как устроить память внутри модели. SocialRL — как учить пачку агентов. Водяные знаки Claude — новость, не этот ход.</p>
+<p class="src">Лабы за 48ч по этой теме пустые.</p>
+</main>
+</body>
+</html>
