@@ -3,47 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Ultra — Anton Zinoviev</title>
-  <meta name="description" content="Не курс. Не школа. Трек до ultra-top в AI. Август 2026.">
+  <title>AI Ultra — лог трека</title>
+  <meta name="description" content="Публичный лог трека AI Ultra. Что сегодня и что уже собрано.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="frame">
     <header class="top">
-      <p>Anton Zinoviev</p>
-      <p>пн 17 августа 2026 · неделя 1 · день 1</p>
+      <p>AI Ultra · Anton Zinoviev</p>
+      <p>17 августа 2026 · неделя 1</p>
     </header>
 
-    <section class="hero">
-      <p class="kicker">штаб · не курс</p>
-      <h1>AI<span class="bolt">⚡</span>Ultra</h1>
-      <p class="line">Трек до ultra-top в AI.<br>Август 2026.</p>
-      <p class="frontier">Фронтир уже не чатбот. Фронтир — агенты с компьютером, evals, inference, публичный shipping.</p>
+    <section class="what" id="what">
+      <h1>Что это</h1>
+      <p>Публичный лог трека. Не курс. Не школа.</p>
+      <p>Сюда смотреть две вещи: <strong>что сегодня</strong> и <strong>что уже собрано</strong>.</p>
     </section>
 
-    <section class="now" id="today">
-      <h2>Сегодня</h2>
-      <p class="now-hit">Удар: <strong>Карта фронтира</strong> · разведка · 60–90 мин</p>
-      <p class="now-note">Первичные источники. Не продукт. Не обзоры.</p>
+    <section class="log" id="today">
+      <h2>Сегодня / сделано · 17.08</h2>
+      <p class="hit">Карта фронтира. Разведка, 60–90 мин. Первичные источники, не продукт.</p>
+
+      <h3>Маршрут моделей</h3>
+      <ul class="facts">
+        <li><span>daily</span> Claude Opus 5</li>
+        <li><span>длинный агент</span> GPT-5.6 Sol / Terra</li>
+        <li><span>объём</span> Luna</li>
+      </ul>
+
+      <h3>Хайп, не брать</h3>
+      <ul class="plain">
+        <li>один «лучший» модель</li>
+        <li>мультиагенты ради галочки</li>
+        <li>компьютер без verify</li>
+      </ul>
+    </section>
+
+    <section class="log" id="built">
+      <h2>Собрано</h2>
       <a class="ship" href="https://github.com/azinoviev-pixel/hole-fix">
-        <span class="ship-tag">собрано</span>
         <span class="ship-name">hole-fix</span>
-        <span class="ship-meta">OpenAI Agents SDK · 3 tools · дыра → фикс → verifier<br>traces/success PASS · traces/fail FAIL</span>
+        <span class="ship-meta">github.com/azinoviev-pixel/hole-fix</span>
+        <span class="ship-meta">Агент нашёл дыру в <code>add()</code>, починил. Verifier: PASS и FAIL трейсы.</span>
+        <span class="ship-meta">OpenAI Agents SDK · read_file / run_cmd / write_file</span>
       </a>
-      <p class="now-fri">Пятница 21.08 — живой URL обязателен. Домена ещё нет.</p>
     </section>
 
-    <section class="block">
-      <h2>Четыре трека</h2>
-      <ol class="tracks">
-        <li><span class="n">01</span><div><h3>Вкус и фронтир</h3><p>Отличать релиз от хайпа.</p></div></li>
-        <li><span class="n">02</span><div><h3>Агенты и системы</h3><p>Tools, memory, evals. Не чат.</p></div></li>
-        <li><span class="n">03</span><div><h3>Модели изнутри</h3><p>Data, harness, inference, цена.</p></div></li>
-        <li><span class="n">04</span><div><h3>Shipping</h3><p>Каждую пятницу — живой URL.</p></div></li>
-      </ol>
+    <section class="log" id="next">
+      <h2>Дальше</h2>
+      <ul class="facts">
+        <li><span>пт 21.08</span> живой URL обязателен</li>
+        <li><span>домен</span> ultra.dscff.es — ждёт одну CNAME</li>
+        <li><span>не трогать</span> корень dscff.es (магазин кофе)</li>
+      </ul>
     </section>
 
-    <section class="block">
+    <section class="block dim">
       <h2>Команда</h2>
       <dl class="team">
         <div><dt>Radar</dt><dd>разведка фронтира</dd></div>
@@ -57,14 +72,20 @@
       <p class="note">Anton думает и делает reps. Боты — остальное.</p>
     </section>
 
-    <section class="rule">
-      <p>Один удар в день. Пятница всегда публичная. Не «почти готово».</p>
+    <section class="block dim">
+      <h2>Четыре трека</h2>
+      <ol class="tracks">
+        <li><span class="n">01</span><div><h3>Вкус и фронтир</h3><p>Отличать релиз от хайпа.</p></div></li>
+        <li><span class="n">02</span><div><h3>Агенты и системы</h3><p>Tools, memory, evals. Не чат.</p></div></li>
+        <li><span class="n">03</span><div><h3>Модели изнутри</h3><p>Data, harness, inference, цена.</p></div></li>
+        <li><span class="n">04</span><div><h3>Shipping</h3><p>Каждую пятницу — живой URL.</p></div></li>
+      </ol>
     </section>
 
     <footer>
-      <a href="https://github.com/azinoviev-pixel">azinoviev-pixel</a>
       <a href="https://github.com/azinoviev-pixel/ai-ultra">этот репо</a>
       <a href="https://github.com/azinoviev-pixel/hole-fix">hole-fix</a>
+      <a href="https://github.com/azinoviev-pixel">azinoviev-pixel</a>
     </footer>
   </div>
 </body>
