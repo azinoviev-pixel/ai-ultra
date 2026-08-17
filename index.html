@@ -3,48 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Ultra — табло дня</title>
-  <meta name="description" content="Табло дня. Что сегодня, что пропустить, что сделано.">
+  <title>AI Ultra — пачка дня</title>
+  <meta name="description" content="Дневная пачка. Секрет, источник, выжимка, на тебя.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="frame">
     <header class="top">
       <p>AI Ultra</p>
-      <p>каждый будний день</p>
+      <p>пачка дня</p>
     </header>
 
-    <section class="day" id="today">
+    <section class="block" id="today">
       <h1>Сегодня</h1>
       <p class="date">понедельник 17 августа 2026</p>
     </section>
 
-    <section class="row" id="skip">
+    <section class="block" id="secret">
+      <h2>Секрет</h2>
+      <p class="empty">первая пачка завтра 8:21</p>
+    </section>
+
+    <section class="block" id="source">
+      <h2>Источник</h2>
+      <p class="empty">—</p>
+    </section>
+
+    <section class="block" id="extract">
+      <h2>Выжимка</h2>
+      <p class="empty">—</p>
+    </section>
+
+    <section class="block" id="you">
+      <h2>На тебя</h2>
+      <p class="empty">—</p>
+    </section>
+
+    <section class="block" id="skip">
       <h2>Пропустить</h2>
       <p class="empty">лента пустая</p>
     </section>
 
-    <section class="row" id="done">
-      <h2>Сделано</h2>
-      <ul class="facts">
-        <li><span>репо</span> <a href="https://github.com/azinoviev-pixel/hole-fix">hole-fix</a> — агент нашёл дыру, починил, PASS + FAIL трейсы</li>
-        <li><span>сайт</span> это табло запущено</li>
-      </ul>
-    </section>
-
-    <section class="hit" id="hit">
-      <h2>Удар дня</h2>
-      <p class="result">Табло запущено.</p>
-      <p class="next">Завтра 8:21 здесь появится следующий ход.</p>
-    </section>
-
-    <section class="where">
-      <h2>Где читать</h2>
-      <ul class="facts">
-        <li><span>сайт</span> эта страница, каждый будний день</li>
-        <li><span>чат</span> AI OPT в 8:21</li>
-        <li><span>не сюда</span> Notion не для Anton</li>
-      </ul>
+    <section class="prog" id="program">
+      <h2>Программа</h2>
+      <p class="line">Verify → Route → Taste → Computer → Ship → Pack</p>
     </section>
   </div>
 </body>
