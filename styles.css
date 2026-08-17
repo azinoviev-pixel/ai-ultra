@@ -69,3 +69,8 @@ h2 {
 @media (min-width: 640px) {
   .frame { padding: 2rem 2rem 4rem; }
 }
+
+ul { list-style: none; }
+li { padding: 0.2rem 0; }
+a { color: var(--ink); text-underline-offset: 0.2em; }
+a:hover { color: var(--acid); }
