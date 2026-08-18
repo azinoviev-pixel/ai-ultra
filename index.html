@@ -1,48 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="canonical" href="https://ultra.dscff.es/">
-<title>AI Ultra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Ultra · статьи</title>
 <style>
 :root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
-main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3rem}
-h1{font-size:1.7rem;letter-spacing:-.03em;margin:.15rem 0}
-a{color:var(--acc)} .dim{color:var(--dim)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.5rem}
 .kicker{color:var(--dim);font-size:.85rem}
-.card{border:1px solid var(--line);padding:1rem;margin:1rem 0}
-ul{padding-left:1.1rem}
+h1{font-size:1.7rem;letter-spacing:-.03em;margin:.2rem 0 .4rem}
+p.lead{color:var(--dim);margin:0 0 1.4rem}
+a{color:var(--acc)}
+article{border:1px solid var(--line);padding:1rem 1rem 1.05rem;margin:0 0 .75rem}
+article h2{font-size:1.05rem;margin:0 0 .35rem;letter-spacing:-.02em}
+article h2 a{text-decoration:none}
+article h2 a:hover{text-decoration:underline}
+.meta{color:var(--dim);font-size:.82rem;margin:0 0 .4rem}
+article p{margin:0}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">AI Ultra · каждый будний день</p>
-<h1>Сбор с полок. Разбор здесь. Источник — если полезешь.</h1>
-<p>Лабы, бумаги, репо. Склеиваем по смыслу. Не курс. Не отчёт.</p>
-<div class="card">
-<p class="dim">Сегодня · 18.08.2026</p>
-<p><b>Когда зелёный прогон врёт.</b> Как понять, что агент на самом деле справился, а не просто красиво написал «готово».</p>
-<p><a href="d/2026-08-18.html">Открыть 18.08</a></p>
-</div>
-<div class="card">
-<p class="dim">ещё сегодня</p>
-<p><b>ещё сегодня: файл что считать сделанным</b></p>
-<p><a href="d/2026-08-18-file.html">Открыть файл</a></p>
-</div>
-<div class="card">
-<p class="dim">ещё сегодня</p>
-<p><b>ещё: какой кусок какой моделью</b></p>
-<p><a href="d/2026-08-18-route.html">Открыть роутинг</a></p>
-</div>
-<p class="dim">Архив</p>
-<ul>
-<li><a href="d/2026-08-18.html">18.08 · когда зелёный прогон врёт</a></li>
-<li><a href="d/2026-08-18-file.html">18.08 · файл что считать сделанным</a></li>
-<li><a href="d/2026-08-18-route.html">18.08 · какой кусок какой моделью</a></li>
-<li><a href="d/2026-08-17.html">17.08 · зелёный прогон без кейсов — ложь</a></li>
-</ul>
+<p class="kicker">AI Ultra</p>
+<h1>Статьи</h1>
+<p class="lead">Каждая отдельно. Новые сверху. Открыл — читаешь одну, не кашу.</p>
+
+<article>
+<p class="meta">18 августа 2026</p>
+<h2><a href="/d/2026-08-18-route.html">Какой кусок какой моделью</a></h2>
+<p>Не «зови Opus на всё». Правило на живую работу: скрейп, список, сравнение пары.</p>
+</article>
+
+<article>
+<p class="meta">18 августа 2026</p>
+<h2><a href="/d/2026-08-18-file.html">Файл, в котором написано «что считать сделанным»</a></h2>
+<p>Чат завтра забудется. Нужен файл, по которому следующий прогон понимает, можно ли писать ok.</p>
+</article>
+
+<article>
+<p class="meta">18 августа 2026</p>
+<h2><a href="/d/2026-08-18.html">Когда зелёный прогон врёт</a></h2>
+<p>Как понять, что агент справился, а не просто написал «готово».</p>
+</article>
+
+<article>
+<p class="meta">17 августа 2026</p>
+<h2><a href="/d/2026-08-17.html">Зелёный прогон без кейсов — ложь</a></h2>
+<p>Первая короткая страница. Оставь, если хочешь начало. Нормальный разбор — 18.08 выше.</p>
+</article>
+
 </main>
 </body>
 </html>
