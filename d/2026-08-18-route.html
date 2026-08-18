@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="18.08 — Какой кусок какой моделью">
+<link rel="canonical" href="https://ultra.dscff.es/d/2026-08-18-route.html">
+<title>18.08 — Какой кусок какой моделью · AI Ultra</title>
+<style>
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.2rem}
+h1{font-size:1.45rem;letter-spacing:-.03em;margin:.2rem 0 .6rem}
+h2{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.kicker{color:var(--dim);font-size:.88rem}
+a{color:var(--acc)}
+p{margin:.65rem 0}
+ul,ol{padding-left:1.15rem}li{margin:.28rem 0}
+code,pre{font:.9em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{margin:1rem 0;padding:.75rem .85rem;border:1px solid var(--line);overflow-x:auto;white-space:pre-wrap}
+.table-wrap{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;min-width:28rem}
+th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{color:var(--acc)}
+details{margin:1rem 0;padding:.7rem .85rem;border:1px solid var(--line)}
+summary{cursor:pointer;color:var(--acc);font-weight:700}
+details[open] summary{margin-bottom:.55rem}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker"><a href="/">AI Ultra</a> · 18 августа 2026 · <a href="/d/2026-08-18.html">18.08</a> · <a href="/d/2026-08-18-file.html">18.08-file</a></p>
+<h1>Какой кусок какой моделью</h1>
+<p><strong>Что учим.</strong> Не «есть дорогая и дешёвая модель». Это ты уже знаешь. Учимся писать правило на живую работу: этот кусок — воркер, этот — дешёвый проход, этот — дорогой глаз. Если у всех кусков один контур, роутера нет.</p>
+<p>Зачем тебе. В auctionscode уже лежит разная работа рядом: скрейп лотов, ежедневный refresh списка, сравнение лота A с лотом B. Сейчас это легко сваливается в один вызов. После страницы ты умеешь сказать, какой кусок кому, и почему.</p>
+<p>Репо не трогаем. Смотрим только <code>team/research/03-visual-appraisal-v1.md</code> и живой refresh.</p>
+
+<h2>Сначала история</h2>
+<p>Аукцион.</p>
+<p>Фотограф бегает по залу и снимает лоты. Это не искусство, это ноги. Ассистент утром обновляет список: что ещё в игре, что сняли. Дорогой эксперт не фотографирует сто стульев. Его зовут, когда надо сказать: этот лучше того и почему.</p>
+<p>Если эксперта посадить снимать каждый лот — день сгорит, список не обновится. Если ассистенту отдать «что дороже, A или B» — будет гладкая чушь.</p>
+<p>Три куска, три роли. Не три слогана, а правило на эту работу.</p>
+
+<h2>Как это называть</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Своими словами</th><th>Термин</th></tr>
+</thead>
+<tbody>
+<tr><td>Кто смотрит задачу и решает, какую модель звать, ещё до ответа</td><td><strong>model router</strong></td></tr>
+<tr><td>Кто решает, звать ли других агентов и сколько</td><td><strong>agent router</strong></td></tr>
+<tr><td>Кусок без «подумать»: скрейп, клик, обновление списка</td><td><strong>worker</strong> / воркер</td></tr>
+<tr><td>Сначала дешёвая, если не тянет — дорогая</td><td><strong>cascade</strong> / <strong>fallback</strong></td></tr>
+<tr><td>Правило «этот тип куска → этот тип модели» лежит в файле, не в настроении чата</td><td><strong>routing rule</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p>Два разных «когда», их путают.</p>
+<ol>
+<li><strong>До ответа.</strong> Запрос простой — быстрая модель. Запрос «подумай и сравни» — думающая. Так делает роутер в <a href="https://openai.com/index/gpt-5-system-card/">GPT-5</a>: смотрит тип разговора, сложность, нужны ли инструменты, фразу вроде «think hard».</li>
+<li><strong>Звать ли стаю.</strong> Один факт — один агент. Обход сотен страниц параллельно — лид режет, воркеры бегут. Так <a href="https://www.anthropic.com/engineering/multi-agent-research-system">Research у Anthropic</a>.</li>
+</ol>
+<p>Путать: звать Opus классифицировать «лотов сегодня 40» или плодить 50 субагентов на одну дату.</p>
+
+<h2>Правило на auctionscode</h2>
+<p>Только смотреть, не менять.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Кусок работы</th><th>Кого звать</th><th>Почему</th></tr>
+</thead>
+<tbody>
+<tr><td>Скрейп лотов</td><td>воркер, почти без модели</td><td>ноги, не вкус</td></tr>
+<tr><td>Ежедневный refresh списка</td><td>дешёвая / быстрая</td><td>много однотипного, цена ошибки низкая</td></tr>
+<tr><td>Pairwise appraisal: этот лот лучше того?</td><td>дорогая, один раз на пару</td><td>вкус, сравнение A↔B уже в рубрике</td></tr>
+</tbody>
+</table>
+</div>
+<p>papa и dawa — один Deploy Bot, роутить нечего. Эту команду ботов и study-live «CEO = Opus» не разбираем: то ты уже умеешь.</p>
+<p>Проверка, что правило живое: если скрейп и pairwise идут в одну и ту же модель — роутера нет, есть привычка.</p>
+
+<h2>Кто так уже делает</h2>
+<p><a href="https://www.anthropic.com/engineering/multi-agent-research-system">Anthropic Research</a>: лид Claude Opus 4 режет задачу, субагенты Claude Sonnet 4 бегают. На их внутреннем research eval обошли одного Opus 4 на 90.2%. Пример из статьи: все члены советов IT из S&amp;P 500 — пачка субагентов нашла, один агент увяз в последовательном поиске. В промпте лида у них же: простой факт → 1 агент и 3–10 вызовов; сравнение → 2–4 субагента; сложное → больше, с границами задач. Ранний косяк: 50 субагентов на простой вопрос. Мультиагент у них жрёт около 15× токенов обычного чата — только если цена ошибки это платит. Код чаще плохо параллелится, это не тот кейс.</p>
+<p><a href="https://openai.com/index/gpt-5-system-card/">OpenAI GPT-5</a>: в чате роутер сам выбирает fast или thinking. В API модель выбираешь ты. Сигналы: сложность, тулы, явный intent.</p>
+<p><a href="https://github.com/lm-sys/RouteLLM">RouteLLM</a>: открытый роутер до ответа, strong vs weak по порогу. Порог калибруют: какой процент запросов вообще имеет право идти в сильную. Их заявленная цифра на MT Bench (не наш аукцион): до 85% дешевле при 95% качества GPT-4. Это чужой бенч, не доказательство про твои лоты.</p>
+
+<h2>Три неочевидных решения</h2>
+<ol>
+<li><strong>Роуть кусок, не «весь auctionscode».</strong> Одна кнопка «обновить» может внутри быть тремя вызовами. Если правило висит на кнопке, эксперт снова фотографирует зал. Цена: надо нарезать работу заранее, не в момент «ой дорого».</li>
+<li><strong>Стая только если куски не ждут друг друга.</strong> Anthropic прямо пишет: если всем нужна одна общая голова или шаг зависит от шага, мультиагент мешает. Pairwise A↔B — один дорогой глаз, не десять дешёвых, которые не видят пару. Скрейп 200 лотов — наоборот, ноги параллельно. Цена: 15× токенов, если по привычке включить стаю на всё.</li>
+<li><strong>Порог «когда дорогая» пиши числом, не ощущением.</strong> Например: в сильную идёт не больше N пар в день, или только если оба лота прошли дешёвый фильтр. RouteLLM калибрует долю запросов в strong. Без числа «иногда Opus» снова станет «всегда Opus». Цена: порог придётся иногда двигать, когда рынок тихий или горячий.</li>
+</ol>
+
+<h2>Попробуй сам, 15 минут</h2>
+<p>Репо не открывать.</p>
+<p>Возьми один свой вечер auctionscode. Разложи на три строки:</p>
+<ol>
+<li>Что сегодня было ногами (собрать/обновить)?</li>
+<li>Что было списком (refresh, отфильтровать мусор)?</li>
+<li>Где нужен был глаз (эта пара лотов, не «все лоты»)?</li>
+</ol>
+<p>Потом напиши routing rule из трёх строк, как для файла:</p>
+<pre>scrape → worker
+daily refresh → cheap
+pairwise A vs B → expensive, max __ пар за вечер
+запрещено: expensive на scrape
+запрещено: 10 субагентов на одну пару</pre>
+<p>Сдал себе урок, если в правиле есть запрет, а не только «нужные роли». Если написал «для сложного — Opus» без куска работы — это снова слоган.</p>
+
+<h2>Что теперь умеешь объяснить</h2>
+<ul>
+<li>Чем роутер модели отличается от роутера агентов.</li>
+<li>Почему auctionscode без правила на куски — это один контур, не система.</li>
+<li>Когда стая субагентов окупается, а когда жрёт 15× зря.</li>
+<li>Зачем порог в сильную модель писать числом.</li>
+</ul>
+
+<h2>Три вопроса</h2>
+<ol>
+<li>Refresh списка из 300 лотов отправили в ту же модель, что pairwise. Это роутинг?</li>
+<li>Чтобы найти 50 цен, лид породил 50 субагентов. По правилу Anthropic это ок?</li>
+<li>В чате написали «на сложное бери Opus». Завтра скрейп снова уйдёт в Opus. Почему?</li>
+</ol>
+<details>
+<summary>Ответы</summary>
+<ol>
+<li>Нет. Куски разные, контур один. Роутинг начинается, когда scrape и pairwise разведены.</li>
+<li>Нет. Ранний косяк Anthropic: 50 субагентов на простое. Для фактов — 1 агент и несколько вызовов.</li>
+<li>Нет. Потому что правило жило в чате и про «сложное», не про кусок. Нужен routing rule в файле: scrape никогда не expensive.</li>
+</ol>
+</details>
+
+<p class="kicker"><a href="/">AI Ultra</a> · <a href="/d/2026-08-18.html">18.08</a> · <a href="/d/2026-08-18-file.html">18.08-file</a></p>
+</main>
+</body>
+</html>
