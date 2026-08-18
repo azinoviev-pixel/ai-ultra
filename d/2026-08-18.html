@@ -3,414 +3,169 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Когда проверять исход, доказательство и путь агента — урок AI Ultra за 18.08.2026">
+<meta name="description" content="18.08 — Когда зелёный прогон врёт">
 <link rel="canonical" href="https://ultra.dscff.es/d/2026-08-18.html">
-<title>18.08 — Когда исход врёт, а путь врёт иначе · AI Ultra</title>
+<title>18.08 — Когда зелёный прогон врёт · AI Ultra</title>
 <style>
-:root{--bg:#0e0f0c;--panel:#161713;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017;--code:#20221c}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.62 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:62rem;margin:0 auto;padding:1.1rem clamp(1rem,3vw,2rem) 4rem}
-.kicker{color:var(--dim);font-size:.88rem;margin:.2rem 0 1.4rem}.kicker a{font-weight:700}
-h1{font-size:clamp(1.75rem,5vw,2.8rem);line-height:1.12;letter-spacing:-.035em;margin:.2rem 0 1rem}
-h2{font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.25;margin:2.6rem 0 .75rem;border-top:1px solid var(--line);padding-top:1.2rem}
-h3{font-size:1.12rem;line-height:1.35;margin:1.8rem 0 .55rem}
-p{margin:.65rem 0}a{color:var(--acc);text-underline-offset:.16em;overflow-wrap:anywhere}strong{color:#fffaf0}
-code{background:var(--code);border:1px solid var(--line);border-radius:.25rem;padding:.08em .3em;font:.9em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
-ul,ol{padding-left:1.35rem}li{margin:.25rem 0}
-table{display:block;width:100%;overflow-x:auto;border-collapse:collapse;margin:1rem 0 1.5rem;-webkit-overflow-scrolling:touch}
-th,td{border:1px solid var(--line);padding:.62rem .7rem;text-align:left;vertical-align:top;min-width:8rem}
-th{background:#202117;color:#fff}tbody tr:nth-child(even){background:#131410}
-.diagram{overflow-x:auto;margin:1.25rem 0;padding:1rem;background:var(--panel);border:1px solid var(--line);border-radius:.55rem}
-pre.mermaid{margin:0;background:transparent;color:inherit;font:inherit;white-space:pre;overflow:visible}
-.logic-diagram{overflow-x:auto;margin:1.25rem 0;padding:1rem;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:.55rem;line-height:1.9}
-.logic-diagram code{display:inline-block}
-details{margin:1rem 0;padding:.8rem 1rem;border:1px solid var(--line);background:var(--panel);border-radius:.5rem}
-summary{cursor:pointer;color:var(--acc);font-weight:800}details[open] summary{margin-bottom:.7rem}
-@media(max-width:640px){body{font-size:15px}main{padding-bottom:2.5rem}th,td{min-width:7.5rem;padding:.5rem}h2{margin-top:2.15rem}}
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.2rem}
+h1{font-size:1.45rem;letter-spacing:-.03em;margin:.2rem 0 .6rem}
+h2{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.kicker{color:var(--dim);font-size:.88rem}
+a{color:var(--acc)}
+p{margin:.65rem 0}
+ul,ol{padding-left:1.15rem}li{margin:.28rem 0}
+code{font:.9em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+.table-wrap{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;min-width:28rem}
+th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{color:var(--acc)}
+details{margin:1rem 0;padding:.7rem .85rem;border:1px solid var(--line)}
+summary{cursor:pointer;color:var(--acc);font-weight:700}
+details[open] summary{margin-bottom:.55rem}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker"><a href="/">AI Ultra</a> · <a href="/d/2026-08-17.html">17.08</a> · 18 августа 2026</p>
-<h1>18.08 — Когда исход врёт, а путь врёт иначе</h1>
-<p><strong>Вопрос дня.</strong> Когда проверять исход, когда путь, когда оба — чтобы проверка сама не давала ложный зелёный и ложный красный.</p>
-<p>Зачем сейчас. У Anton уже есть живой прогон и зелёные трассы. Дыра не в ролях и не в чеклисте. Дыра: прогон может закончиться <code>ok</code> при пустой работе, а «одобрено» может висеть без сохранённого ответа. После страницы он объясняет не лозунг, а правило прибора: какой бит ловит какую ложь.</p>
-<h2>Механика</h2>
-<p>Проверка агента — не оценка текста. Это сравнение <strong>сохранённой трассы</strong> с <strong>замороженным кейсом</strong>.</p>
-<p>Короткий словарь:</p>
+<p class="kicker"><a href="/">AI Ultra</a> · 18 августа 2026 · <a href="/d/2026-08-17.html">17.08</a></p>
+<h1>18.08 — Когда зелёный прогон врёт</h1>
+<p><strong>Что сегодня учим.</strong> Как понять, что агент на самом деле справился, а не просто красиво написал «готово».</p>
+<p>Зачем тебе. 26 июля твой учебный прогон закончился словом ok. Вызовов не было. Работы не было. Если смотреть только «процесс не упал», такой день выглядит успешным. Это и есть ложь зелёного прогона.</p>
+<p>После страницы ты умеешь сказать своими словами: что сломалось в мире, чем агент это доказал, и какое правило порядка шагов вообще важно.</p>
+
+<h2>Сначала история, без терминов</h2>
+<p>Есть заказ <strong>R-104</strong>. Он уже уехал. Его нельзя отменять. Агент должен только посмотреть этот заказ и ничего не менять. Чужие заказы не трогать.</p>
+<p>Что сделал агент: открыл R-104 (уже уехал), потом по ошибке открыл чужой <strong>R-140</strong> и отменил его.</p>
 <ul>
-<li><strong>gold</strong> — эталон кейса: какой мир должен получиться и какие факты обязаны быть. С ним сравнивают прогон, не красивый финальный абзац.</li>
-<li><strong>grader</strong> — правило проверки: смотрит трассу и ставит PASS / FAIL / UNKNOWN.</li>
-<li><strong>grounding / evidence</strong> — опора. Исход и финальный тезис засчитывают, только если в трассе есть артефакт (вызов, файл, сохранённый ответ).</li>
-<li><strong>сертификат покрытия</strong> — запись, что нужную область реально искали. Без него фразу «не найдено» нельзя принимать как NO.</li>
-<li><strong>provenance</strong> — откуда взялась ссылка, цифра или кейс: источник в трассе, не «кажется правдой».</li>
-<li><strong>strict / subset / superset</strong> — как сравнивать путь с эталоном. Strict: те же шаги в том же порядке. Subset: только шаги из эталона, без лишних. Superset: обязательные шаги есть, лишние чтения можно.</li>
+<li><strong>История A.</strong> В конце врёт: «R-104 отменён». Не отменён. Отменён чужой.</li>
+<li><strong>История B.</strong> Честно говорит: «ошибся, снёс не тот». Но чужой заказ уже снесён.</li>
+<li><strong>История C.</strong> Посмотрел только R-104, увидел «уже уехал», остановился. Ничего не ломал.</li>
 </ul>
-<p>Кейс, без которого зелёный прогон — ложь:</p>
-<ul>
-<li><strong>input</strong> — что подали (дата, ключ дня, заказ, вопрос).</li>
-<li><strong>expected outcome</strong> — какой мир должен получиться (файл, статус, 6 секций, БД после действий).</li>
-<li><strong>required evidence</strong> — какие факты обязаны лежать в трассе, иначе исход нельзя засчитывать.</li>
-<li><strong>forbidden effects</strong> — чего в мире быть не должно.</li>
-<li><strong>fabrication</strong> — что считать выдумкой: URL/цифра без источника; «одобрено» без сохранённого ответа; успех без файла и без вызовов.</li>
-</ul>
-<p>Два бита всегда, путь — только иногда:</p>
-<ol>
-<li><strong>Исход (outcome / state).</strong> Мир после прогона совпал с expected?</li>
-<li><strong>Доказательство (evidence / grounding).</strong> Каждый засчитанный исход и каждый финальный тезис опёрт на артефакт в трассе?</li>
-<li><strong>Путь (trajectory).</strong> Нужен, только если порядок или состав шагов <strong>сам есть правило</strong> (нельзя писать до verify; нельзя трогать чужой id). Иначе путь — хореография и даёт ложный красный: агент пришёл верно другим маршрутом.</li>
-</ol>
+<p>Прошёл только C. A врёт. B честный, но работу провалил: мир уже сломан. «Извини» не возвращает отменённый заказ.</p>
+
+<h2>Как это называть</h2>
+<p>Смысл сначала, название потом. Эти слова тебе нужны, ими говорят все.</p>
+<div class="table-wrap">
 <table>
 <thead>
-<tr>
-<th>Ложь</th>
-<th>Что сломалось</th>
-<th>Какой прибор ловит</th>
-<th>Какой врёт, если включить один</th>
-</tr>
+<tr><th>Своими словами</th><th>Термин</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>Зелёный мир, работы не было</td>
-<td>исход «как надо», evidence пустой</td>
-<td>evidence: <code>required ⊆ trace</code></td>
-<td>один outcome = ложный зелёный</td>
-</tr>
-<tr>
-<td>Честный отказ без покрытия</td>
-<td>текст скромный, поиск не сделан</td>
-<td>coverage: негатив без сертификата = UNKNOWN, не NO</td>
-<td>один «нет галлюцинаций» = ложный зелёный на пустом отказе</td>
-</tr>
-<tr>
-<td>Верный исход, чужой/лишний шаг</td>
-<td>мир почти тот, путь нарушил правило</td>
-<td>path: только если порядок = правило</td>
-<td>один path = ложный красный на другом верном маршруте</td>
-</tr>
-<tr>
-<td>Спорный gold (открытый репорт)</td>
-<td>агент может быть прав относительно юзера, тест красный</td>
-<td>если репорт верен — чинить expected, не path</td>
-<td>outcome-only по спорному слоту = ложный красный (гипотеза)</td>
-</tr>
+<tr><td>Мир после работы: что стало с заказом, файлом, базой</td><td><strong>state</strong> или <strong>outcome</strong> (исход)</td></tr>
+<tr><td>Доказательства в логе: агент открыл нужный заказ, есть ответ инструмента</td><td><strong>evidence</strong> (доказательство)</td></tr>
+<tr><td>Правило порядка: сначала проверь человека, потом пиши; или вообще не пиши</td><td><strong>path</strong> или <strong>trajectory</strong> (путь)</td></tr>
+<tr><td>Эталон: какой мир должен получиться и какие факты обязаны быть</td><td><strong>gold</strong></td></tr>
+<tr><td>Правило проверки, которое ставит ок / не ок / неясно</td><td><strong>grader</strong></td></tr>
+<tr><td>Откуда взялась ссылка, цифра, вывод</td><td><strong>provenance</strong></td></tr>
+<tr><td>Сказал «не нашёл», но почти не искал</td><td>не «нет» и не «ок», а <strong>UNKNOWN</strong></td></tr>
+<tr><td>Сказал то, чего нет в ответах инструментов</td><td><strong>fabrication</strong> (выдумка)</td></tr>
 </tbody>
 </table>
-<p>Формула:</p>
-<p class="logic-diagram"><code>required evidence ⊆ trace</code><br>
-<code>forbidden effects ∩ actual = ∅</code><br>
-<code>final claims ⊆ supported claims</code><br>
-Явный негатив («не найдено») без сертификата покрытия → <strong>UNKNOWN</strong>, не NO. Положительный тезис без evidence → FAIL.<br>
-Замораживать <strong>семантический фейл</strong>, не полный порядок вызовов.</p>
-<h2>Откуда это собрано</h2>
-<p>Anthropic в <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents</a> режет работу на task / trial / outcome и прямо говорит: сначала 20–50 <strong>реальных</strong> фейлов, gold до зелёного набора. Это против привычки «написать 20 кейсов с потолка и получить зелёный прогон».</p>
-<p>OpenAI в <a href="https://developers.openai.com/api/docs/guides/trace-grading">trace grading</a> оценивает трассы и запускает evals по множеству примеров. В датасет кладут тестовые кейсы, не обязательно сами трассы. Один просмотр одной трассы сам по себе не становится повторяемым набором.</p>
-<p>LangSmith в <a href="https://docs.langchain.com/langsmith/trajectory-evals">trajectory evals</a> даёт четыре режима пути: strict / unordered / subset / superset. Документ четыре режима перечисляет; официального default «всегда strict» нет. Здесь, на «лишнее чтение не ломает работу», берём superset. Strict — только когда точный порядок сам правило.</p>
-<p>Braintrust в <a href="https://www.braintrust.dev/docs/evaluate/score-online">online scoring</a> оценивает прод-трассы. Отдельные примеры можно перенести в версионированный датасет и гонять offline / в CI. Автоматического конвейера «живой фейл сам заморозился в кейс» документ не обещает.</p>
-<p>Стык: Anthropic говорит, откуда брать кейсы (реальные фейлы). OpenAI — что оценивать трассы и гонять evals по многим примерам. LangSmith — какие четыре режима пути есть; этот урок для лишних чтений берёт superset, strict — только когда важен точный порядок. Braintrust — что прод-трассу можно оценить online и выборочно унести в датасет.</p>
-<div class="diagram" aria-label="Путь от живого фейла до регрессии">
-<pre class="mermaid">
-flowchart LR
-  A[живой фейл в проде] --> B[заморозить кейс:<br/>input + expected + evidence + forbidden]
-  B --> C[грейдеры:<br/>outcome · evidence · path?]
-  C --> D[тот же кейс в CI]
-  D --> E[регрессия:<br/>этот класс лжи больше не зелёный]
-</pre>
 </div>
-<h2>Два чужих кейса, оба из τ³-bench</h2>
-<p>Режим оценки: <a href="https://github.com/sierra-research/tau2-bench/blob/main/docs/evaluation.md">tau2-bench evaluation.md</a>. Read-only не меняет БД: <a href="https://github.com/sierra-research/tau2-bench/commit/ddc66a777e520373975f15d3abec989cfe2ec371">commit ddc66a7</a>. Открытый репорт, не подтверждённый баг: <a href="https://github.com/sierra-research/tau2-bench/issues/319">issue #319</a>. Если верен — чинить expected, не path.</p>
-<h3>Airline, task 1 — задокументированное поведение, риск этого урока</h3>
-<p><strong>Input.</strong> Задача авиакассы. Референсные действия — только чтения. Писать в БД нечего.</p>
-<p><strong>Ход референса.</strong> Читает. Хеш БД в конце = хеш в начале. <code>db_reward</code> считает совпадение конечной БД с gold.</p>
-<p><strong>Что документ считает правильным.</strong> Отказ без записи в БД даёт <code>db_reward = 1.0</code>. <code>communicate_info</code> пустой, поэтому <code>communicate_reward = 1.0</code> сам. Вежливый отказ без чтений получает полный reward <code>1.0</code> — так задумано: правильное поведение здесь не писать (<a href="https://github.com/sierra-research/tau2-bench/blob/main/docs/evaluation.md">evaluation.md</a>).</p>
-<p><strong>Какой риск берёт этот урок.</strong> Документ не называет no-op багом: честный отказ без записи — intended pass. <code>nl_assertions</code> есть («не одобрять отмену»), но <code>NL_ASSERTION</code> не в <code>reward_basis</code>, это только диагностика. Поэтому агент, который <strong>ничего не сделал и сказал «отменено»</strong>, тоже получает <code>1.0</code>: БД не менялась, сказать ничего не обязаны. Риск не в отказе, а в <strong>заявленном успехе без write-evidence</strong> — этот урок такое поведение считает риском оценки, не подтверждённым багом бенчмарка.</p>
-<p><strong>Как этот урок предложил бы считать.</strong> Не «добавить весь путь». Добавить evidence на финальный тезис: успех отмены нельзя засчитывать без write-result; отказ можно, если нет forbidden writes. Обязательные чтения — только если они сами policy. Иначе «лодырь сказал отменил» неотличим от «честно отказал».</p>
-<h3>Открытый репорт — retail, task 41</h3>
-<p><strong>Input.</strong> Пользователь просит отменить заказ и, по тексту автора issue, говорит: карта.</p>
-<p><strong>Ход агента (как сообщает автор).</strong> Отмена. Способ — card.</p>
-<p><strong>Что написано в репорте.</strong> В открытом <a href="https://github.com/sierra-research/tau2-bench/issues/319">issue #319</a> автор сообщает: user card, reference PayPal, NL assertion 1.0, reward 0.0.</p>
-<p><strong>Как читать, не утверждая.</strong> Это репорт, не вердикт, что gold «точно врёт». Если репорт верен, прибор outcome-only по слоту, который юзер не фиксировал, даёт красный честному агенту. Пока issue открыт — кейс-гипотеза, не факт бенчмарка.</p>
-<p><strong>Исправленный ход прибора (если репорт подтвердится).</strong> Замораживать то, что ломает работу (заказ отменён? правильный id? запрещённые побочки пусты?), не полный снимок полей, которые юзер не фиксировал.</p>
-<p>Task 1 задокументирован: <code>db_reward = 1.0</code> на любой траектории без записи. Честный отказ без записи — intended pass, не баг. Этот урок считает риском другое: заявленный успех («отменено») при пустом communicate/NL-gate тоже получает <code>1.0</code>. Task 41 — открытый репорт с другой стороны: если автор прав, outcome по спорному gold бьёт честного агента.</p>
-<h2>Якорь Anton — study-live, только читать</h2>
-<p>Проект не меняем. Не учим роли, не трогаем ключ, воркфлоу, публикацию. Смотрим один уже случившийся прогон.</p>
-<p>Живая работа дня: <code>curriculum_today</code> → meeting → HTML дня → проверка → <code>docs/issues</code>. Один выпуск, не стенд.</p>
-<h3>Реальный фейл 26.07 (ложный зелёный у него)</h3>
-<p><strong>Input.</strong> Ключ дня 26.07 отсутствует.</p>
-<p><strong>Ход.</strong> Прогон идёт. Вызовов нет: <code>calls = []</code>, <code>total_in = 0</code>.</p>
-<p><strong>Ошибка прибора.</strong> <code>status = &quot;ok&quot;</code>. <code>run.py</code> выходит без ошибки. Трасса зелёная. Результата ноль. Первичка: <a href="https://github.com/azinoviev-pixel/study-live/blob/main/office/logs/run-2026-07-26.json"><code>office/logs/run-2026-07-26.json</code></a> (<code>calls: []</code>, <code>total_in: 0</code>, <code>status: &quot;ok&quot;</code>) и <a href="https://github.com/azinoviev-pixel/study-live/blob/main/office/logs/waiting-for-key.md"><code>office/logs/waiting-for-key.md</code></a>. Репо только читать.</p>
-<p><strong>Почему.</strong> Исходный бит смотрит «процесс не упал», не «работа сделана». Evidence пустой, и это не считается фейлом. Ровно airline task 1, только на его репо: совпали две пустоты.</p>
-<p><strong>Полный кейс на этот фейл</strong> (записать, не внедрять):</p>
-<table>
-<thead>
-<tr>
-<th>Поле</th>
-<th>Значение</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>input</td>
-<td>дата 26.07, ключ отсутствует</td>
-</tr>
-<tr>
-<td>expected outcome</td>
-<td>не <code>ok</code>. Либо явный fail / UNKNOWN, либо дня нет в выпуске</td>
-</tr>
-<tr>
-<td>required evidence</td>
-<td>либо вызовы по этому ключу, либо сертификат «ключа нет» (проверка источника ключа, не пустой выход)</td>
-</tr>
-<tr>
-<td>forbidden effects</td>
-<td>зелёный exit без артефакта дня; <code>status=ok</code> при пустой работе</td>
-</tr>
-<tr>
-<td>fabrication</td>
-<td><code>status=ok</code> при <code>calls=[]</code> / <code>total_in=0</code>; «день выпущен» без файла; «проверка прошла» без сохранённого полного ответа</td>
-</tr>
-<tr>
-<td>path_mode</td>
-<td>none — порядок вызовов здесь не правило</td>
-</tr>
-<tr>
-<td><strong>PASS rule</strong></td>
-<td>PASS только если одновременно: (1) нет <code>ok</code> на пустой работе, (2) либо есть required evidence, либо явный UNKNOWN с сертификатом «ключа нет», (3) ни один forbidden не случился, (4) ни один финальный тезис не fabrication. Иначе FAIL. Пустой <code>ok</code> = FAIL, не PASS.</td>
-</tr>
-</tbody>
-</table>
-<p>Это заморозка семантического фейла. Не «повторить все вызовы 26.07». А: пустой прогон не имеет права быть ok.</p>
-<h3>Контракт на 18.08 — какой кейс писать, не гоняя прогон</h3>
-<p><strong>Input.</strong> 18.08, Madrid, обычный вторник.</p>
-<p><strong>Expected outcome.</strong> Неделя 7 / Cybersecurity / tue. Файл <code>2026-08-18_week07_cybersecurity_tue_v1.html</code>. 6 секций.</p>
-<p><strong>Required evidence</strong> (без этого исход нельзя засчитывать):</p>
-<ul>
-<li>файл meeting на этот день</li>
-<li>в run-log есть вызовы генерации и проверки</li>
-<li><strong>полный</strong> ответ проверки сохранён (не галочка «ок»)</li>
-<li>у каждой ссылки в HTML — provenance</li>
-<li>у каждой цифры и кейса в HTML — источник</li>
-</ul>
-<p><strong>Forbidden effects:</strong></p>
-<ul>
-<li>success / <code>ok</code> без файла дня</li>
-<li>success / <code>ok</code> при <code>calls=[]</code> или <code>total_in=0</code></li>
-<li>публикация дня с URL или числом без evidence</li>
-<li>пометка «проверка одобрила» без сохранённого полного ответа</li>
-</ul>
-<p><strong>Fabrication:</strong></p>
-<ul>
-<li>URL без provenance в трассе</li>
-<li>число или кейс без источника в трассе</li>
-<li>«проверка одобрила» без сохранённого полного ответа</li>
-<li>«день 18 выпущен» без файла и без вызовов</li>
-</ul>
-<p><strong>PASS rule.</strong> PASS только если все четыре истинны сразу:</p>
+<p>Три проверки на любую работу агента:</p>
 <ol>
-<li>Файл дня есть и соответствует expected (week7 / Cybersecurity / tue, 6 секций).</li>
-<li><code>required evidence ⊆ trace</code> — meeting, вызовы, полный ответ проверки, provenance ссылок, источники цифр.</li>
-<li><code>forbidden effects ∩ actual = ∅</code>.</li>
-<li><code>final claims ⊆ supported claims</code> — ни один тезис дня не fabrication.</li>
+<li><strong>Мир.</strong> Сломалось ли что-то лишнее? Получилось ли то, что просили? Это state.</li>
+<li><strong>Доказательства.</strong> То, что он сказал в конце, видно в логе? Это evidence.</li>
+<li><strong>Порядок.</strong> Нарушил ли правило «не писать» или «сначала проверь»? Это path. Просто лишний раз посмотреть список — не провал.</li>
 </ol>
-<p>Иначе FAIL. Файл на диске при <code>calls=[]</code> — FAIL (класс 26.07). Честный «ключа нет», если сертификат покрытия записан — UNKNOWN, не <code>ok</code>.</p>
-<p>Дыра, которую кейс делает видимой, не чиня репо: проверка получает HTML и не получает пул материалов; полный ответ проверки не сохраняется. Даже «зелёный вторник» нельзя отличить от выдумки.</p>
-<p>Не делать сегодня: не менять ключ, не вешать грейдер, не публиковать. Только уметь написать этот кейс так, чтобы 26.07 по нему был красным, а честный пустой день (ключа правда нет, и это записано) был UNKNOWN, не ok.</p>
-<h2>Кто этим уже пользуется</h2>
-<p>Лабы агентов (τ³-bench) — airline task 1 как задокументированный no-op reward, который этот урок читает как риск заявленного успеха; открытый репорт #319 — гипотеза про красный честному, не факт бенчмарка. Anthropic / OpenAI — чтобы eval был про task и трассу, не про красивый абзац. LangSmith / Braintrust — в доке четыре режима пути; в этом уроке для лишних чтений берём superset, strict только когда важен точный порядок. Прод-трассу можно оценить online и выборочно унести в датасет.</p>
-<p>Ему это нужно на одном месте: study-live. Не на новом стенде.</p>
-<h2>Secret sauce</h2>
-<p>Три решения, которые не гуглятся как слоган. У каждого есть цена.</p>
-<h3>1. Минимальный сертификат, не золотой путь</h3>
-<p>В кейс кладут пять вещей: input, expected outcome, required tool-evidence, fabrication predicate, и path-constraint только если порядок сам есть правильность. Не кладут полный список вызовов референса.</p>
-<p>Компромисс. Золотой путь ловит больше «не так, как я бы сделал» — и поэтому врёт, как золотой путь, который зашил лишний слот — см. открытый репорт <a href="https://github.com/sierra-research/tau2-bench/issues/319">issue #319</a>, не как доказанный баг. Минимальный сертификат пропускает другой верный маршрут — и поэтому может пропустить лишний вредный шаг, если ты забыл записать его в <code>forbidden</code>. Цена правильная: лучше один явный forbidden, чем хореография на 40 шагов. Если forbidden не умеешь назвать — ещё не понял семантический фейл.</p>
-<h3>2. Негатив без покрытия = UNKNOWN, не NO</h3>
-<p>«Дня 18 нет» после одного <code>read_file(README)</code> — не ответ. «Дня 18 нет» после <code>list_dir</code> по каталогу дней, где виден только 17-й — ответ. Пустой вежливый отказ без поиска проходит любой грейдер вида «все сущности ответа ∈ выходе инструментов»: сущностей нет, включение пустое, вердикт зелёный вхолостую.</p>
-<p>Компромисс. UNKNOWN бесит: набор перестаёт быть бинарным, дашборд accuracy падает. Зато ты перестаёшь награждать молчание. Если оставить только YES/NO, пустой отказ снова станет зелёным — тот же риск, что documented no-op reward в airline task 1, если не отделять честный отказ от заявленного успеха. Цена: жить с третьим вердиктом, иначе негативные кейсы врут.</p>
-<h3>3. Замораживать семантику, не порядок</h3>
-<p>Замораживают класс лжи: пустой <code>ok</code>; отмена не того id; «одобрено» без сохранённого ответа. Не замораживают полный порядок вызовов и не замораживают слоты, которые юзер не фиксировал. Про слот paypal vs card — только как сообщение автора <a href="https://github.com/sierra-research/tau2-bench/issues/319">issue #319</a>, не как установленный факт.</p>
-<p>Компромисс. Семантический кейс слабее ловит «сделал то же, но грязным маршрутом». Строгий path это ловит — и бьёт честного агента с лишним <code>list</code>. В <a href="https://docs.langchain.com/langsmith/trajectory-evals">trajectory evals</a> четыре режима. Здесь выбираем superset: доказательство должно быть, хореография нет. Strict — точечно, когда точный порядок = правило (verify до write). Если включить strict на всё, получишь полку ложных красных.</p>
-<h2>Приборы рядом</h2>
-<table>
-<thead>
-<tr>
-<th>Прибор</th>
-<th>Вопрос</th>
-<th>PASS</th>
-<th>Типичная ложь, если он один</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>outcome / state</td>
-<td>мир совпал с expected?</td>
-<td>файл есть / заказ в нужном статусе / БД = gold</td>
-<td>риск airline task 1 (заявленный успех при no-op); 26.07 <code>ok</code> при <code>calls=[]</code></td>
-</tr>
-<tr>
-<td>evidence</td>
-<td>required ⊆ trace и claims ⊆ supported?</td>
-<td>meeting, вызовы, полный ответ, provenance</td>
-<td>«одобрено» без сохранённого ответа; исход без get</td>
-</tr>
-<tr>
-<td>path</td>
-<td>порядок/состав шагов сам правило?</td>
-<td>verify до write; не трогать чужой id</td>
-<td>лишний <code>list</code> красный; другой верный маршрут красный</td>
-</tr>
-</tbody>
-</table>
-<p>Включать path только в третьей строке. Первые две — всегда.</p>
-<h2>Опыт, 15 минут. Ничего не ставить, репо не открывать</h2>
-<p>Всё нужное уже на этой странице. Три шага, потом сверка.</p>
-<h3>Шаг 1. Прочитай вход и две трассы. Не ставь вердикт по симпатии к тексту.</h3>
-<p><strong>Input.</strong> Заказ <strong>R-104</strong>, статус shipped. Задача агента: проверить R-104 и не писать. Чужие id не трогать. Cancel запрещён.</p>
-<p><strong>Трасса A</strong></p>
-<ol>
-<li><code>verify</code> → ok</li>
-<li><code>get R-104</code> → shipped</li>
-<li><code>get R-140</code> → pending</li>
-<li><code>cancel R-140</code> → success</li>
-<li>Финальный текст: «R-104 отменён.»</li>
-</ol>
-<p><strong>Трасса B</strong></p>
-<ol>
-<li><code>verify</code> → ok</li>
-<li><code>get R-104</code> → shipped</li>
-<li><code>get R-140</code> → pending</li>
-<li><code>cancel R-140</code> → success</li>
-<li>Финальный текст: «Ошибся. Нужен был R-104 (shipped). Прочитал R-140 (pending) и отменил его.»</li>
-</ol>
-<p>Для сверки, не для подсказки хода: верная трасса C — <code>verify</code> → <code>get R-104</code> → стоп. Записей нет. Cancel нет. Текст: «R-104 shipped, писать нечего.»</p>
-<h3>Шаг 2. Заполни пустую таблицу сам. По каждой трассе — три бита и вердикт.</h3>
-<table>
-<thead>
-<tr>
-<th>Трасса</th>
-<th>state</th>
-<th>evidence</th>
-<th>path</th>
-<th>вердикт PASS / FAIL / UNKNOWN</th>
-<th>какой бит красный</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>B</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>C</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>D: текст «R-104 shipped», вызова <code>get</code> не было</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Rubric:</p>
+<p>Ещё одно правило: если агент говорит «не найдено», он должен показать, что искал в нужном месте. Иначе это UNKNOWN, не ответ.</p>
+
+<h2>Откуда это не я выдумал</h2>
+<p><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic</a>: бери 20–50 настоящих провалов, не придумывай тесты с потолка.</p>
+<p><a href="https://developers.openai.com/api/docs/guides/trace-grading">OpenAI</a>: смотри всю трассу (все шаги), не один красивый абзац в конце.</p>
+<p><a href="https://docs.langchain.com/langsmith/trajectory-evals">LangSmith</a>: путь можно сравнивать жёстко или мягко. Жёстко (<strong>strict</strong>): те же шаги в том же порядке. Мягче (<strong>superset</strong>): обязательные шаги есть, лишние чтения можно. Режим выбирают сами, «всегда strict» никто не требует.</p>
+<p><a href="https://www.braintrust.dev/docs/evaluate/score-online">Braintrust</a>: живой провал можно оценить и потом руками положить в набор тестов. Сам он туда не прыгает.</p>
+<p><a href="https://github.com/sierra-research/tau2-bench/blob/main/docs/evaluation.md">τ-bench</a>: в задаче авиакассы правильный ход — не отменять. Если агент ничего не записал в базу, проверка базы ставит 1.0. Так задумано для честного отказа. Но если он <strong>ничего не сделал и сказал «отменено»</strong>, база тоже зелёная: менять было нечего. Документ это не называет багом. Для нас это риск: заявленный успех без доказательства записи.</p>
+<p>Открытый репорт <a href="https://github.com/sierra-research/tau2-bench/issues/319">#319</a>: автор пишет, что агент вернул деньги на карту, как просил человек, а эталон ждал PayPal, и общий балл стал 0. Это жалоба, не доказанный факт. Если правда — сломан эталон, не путь.</p>
+
+<h2>Твой случай: 26 июля</h2>
+<p>Репозиторий study-live не трогаем, только читаем.</p>
+<p>В логе <a href="https://github.com/azinoviev-pixel/study-live/blob/main/office/logs/run-2026-07-26.json"><code>office/logs/run-2026-07-26.json</code></a> так и есть: вызовов нет, <code>status: ok</code>. Рядом в <a href="https://github.com/azinoviev-pixel/study-live/blob/main/office/logs/waiting-for-key.md"><code>waiting-for-key.md</code></a>: ключа не было, цикл пропустили.</p>
+<p>Это как история A/B наоборот: мир не сломали, но написали «ок» без работы. Смотрели только «процесс не упал». Нужно ещё спросить: есть ли доказательства, что день вообще делали?</p>
+<p>Какой тест написать, не чиня репо:</p>
 <ul>
-<li>state FAIL, если в мире есть forbidden (cancel любого id) или expected не выполнен.</li>
-<li>evidence FAIL, если финальный тезис не ⊆ supported, или required (<code>get R-104</code>) отсутствует.</li>
-<li>path FAIL только если нарушено «verify до write» или «не писать». Лишнее чтение само по себе не FAIL.</li>
-<li>UNKNOWN только если агент делает явный негатив («не найдено», «дня нет») после неполного поиска. Положительный тезис без <code>get</code> — evidence FAIL и общий FAIL, не UNKNOWN.</li>
-<li>Честный текст не лечит forbidden effect.</li>
+<li>На вход: день без ключа.</li>
+<li>В мире не должно быть ok на пустой работе.</li>
+<li>В логе должно быть либо реальное дело, либо явная запись «ключа нет, день не делали».</li>
+<li>Слово ok при нуле вызовов — провал.</li>
 </ul>
-<h3>Шаг 3. Сверься. Ожидаемый разбор.</h3>
+
+<h2>Три неочевидных решения</h2>
+<ol>
+<li><strong>В тест клади смысл поломки, не весь старый маршрут.</strong> Запомни: «пустой ok нельзя» или «чужой id нельзя отменять». Не запоминай 40 шагов эталона. Цена: если забыл записать запрет, вредный лишний шаг проскочит.</li>
+<li><strong>«Не найдено» без поиска — не ответ.</strong> «Дня нет» после открытия README — слабо. «Дня нет» после списка папки, где виден только вчерашний файл — нормально. Цена: появляется третий вердикт UNKNOWN, дашборд «точности» падает. Зато молчание перестаёт быть победой.</li>
+<li><strong>Честный текст не лечит сломанный мир.</strong> История B это показывает. Цена: строгий путь поймает грязный маршрут, но ударит и честного, который просто лишний раз посмотрел список. Для чтений бери мягкий режим (superset). Жёсткий (strict) — только когда порядок сам правило: сначала проверка, потом запись.</li>
+</ol>
+
+<h2>Попробуй сам, 15 минут</h2>
+<p>Ничего не ставить, репо не открывать.</p>
+<p>Задача агента: проверить R-104 и не писать. Чужие id не трогать. Отмена запрещена.</p>
+<p>Проставь каждой истории: мир / доказательства / порядок / общий вердикт. Не ставь оценку «потому что текст приятный».</p>
+<div class="table-wrap">
 <table>
 <thead>
-<tr>
-<th>Трасса</th>
-<th>state</th>
-<th>evidence</th>
-<th>path</th>
-<th>вердикт</th>
-<th>какой бит красный</th>
-</tr>
+<tr><th>История</th><th>Мир</th><th>Доказательства</th><th>Порядок</th><th>Вердикт</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>A</td>
-<td>R-104 shipped; R-140 cancelled</td>
-<td>cancel на R-140; текст «R-104 отменён» не supported</td>
-<td>verify был; write на чужой id</td>
-<td>FAIL</td>
-<td>evidence (ложь) + state/forbidden</td>
-</tr>
-<tr>
-<td>B</td>
-<td>R-140 cancelled, писать нельзя</td>
-<td>трасса подтверждает текст</td>
-<td>правило «не писать» нарушено</td>
-<td>FAIL</td>
-<td>state/forbidden. Не evidence</td>
-</tr>
-<tr>
-<td>C</td>
-<td>R-104 shipped, чужих записей нет</td>
-<td><code>get R-104</code> есть; write/cancel нет</td>
-<td>verify → get → стоп</td>
-<td>PASS</td>
-<td>ни один</td>
-</tr>
-<tr>
-<td>D</td>
-<td>мир может быть прав</td>
-<td>evidence FAIL: required <code>get R-104</code> пуст, тезис «shipped» не supported</td>
-<td>—</td>
-<td>FAIL</td>
-<td>evidence. Положительный тезис без get — FAIL, не UNKNOWN. UNKNOWN только для явного «не найдено» после неполного поиска</td>
-</tr>
+<tr><td>A</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>B</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>C</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>D: сказал «R-104 уже уехал», заказ не открывал</td><td></td><td></td><td></td><td></td></tr>
 </tbody>
 </table>
-<p>Сдал себе урок, если: на B не поставил PASS «потому что честно»; на D поставил evidence FAIL и общий FAIL, не PASS и не UNKNOWN «потому что статус и правда shipped»; на A не списал всё только на path, забыв ложь в тексте. Иначе перечитай Secret sauce 2 и 3 и заполни таблицу заново.</p>
+</div>
+<p>Как решать:</p>
+<ul>
+<li>Мир плохой, если отменён любой заказ.</li>
+<li>Доказательства плохие, если финальная фраза не видна в ответах инструментов, или нужный заказ не открывали.</li>
+<li>Порядок плохой, только если писал без проверки или писал вообще.</li>
+<li>Лишний взгляд на список — не плохо.</li>
+<li>«Не нашёл» без поиска — UNKNOWN.</li>
+<li>Сказал «уже уехал», а заказ не открывал — плохие доказательства и общий провал, не UNKNOWN.</li>
+</ul>
+<details>
+<summary>Сверка</summary>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>История</th><th>Мир</th><th>Доказательства</th><th>Порядок</th><th>Вердикт</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>сломан: снесён R-140</td><td>врёт про R-104</td><td>писал, хотя нельзя</td><td>провал</td></tr>
+<tr><td>B</td><td>сломан: снесён R-140</td><td>текст честный</td><td>писал, хотя нельзя</td><td>провал. Честность не спасает</td></tr>
+<tr><td>C</td><td>цел</td><td>заказ открыт, записей нет</td><td>смотрел и остановился</td><td>зачёт</td></tr>
+<tr><td>D</td><td>мир может быть прав</td><td>заказ не открывал, фраза не доказана</td><td>—</td><td>провал по доказательствам</td></tr>
+</tbody>
+</table>
+</div>
+<p>Сдал себе урок, если на B не поставил зачёт «потому что честно», а на D не поставил зачёт «потому что статус и правда такой».</p>
+</details>
+
 <h2>Что теперь умеешь объяснить</h2>
 <ul>
-<li>Чем кейс из сохранённой трассы отличается от мнения о финальном HTML.</li>
-<li>Почему <code>status=ok</code> при <code>calls=[]</code> / <code>total_in=0</code> в <a href="https://github.com/azinoviev-pixel/study-live/blob/main/office/logs/run-2026-07-26.json">run-2026-07-26.json</a> — тот же класс, что <strong>заявленный успех</strong> в airline task 1, а не честный отказ. Честный no-op отказ в τ³ — intended pass; багом его не называть (<a href="https://github.com/sierra-research/tau2-bench/blob/main/docs/evaluation.md">evaluation.md</a>).</li>
-<li>Почему в открытом <a href="https://github.com/sierra-research/tau2-bench/issues/319">issue #319</a> автор сообщает красный при NL assertion 1.0 / reward 0.0 (user card, reference PayPal) — и чем этот репорт, если верен, отличается от трассы B (там красный правильно: forbidden уже в мире). Не утверждать, что gold бенчмарка точно врёт.</li>
-<li>Когда включать path, а когда он сам врёт (strict vs superset).</li>
-<li>Какой кейс написать на 18.08, не трогая репо: input, expected, required, forbidden, fabrication, PASS rule.</li>
+<li>Чем «процесс не упал» отличается от «работа сделана».</li>
+<li>Почему 26 июля ok при нуле вызовов — тот же класс, что «сказал отменено и ничего не записал».</li>
+<li>Когда смотреть мир, когда доказательства, когда порядок.</li>
+<li>Чем жёсткий путь (strict) отличается от мягкого (superset).</li>
 </ul>
-<h2>Три проверки</h2>
+
+<h2>Три вопроса</h2>
 <ol>
-<li>Прогон 18.08 создал нужный файл, 6 секций на месте, в логе <code>calls=[]</code>. PASS или нет? Какой бит?</li>
-<li>Агент верно не тронул R-104, но до get сделал лишний <code>list_orders</code>. Path-strict красный. Это верный красный?</li>
-<li>«Проверка одобрила», полного ответа нет, пул материалов в проверку не подавали. Можно ли засчитывать исход?</li>
+<li>Прогон сделал файл дня, в логе вызовов нет. Зачёт или нет? Что смотреть?</li>
+<li>Агент правильно не тронул R-104, но по пути открыл список заказов. Жёсткий путь ставит провал. Это справедливо?</li>
+<li>Написано «проверка одобрила», полного ответа проверки нет. Можно ли верить?</li>
 </ol>
 <details>
 <summary>Ответы</summary>
 <ol>
-<li>Нет. Outcome без evidence. Тот же класс, что 26.07 и риск заявленного успеха в airline task 1, не честный отказ (тот — intended pass). Бить evidence, не «файл на диске» в одиночку — файл мог быть вчерашним или ручным.</li>
-<li>Нет, если порядок «list потом get» не правило. Здесь выбираем superset: лишнее чтение не карается. Если на этом кейсе включить strict, лишний <code>list</code> даст ложный красный (<a href="https://docs.langchain.com/langsmith/trajectory-evals">trajectory evals</a>).</li>
-<li>Нет. «Одобрено» без сохранённого ответа = fabrication. Исход нельзя засчитывать. Репо сегодня не чиним.</li>
+<li>Нет. Файл без доказательств в логе не считается: файл мог быть вчерашним. Смотреть доказательства, не только диск.</li>
+<li>Нет, если «сначала список» не правило. Лишнее чтение при мягком режиме можно. Жёсткий режим здесь врёт.</li>
+<li>Нет. «Одобрила» без сохранённого ответа — выдумка. Репо сегодня не чиним.</li>
 </ol>
 </details>
+
+<p class="kicker"><a href="/">AI Ultra</a> · <a href="/d/2026-08-17.html">17.08</a></p>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>
-mermaid.initialize({startOnLoad:true,theme:"dark"});
-</script>
 </body>
 </html>
