@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="19.08 — Что реально уходит в модель на этот вызов">
+<link rel="canonical" href="https://ultra.dscff.es/d/2026-08-19-window.html">
+<title>19.08 — Что реально уходит в модель на этот вызов · AI Ultra</title>
+<style>
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.2rem}
+h1{font-size:1.45rem;letter-spacing:-.03em;margin:.2rem 0 .6rem}
+h2{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.kicker{color:var(--dim);font-size:.88rem}
+a{color:var(--acc)}
+p{margin:.65rem 0}
+ul,ol{padding-left:1.15rem}li{margin:.28rem 0}
+code,pre{font:.9em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{margin:1rem 0;padding:.75rem .85rem;border:1px solid var(--line);overflow-x:auto;white-space:pre-wrap}
+.table-wrap{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;min-width:28rem}
+th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{color:var(--acc)}
+details{margin:1rem 0;padding:.7rem .85rem;border:1px solid var(--line)}
+summary{cursor:pointer;color:var(--acc);font-weight:700}
+details[open] summary{margin-bottom:.55rem}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker"><a href="/">AI Ultra</a> · 19 августа 2026</p>
+<h1>Что реально уходит в модель на этот вызов</h1>
+<p>После этой страницы ты на одном вечернем вызове auctionscode умеешь выписать стек окна — системное, история, инструменты, этот ход — и пометить одно сообщение, которое вылетит первым, если окно заполнится.</p>
+
+<h2>Зачем это сейчас</h2>
+<p>Вечер auctionscode. Лоты сыплются. Утром уже был refresh: статус, дамп карточек, болтовня про фото. Потом ты спрашиваешь, что лучше — A или B. В голове это новый вопрос. В запросе утро всё ещё лежит.</p>
+<p>Модель не видит «разговор». Она видит этот запрос: системное, история, инструменты, этот ход. Если окно не влезает, что-то из запроса не доедет. Что уйдёт первым — правило клиента, не ощущение.</p>
+<p>Файл успеха, какой кусок какой модели, вкус на лицо и зелёный прогон — уже были. Эта страница про другое: что реально сидит в одном вызове и что клиент выкинет первым, когда окно лопнет.</p>
+
+<h2>Как это устроено</h2>
+<p>Окно контекста (context window) — сколько этот вызов имеет право унести в модель.</p>
+<p>В запрос считается всё: системный промпт (system prompt), каждое сообщение в <code>messages</code> (включая результаты инструментов, картинки, документы), определения инструментов. Ответ на ход, включая расширенное размышление (extended thinking), тоже считается [2]. У OpenAI то же на один запрос: «The context window is the maximum number of tokens that can be used in a single request. This max tokens number includes input, output, and reasoning tokens» [10]. Один вызов Responses без history / previous_response_id / Conversations — без состояния. Какой input item падает первым, эта страница не говорит [10]. Пример 128k у gpt-4o-2024-08-06 — на дату чтения, даты документа нет.</p>
+<p>Один вызов — четыре слоя. Системное: правило, которое должно стоять на каждом ходе. Вечером auctionscode это, например, «сбор не в дорогую, пара — дорогая один раз» — если хочешь, чтобы этот вызов его ещё видел. История: утреннее «обнови список», статус refresh, болтовня про фото. Инструменты: утренний дамп примерно 200 карточек. Этот ход: «какой лучше, A или B».</p>
+<p>Человек думает, что начал новый вопрос. Клиент всё равно шлёт утреннюю историю и дамп.</p>
+<p>Когда окно полное, что-то режут до модели.</p>
+<p>Anthropic Applied AI про уже лежащие результаты в длинном агенте: «One of the safest lightest touch forms of compaction is tool result clearing» [12]. Это про чистку того, что уже в окне, не про то, слать ли утренний дамп в новый вечерний вызов.</p>
+<p>Anthropic Messages API, контекстное редактирование (context editing): «When activated, the API automatically clears the oldest tool results in chronological order» [3]. «Context editing is applied server-side before the prompt reaches Claude» [3]. «By default, only tool results are cleared» [3]. По умолчанию триггер — 100&nbsp;000 входных токенов, оставляют 3 последних вызова инструмента. Штамп <code>clear_tool_uses_20250919</code>. Системное и текущий ход не трогают. Это не FIFO всей истории [3]. Их новость: контекстное редактирование само чистит протухшие вызовы инструментов и результаты, когда токены подходят к лимиту. На внутреннем тесте (eval) агентского поиска: редактирование +29% к базовой линии; память плюс редактирование +39%. На 100-ходовом веб-поиске — минус 84% токенов. Цифры и Sonnet 4.5 — на 29.09.2025, не на сегодня и не на лоты [1].</p>
+<p>В чате claude.ai окно могут вести «первым ушло — первым вылетело» (FIFO, first in, first out) [2]. Если вход уже больше окна — 400 <code>invalid_request_error</code> «prompt is too long» [2].</p>
+<p>Claude Code: «It clears older tool outputs first, then summarizes the conversation if needed. Your requests and key code snippets are preserved; detailed instructions from early in the conversation may be lost» [5].</p>
+<p>Сжатие (compaction): на пороге API пишет сводку в блок <code>compaction</code>; следующие запросы отбрасывают все блоки содержимого до этого блока [4]. Триггер по умолчанию — 150&nbsp;000 входных токенов (минимум 50&nbsp;000). Системный промпт можно держать отдельно от сжимаемой истории. Бета <code>compact-2026-01-12</code>. Цифры на чтение 19.08.2026, на странице даты нет [4]. У OpenAI Responses тот же жест: «if the context size crosses the threshold, the server triggers a compaction pass, emits a compaction output item … and prunes context before continuing inference» [11]. Можно отбросить items до последнего блока compaction [11]. Какие типы items оставляют — не сказано. Пример порога 200&nbsp;000 / gpt-5.3-codex — на дату чтения, не на лоты.</p>
+<p>Картина «системное остаётся, история — FIFO» есть у Packer et al. в MemGPT: «The prompt tokens in MemGPT are split into three contiguous sections: the system instructions, working context, and FIFO Queue» [9]. Система — «read-only (static)» [9]. FIFO — «a rolling history of messages, including messages between the agent and user, as well as system messages … and function call inputs and outputs» [9]. Первое место в FIFO — «a recursive summary of messages that have been evicted from the queue» [9]. На «warning token count» (у них пример 70%) — давление памяти; на «flush token count» (у них пример 100%) «the queue manager evicts a specific count of messages (e.g. 50% of the context window)» и пересобирает рекурсивную сводку [9]. Вытесненное «are no longer in-context», живёт в recall storage [9]. 70% / 100% / 50% и GPT-4 на 8&nbsp;192 — на 12.02.2024, не на сегодня и не на лоты auctionscode. У Anthropic API первым уходит старый результат инструмента, не система [3].</p>
+<p>Коротко. Сначала выпиши четыре слоя этого вызова. Потом пометь одно сообщение, которое уйдёт первым — по правилу клиента, которым ты реально шлёшь, не по «наименее важному».</p>
+<p>Аналогия одна. Витрина и касса. На кассу не тащат утренний склад. Касса не выбирает «важное»: она сбрасывает по своему правилу.</p>
+
+<h2>Как это садится на auctionscode</h2>
+<p>Только смотреть. Ничего не менять. Репозиторий не открываем.</p>
+<p>Вечерний вызов: какой лот лучше, A или B.</p>
+<p>Системный слой. Правило маршрута — сбор не в дорогую, пара — дорогая один раз — живёт здесь, если хочешь, чтобы этот вызов его ещё видел. Эта страница не урок про роутер. Урок про слой: правило только в первой утренней реплике человека пропадёт, если историю подрезали.</p>
+<p>История: «обнови список», статус refresh, болтовня про фото. Не вопрос про пару.</p>
+<p>Инструменты: утренний дамп примерно 200 карточек. Сравнению пары нужны две карточки, не склад.</p>
+<p>Этот ход: «какой лучше, A или B».</p>
+<p>Проверка на провал. Если вызов пары всё ещё тащит утренний дамп всех лотов — стека нет, есть привычка. Если не можешь назвать одно сообщение, которое вылетит первым — правила вытеснения нет, есть надежда, что модель «доймёт».</p>
+
+<h2>Кто так уже делает</h2>
+<p>Anthropic, платформа Claude Developer Platform. Длинный агент, много результатов инструментов. Сервер чистит самые старые результаты инструментов по времени, ставит заглушку, вызов инструмента оставляет. Системное и текущий ход не трогает. По умолчанию после 100&nbsp;000 входных токенов, оставляют 3 последние пары вызов/результат (<code>clear_tool_uses_20250919</code>) [1][3]. На их внутреннем 100-ходовом веб-поиске — минус 84% токенов. На их eval агентского поиска: редактирование одно +29% к качеству, с инструментом памяти +39%. Не лоты auctionscode.</p>
+<p>Claude Code, продукт Anthropic. На ход модель получает: системное (не в истории) + <code>MEMORY.md</code> (первые 200 строк или 25&nbsp;КБ) + имена MCP + описания скиллов (skills) + <code>CLAUDE.md</code> + историю (файлы, вывод инструментов) + этот ход [8]. Симуляция на странице иллюстративная, пометка «as of v2.1.198», чтение 19.08.2026. Когда окно полное, <code>/compact</code> сворачивает историю. Системное, проектный <code>CLAUDE.md</code> и память перечитывают с диска. Тела вызванных скиллов вшивают снова: потолок 5&nbsp;000 токенов на скилл, 25&nbsp;000 всего; сверх бюджета первыми падают самые старые скиллы [8]. Автосжатие на Sonnet 5 / Anthropic API ≈ 967&nbsp;000 токенов при окне 1M [8]. Стенд — Claude Code и Sonnet 5, не лоты auctionscode. 967&nbsp;000 / 5&nbsp;000 / 25&nbsp;000 / 200 строк на вечер Anton не вешаем. <code>CLAUDE.md</code> здесь — один слой этого вызова, что лежит в запросе.</p>
+<p>Aider. Команда <code>/tokens</code> режет вызов на слои: системное, история чата, карта репозитория, файлы, этот ход. У истории мягкий лимит: старые <code>done_messages</code> сворачивают в сводку; системное и текущие ответы остаются. Файлы сами не вылетают (<code>/drop</code>). Бюджет истории = min(max(окно/16, 1024), 8192). Карта репозитория по умолчанию 1024, потолок 4096. Формула и карта — живой <code>blob/main</code>, чтение 19.08.2026. Их CLI и формула — не вечер Anton, без карты репо и без <code>/add</code>. Мягкий лимит, не жёсткий срез (issue 07.10.2024) [6].</p>
+<p>LangChain, <code>trim_messages</code>. <code>strategy="last"</code> режет самые старые human/ai. <code>include_system=True</code> держит системное на индексе 0, даже если оно «старое». <code>start_on="human"</code> — чтобы окно не начиналось с обрубленного ответа ассистента. Полный архив остаётся в состоянии; модель получает обрезку. Их учебный пример: <code>max_tokens=45</code> на диалоге из 6 сообщений (langchain-core 1.5.6, снимок 17.08.2026): после trim остаются только SystemMessage и последний HumanMessage; две ранние пары human/ai ушли первыми. Число про порядок, не норма для Anton [7].</p>
+<p>Что вылетает первым, коротко. Anthropic API: старый результат инструмента. Claude Code: сначала старый вывод инструмента, потом сводка истории; системное и <code>CLAUDE.md</code> перечитывают [5][8]. Aider: старая история (сворачивается), не системное и не файлы. LangChain: старые human/ai, системное держит флаг. MemGPT: из FIFO старое, система на месте; на первое место FIFO садится сводка [9].</p>
+
+<h2>Неочевидные решения</h2>
+<p>Не клади утренний дамп всех лотов в вызов сравнения пары. Цена: старый результат инструмента надо явно не слать, хотя он «уже есть».</p>
+<p>Держи постоянное правило в системном слое этого вызова, не только в первой реплике человека. Цена: системное его несёт; первая строка истории при FIFO — кандидат на вылет. Не «клади в файл»: это про слой запроса, не про память в репо.</p>
+<p>Не путай FIFO истории и чистку результатов инструментов. Anthropic API сначала сбрасывает старые результаты инструментов, не систему [3]. Claude Code тоже сначала сбрасывает старые выводы инструментов [5]. Цена: если пометил «обнови список» как первое на вылет, а клиент чистит дамп — пометил не то сообщение.</p>
+
+<h2>Практика, 15 минут</h2>
+<p>Репозиторий не открывать.</p>
+<p>Возьми один вечерний вызов auctionscode. Не весь вечер. Один запрос: например «какой лучше, A или B» после утреннего refresh.</p>
+<p>Выпиши стек этого вызова. Четыре строки. В каждой — живое содержимое, не название слоя.</p>
+<pre>системное: …
+история: …
+инструменты: …
+этот ход: …
+вылетит первым: …   ← одно сообщение из строк выше
+нельзя: в вызов сравнения пары класть утренний дамп всех лотов</pre>
+<p>Сверка (не единственный правильный текст, но такой проходит):</p>
+<pre>системное: правило маршрута — сбор не в дорогую, пара — дорогая один раз
+история: утреннее «обнови список», статус refresh, 30 реплик про фото
+инструменты: дамп 200 карточек с утреннего обхода (висит с утра)
+этот ход: «какой лучше, A или B»
+вылетит первым: утреннее «обнови список»
+нельзя: в вызов сравнения пары класть утренний дамп всех лотов</pre>
+<p>Сдал, если четыре слоя заполнены своим вечером, не словами «контекст», «окно», «всё важное»; «вылетит первым» — одно конкретное сообщение из истории или старого результата инструмента, не системное и не этот ход; есть строка «нельзя».</p>
+<p>Не сдан, если открыл репо, написал «главное — контекст», пересказал done-файл, или снова написал «в файл / в чат / чтобы не забыла».</p>
+<p>нельзя: открывать и менять репозиторий.</p>
+<p>нельзя: помечать системное или этот ход как то, что вылетит первым — первым уходит самый старый незакреплённый кусок.</p>
+
+<h2>Три вопроса</h2>
+<ol>
+<li>Вызов сравнения пары. В системном — «дорогая один раз на пару». В истории первая реплика — «сбор не в дорогую», дальше 30 реплик про фото. В инструментах — две карточки A и B. Этот ход — «какой лучше». Окно не влезает. Какое одно сообщение вылетит первым?</li>
+<li>Правило «сбор не в дорогую» стояло только в первой реплике человека. В системном его нет. К вечеру окно заполнилось, сбор снова ушёл в дорогую. Что модель видела на этом вызове по слоям?</li>
+<li>Человек думает, что начал новый вопрос. Клиент всё равно шлёт утреннюю историю и дамп 200 карточек. Этот ход — «какой лучше, A или B». Что реально в стеке, и что вылетит первым, если окно лопнет?</li>
+</ol>
+<details>
+<summary>Ответы</summary>
+<ol>
+<li>Первая реплика истории: «сбор не в дорогую». Системное обычно остаётся. Этот ход — последний, он не первый на вылет. Две карточки новее первой реплики.</li>
+<li>Системное — без этого правила. История — уже без первой реплики. Инструменты и этот ход — про сам сбор. Правила в кадре нет. Модель его не «раздумала»: его нет в стеке этого вызова.</li>
+<li>В стеке все четыре слоя: старая история и дамп на месте, не один свежий вопрос. Первым вылетит самое старое из той утренней истории (часто сам refresh), не «какой лучше».</li>
+</ol>
+</details>
+
+<h2>Источники</h2>
+<p>[1] Anthropic. Managing context on the Claude Developer Platform. 29 сентября 2025. <a href="https://www.anthropic.com/news/context-management">https://www.anthropic.com/news/context-management</a><br>
+Что взяли: контекстное редактирование само чистит протухшие вызовы инструментов и результаты, когда токены подходят к лимиту. На внутреннем eval агентского поиска: редактирование +29% к базовой линии; память плюс редактирование +39%. На 100-ходовом веб-поиске — минус 84% токенов. Цифры и Sonnet 4.5 — на 29.09.2025, не на сегодня.</p>
+<p>[2] Anthropic. Context windows. Даты на странице нет (живая дока, чтение 19.08.2026). <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">https://platform.claude.com/docs/en/build-with-claude/context-windows</a><br>
+Что взяли: в запрос считается всё — системный промпт, каждое сообщение в <code>messages</code> (включая результаты инструментов, картинки, документы), определения инструментов; ответ на ход, включая расширенное размышление, тоже. В чате claude.ai окно могут вести FIFO. Если вход уже больше окна — 400 <code>invalid_request_error</code> «prompt is too long». Не брали «more context isn't automatically better».</p>
+<p>[3] Anthropic. Context editing. Даты на странице нет. Штампы: бета <code>context-management-2025-06-27</code>, стратегия <code>clear_tool_uses_20250919</code>. <a href="https://platform.claude.com/docs/en/build-with-claude/context-editing">https://platform.claude.com/docs/en/build-with-claude/context-editing</a><br>
+Что взяли: «When activated, the API automatically clears the oldest tool results in chronological order.» «Context editing is applied server-side before the prompt reaches Claude.» «By default, only tool results are cleared.» Триггер по умолчанию 100&nbsp;000 входных токенов, keep 3. Не FIFO всей истории. Системное и текущий ход не трогают.</p>
+<p>[4] Anthropic. Compaction. Даты на странице нет. Бета <code>compact-2026-01-12</code>. <a href="https://platform.claude.com/docs/en/build-with-claude/compaction">https://platform.claude.com/docs/en/build-with-claude/compaction</a><br>
+Что взяли: на пороге API пишет сводку в блок <code>compaction</code>; следующие запросы отбрасывают все блоки содержимого до этого блока. Триггер по умолчанию 150&nbsp;000 входных токенов, минимум 50&nbsp;000. Системный промпт можно держать отдельно от сжимаемой истории. Цифры на чтение 19.08.2026.</p>
+<p>[5] Anthropic / Claude Code. How Claude Code works → When context fills up. Даты на странице нет. <a href="https://code.claude.com/docs/en/how-claude-code-works">https://code.claude.com/docs/en/how-claude-code-works</a><br>
+Что взяли: «It clears older tool outputs first, then summarizes the conversation if needed. Your requests and key code snippets are preserved; detailed instructions from early in the conversation may be lost.»</p>
+<p>[6] Aider. <code>aider/models.py</code>, опции, issue #1963. Формула и карта: живой <code>blob/main</code>, чтение 19.08.2026. Issue 7 октября 2024. <a href="https://github.com/Aider-AI/aider/blob/main/aider/models.py">https://github.com/Aider-AI/aider/blob/main/aider/models.py</a> · <a href="https://aider.chat/docs/config/options.html">https://aider.chat/docs/config/options.html</a> · <a href="https://github.com/Aider-AI/aider/issues/1963">https://github.com/Aider-AI/aider/issues/1963</a><br>
+Что взяли: <code>/tokens</code> режет вызов на слои: системное, история чата, карта репозитория, файлы, этот ход. Мягкий лимит истории: старые <code>done_messages</code> сворачивают; системное и текущие ответы остаются. Файлы сами не вылетают (<code>/drop</code>). Бюджет истории = min(max(окно/16, 1024), 8192) — снимок main на 19.08.2026. Карта репозитория по умолчанию 1024, потолок 4096 — тот же снимок. Мягкий лимит, не жёсткий срез (issue 07.10.2024). Их CLI и формула — не вечер Anton.</p>
+<p>[7] LangChain. <code>trim_messages</code>. Снимок 17.08.2026, langchain-core 1.5.6. <a href="https://reference.langchain.com/python/langchain-core/messages/utils/trim_messages">https://reference.langchain.com/python/langchain-core/messages/utils/trim_messages</a><br>
+Что взяли: <code>strategy="last"</code> режет самые старые human/ai. <code>include_system=True</code> держит системное на индексе 0. <code>start_on="human"</code> — окно не начинается с обрубленного ответа ассистента. Полный архив в состоянии, модель получает обрезку. Учебный пример <code>max_tokens=45</code> на 6 сообщениях: после trim — SystemMessage и последний HumanMessage; две ранние пары ушли первыми. Число про порядок, не норма для Anton.</p>
+<p>[8] Anthropic / Claude Code. Explore the context window. Живая дока, чтение 19.08.2026, пометка as of v2.1.198. <a href="https://code.claude.com/docs/en/context-window">https://code.claude.com/docs/en/context-window</a> · автосжатие: <a href="https://code.claude.com/docs/en/model-config">https://code.claude.com/docs/en/model-config</a><br>
+Что взяли: стек до хода (системное не в history, memory 200 строк/25&nbsp;КБ, имена MCP, описания скиллов, <code>CLAUDE.md</code>, history, этот ход). После compact: системное / <code>CLAUDE.md</code> / memory перечитывают с диска; тела вызванных скиллов — потолок 5&nbsp;000 / 25&nbsp;000, oldest dropped first. Окно симуляции 200&nbsp;000. Автосжатие ≈967&nbsp;000 на 1M / Sonnet 5. Версия и капы — на v2.1.198, не на сегодня. Не пересказывать file.</p>
+<p>[9] Packer et al. MemGPT: Towards LLMs as Operating Systems. arXiv:2310.08560v2, 12 февраля 2024. <a href="https://arxiv.org/abs/2310.08560">https://arxiv.org/abs/2310.08560</a> · PDF <a href="https://arxiv.org/pdf/2310.08560.pdf">https://arxiv.org/pdf/2310.08560.pdf</a><br>
+Что взяли: «The prompt tokens in MemGPT are split into three contiguous sections: the system instructions, working context, and FIFO Queue.» Система — «read-only (static)». FIFO — «a rolling history of messages, including messages between the agent and user, as well as system messages … and function call inputs and outputs.» Первое место FIFO — «a recursive summary of messages that have been evicted from the queue.» На «warning token count» (у них пример 70%) — давление памяти; на «flush token count» (у них пример 100%) «the queue manager evicts a specific count of messages (e.g. 50% of the context window)» и пересобирает рекурсивную сводку. Вытесненное «are no longer in-context», живёт в recall storage. 70% / 100% / 50% и GPT-4 8&nbsp;192 — на 12.02.2024, не сегодня, не лоты auctionscode.</p>
+
+<p>[10] OpenAI. Conversation state. Даты на странице нет. Чтение 19.08.2026. <a href="https://developers.openai.com/api/docs/guides/conversation-state">https://developers.openai.com/api/docs/guides/conversation-state</a><br>
+Что взяли: «The context window is the maximum number of tokens that can be used in a single request. This max tokens number includes input, output, and reasoning tokens.» Один вызов Responses без history / previous_response_id / Conversations — без состояния. Про порядок вытеснения input items страница не говорит. Пример gpt-4o-2024-08-06 128k — на дату чтения, даты документа нет.</p>
+<p>[11] OpenAI. Compaction (Responses). Даты на странице нет. Чтение 19.08.2026. <a href="https://developers.openai.com/api/docs/guides/compaction">https://developers.openai.com/api/docs/guides/compaction</a><br>
+Что взяли: «if the context size crosses the threshold, the server triggers a compaction pass, emits a compaction output item … and prunes context before continuing inference.» «you can drop items that came before the most recent compaction item». Какие типы items оставляют — не сказано. Пример threshold 200000 / gpt-5.3-codex — на дату чтения. Не лоты auctionscode.</p>
+<p>[12] Anthropic Applied AI. Effective context engineering for AI agents. 29 сентября 2025. <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</a><br>
+Что взяли: context = «system instructions, tools, Model Context Protocol (MCP), external data, message history, etc.» У Claude Code сжатие «preserves architectural decisions, unresolved bugs, and implementation details while discarding redundant tool outputs or messages» плюс «the five most recently accessed files». «One of the safest lightest touch forms of compaction is tool result clearing». Слоган про контекст не брали. Пост multi-agent research по ссылке со страницы не использовали.</p>
+
+<h2>Кто собрал</h2>
+<ul>
+<li>Sensei — тема дня и запрет на вчерашний черновик window</li>
+<li>Radar — источники на окно и вытеснение: Anthropic API, OpenAI, Claude Code, MemGPT</li>
+<li>Probe — кто уже режет стек: Anthropic, Claude Code, Aider, LangChain</li>
+<li>Drill — практика на один вызов и три вопроса</li>
+<li>K.O. — один файл, тон канона, сноски</li>
+<li>Hands — кладёт файл как есть, текст не переписывает</li>
+</ul>
+
+<p class="kicker"><a href="/">AI Ultra</a></p>
+</main>
+</body>
+</html>
