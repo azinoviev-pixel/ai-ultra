@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="22.08 — Структурированный вывод по схеме вместо «ответь в JSON»">
+<meta name="description" content="22.08 — Схема, не фраза">
 <link rel="canonical" href="https://ultra.dscff.es/d/2026-08-22-schema.html">
-<title>22.08 — Структурированный вывод по схеме вместо «ответь в JSON» · AI Ultra</title>
+<title>22.08 — Схема, не фраза · AI Ultra</title>
 <style>
 :root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
@@ -25,42 +25,48 @@ th{color:var(--acc)}
 details{margin:1rem 0;padding:.7rem .85rem;border:1px solid var(--line)}
 summary{cursor:pointer;color:var(--acc);font-weight:700}
 details[open] summary{margin-bottom:.55rem}
+img{display:block;width:100%;height:auto;margin:1rem 0;border:1px solid var(--line)}
 </style>
 </head>
 <body>
 <main>
+<img src="hero-stamp-2026-08-22.png" alt="штамп 22.08" width="1344" height="768">
 <p class="kicker"><a href="/">AI Ultra</a> · 22 августа 2026</p>
-<h1>Структурированный вывод по схеме вместо «ответь в JSON»</h1>
-<p>После этой страницы ты на одном выдуманном вечере пишешь схему ответа (поля и типы) и бракуешь одну фразу, которая выглядит как JSON, но схему ломает. нельзя: просить ответь в JSON без схемы.</p>
+<h1>Схема, не фраза</h1>
+<p>После этой страницы пишешь три поля с типами и бракуешь фразу, которая выглядит как JSON.</p>
 
 <h2>Зачем это сейчас</h2>
-<p>Вечер записи в поликлинике «Северная». Бот должен ответить коду: можно ли слот в воскресенье после 19:00.</p>
-<p>Кто-то пишет «ответь в JSON». Приходит <code>{"ok":"да","slot":19:00}</code>. Выглядит как JSON. Схему ломает: <code>ok</code> это строка, <code>slot</code> без кавычек, поля <code>reason</code> нет.</p>
-<p>Эта страница не про кэш, не про окно, не про роли, не про «больше контекста».</p>
+<p>Вечер записи в поликлинике «Северная». Бот отвечает коду: можно ли слот в воскресенье после 19:00.</p>
+<p>Кто-то пишет «ответь в JSON». Приходит <code>{"ok":"да","slot":19:00}</code>. Выглядит как JSON. Схему ломает.</p>
+<p><code>ok</code> это строка. <code>slot</code> без кавычек. Поля <code>reason</code> нет.</p>
+<p>Эта страница не про кэш, не про окно, не про роли.</p>
+
+<img src="schema-figura-2026-08-22.png" alt="схема ответа: ok, slot, reason" width="840" height="307">
+<p><code>ok</code> — boolean, обязательно</p>
+<p><code>slot</code> — string или null, можно пусто</p>
+<p><code>reason</code> — string, обязательно</p>
+
+<img src="schema-ok-vs-bad-2026-08-22.png" alt="брак и ок" width="1344" height="768">
+<p>Выглядит как JSON. Этого мало. Схему держать.</p>
 
 <h2>Как это устроено</h2>
-<p>Структурированный вывод (structured outputs): API берёт схему (schema) полей и типов. Модель должна её держать.</p>
-<p>У OpenAI схема живёт в <code>response_format</code> / <code>text.format</code> [1]. JSON mode даёт валидный JSON, схему не держит [1]. «only Structured Outputs ensure schema adherence» [1]. Когда можно, бери Structured Outputs, не JSON mode [1].</p>
-<p>Chat Completions: <code>response_format</code> type <code>json_schema</code>, <code>strict</code> true [1]. В схеме: <code>required</code> и <code>additionalProperties</code> false [1]. Function calling для инструментов. <code>response_format</code> для ответа человеку [1].</p>
-<p>6 августа 2024 запустили Structured Outputs: ответ держит схему, которую задал разработчик [2]. Сильно формулировать промпт, чтобы поймать формат, больше не нужно [1].</p>
-<p>У Anthropic два рубильника. Ответ по схеме: <code>output_config.format</code> [3]. Аргументы инструмента: <code>strict</code> true [3]. Не фраза «ответь в JSON» [3].</p>
-<p>Ответ держит схему через constrained decoding [3]. В схеме: <code>required</code> и <code>additionalProperties</code> false [3]. <code>output_format</code> переехал в <code>output_config.format</code>. Beta header больше не нужен [3].</p>
-<p>JSON outputs: что Claude говорит. Strict tool use: как он вызывает функции [3].</p>
-<p>У Gemini схема в <code>response_format</code>, <code>mime_type</code> <code>application/json</code> [4]. Last updated 2026-08-17 UTC. Structured Outputs: формат финального ответа. Function Calling: действие по ходу разговора [4]. «always validate values in your application» [4]. Стенд Probe здесь не брал. Чисел нет.</p>
+<p>Схему клади в поле API, не в фразу промпта. «ответь в JSON» это не схема [1].</p>
+<p>OpenAI: <code>response_format</code> / <code>text.format</code>. JSON mode схему не держит [1].</p>
+<p>Anthropic: два рубильника. Ответ — <code>output_config.format</code>. Инструмент — <code>strict</code> [3].</p>
+<p>Gemini: схема в <code>response_format</code>. Чисел со стенда нет [4].</p>
 
 <h2>Как это садится на твою работу</h2>
 <p>Репозиторий не открываем.</p>
-<p>Тот же вечер поликлиники. Схема ответа: <code>ok</code> boolean, <code>slot</code> string или null, <code>reason</code> string.</p>
-<p>Фразу, которая выглядит как JSON, но ломает типы, обязательные поля или тащит лишнее, бракуешь.</p>
+<p>Тот же вечер поликлиники. Пишешь три поля с типами. Фразу, которая выглядит как JSON и ломает схему, бракуешь.</p>
 <p>Проверка на провал. Если написал только «ответь в JSON», правила нет.</p>
 
 <h2>Кто так уже делает</h2>
-<p>OpenAI, запуск 6 августа 2024. <code>gpt-4o-2024-08-06</code> со Structured Outputs: 100% на их оценке сложных JSON Schema. <code>gpt-4-0613</code>: меньше 40% [5]. В таблице рядом: Prompting Alone / Structured Outputs (strict=false) / Structured Outputs (strict=true) [5]. Их стенд, август 2024. Не твоя схема сегодня. На Claude и Gemini эти проценты не переносить.</p>
+<p>OpenAI, запуск 6 августа 2024. <code>gpt-4o-2024-08-06</code> со Structured Outputs: 100% на их оценке сложных JSON Schema. <code>gpt-4-0613</code>: меньше 40% [5]. Их стенд, август 2024. Не твоя схема сегодня. На Claude и Gemini эти проценты не переносить.</p>
 <p>Живой гайд, чтение 22.08.2026. Таблица «Adheres to schema»: Structured Outputs Yes, JSON Mode No [1].</p>
-<p>Anthropic, лимиты компиляции, чтение 22.08.2026. 20 строгих инструментов на запрос. 24 необязательных параметра суммарно по всем строгим схемам и JSON-выводу. 16 параметров с union (<code>anyOf</code> или type string|null) [3]. Четыре строгих инструмента по 6 необязательных полей уже упираются в 24 [3]. Схема, которая проходит у GPT, здесь может дать 400 «Schema is too complex for compilation» [3]. 20 / 24 / 16 это их компилятор, не потолок OpenAI и не Gemini.</p>
+<p>Anthropic, лимиты компиляции, чтение 22.08.2026. 20 строгих инструментов на запрос. 24 необязательных параметра суммарно. 16 параметров с union [3]. Схема, которая проходит у GPT, здесь может дать 400 «Schema is too complex for compilation» [3].</p>
 
 <h2>Неочевидные решения</h2>
-<p>Схему клади в поле API, не в фразу промпта. Цена: надо написать поля и типы. «ответь в JSON» это не схема [1].</p>
+<p>Схему клади в поле API. Цена: надо написать поля и типы. «ответь в JSON» это не схема [1].</p>
 <p>Валидный JSON мало. Цена: <code>{"ok":"да"}</code> бракуешь, даже если парсится [1].</p>
 <p>Два рубильника Anthropic делают разную работу. Цена: схему ответа не вешай на strict tool use [3].</p>
 
@@ -118,6 +124,7 @@ details[open] summary{margin-bottom:.55rem}
 <li>Radar: источники, схема в поле API, JSON mode схему не держит, Gemini механика без стенда</li>
 <li>Probe: OpenAI 100% / меньше 40% их стенд август 2024; Anthropic 20 / 24 / 16; Gemini стенд не брал</li>
 <li>Drill: практика поликлиника «Северная»</li>
+<li>Арт: фигура схемы</li>
 <li>K.O.: один файл, тон канона, сноски</li>
 <li>Hands: кладёт как есть (сейчас не звать)</li>
 </ul>
