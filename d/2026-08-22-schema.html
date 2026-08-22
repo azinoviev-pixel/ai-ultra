@@ -7,33 +7,51 @@
 <link rel="canonical" href="https://ultra.dscff.es/d/2026-08-22-schema.html">
 <title>22.08 — Схема, не фраза · AI Ultra</title>
 <style>
-:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
-main{max-width:42rem;margin:0 auto;padding:1.25rem 1rem 3.2rem}
-h1{font-size:1.45rem;letter-spacing:-.03em;margin:.2rem 0 .6rem}
-h2{font-size:1.05rem;margin:1.4rem 0 .4rem}
-.kicker{color:var(--dim);font-size:.88rem}
+:root{--bg:#0e0f0c;--ink:#ece7d8;--dim:#9a9484;--line:#2a2b24;--acc:#d4a017;--bad:#8b2e2e}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,sans-serif}
+main{max-width:42rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+header{padding-bottom:2.5rem;border-bottom:1px solid var(--line);margin-bottom:2.5rem}
+.stamp{display:block;width:11rem;max-width:40%;height:auto;margin:0 0 1.5rem}
+.kicker{color:var(--dim);font-size:.88rem;margin:0}
+h1{font-size:2.4rem;line-height:1.15;letter-spacing:-.03em;color:var(--ink);margin:.45rem 0 .55rem;font-weight:700}
+.lead{font-size:1.05rem;line-height:1.45;color:var(--dim);margin:0}
+h2{font-size:1.2rem;margin:2.5rem 0 .6rem}
 a{color:var(--acc)}
-p{margin:.65rem 0}
+p{margin:.7rem 0}
 ul,ol{padding-left:1.15rem}li{margin:.28rem 0}
-code,pre{font:.9em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
-pre{margin:1rem 0;padding:.75rem .85rem;border:1px solid var(--line);overflow-x:auto;white-space:pre-wrap}
-.table-wrap{overflow-x:auto;margin:1rem 0}
-table{width:100%;border-collapse:collapse;min-width:28rem}
-th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
-th{color:var(--acc)}
-details{margin:1rem 0;padding:.7rem .85rem;border:1px solid var(--line)}
+code,pre{font:.92em/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{margin:1rem 0;padding:.75rem .85rem;border:1px solid var(--line);overflow-x:auto;white-space:pre-wrap;border-radius:0;box-shadow:none}
+.fig{display:block;width:100%;height:auto;margin:.4rem 0 1rem}
+.fields p{margin:.25rem 0}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:0 0 1rem}
+.compare .name{font-weight:700;margin:0 0 .5rem}
+.compare .brak .name{color:var(--bad)}
+.compare .ok .name{color:var(--acc)}
+.compare pre{margin:0 0 .55rem}
+.compare ul{margin:0}
+.note{margin:.4rem 0 0}
+.sources{border-top:1px solid var(--line);margin-top:2.5rem;padding-top:.2rem}
+.sources h2{margin-top:1.5rem}
+details{margin:1.2rem 0}
 summary{cursor:pointer;color:var(--acc);font-weight:700}
 details[open] summary{margin-bottom:.55rem}
-img{display:block;width:100%;height:auto;margin:1rem 0;border:1px solid var(--line)}
+.quiet{color:var(--dim)}
+@media (max-width:40rem){
+.compare{grid-template-columns:1fr}
+h1{font-size:2rem}
+.stamp{width:10rem;max-width:55%}
+}
 </style>
 </head>
 <body>
 <main>
-<img src="hero-stamp-2026-08-22.png" alt="штамп 22.08" width="1344" height="768">
+<header>
+<img class="stamp" src="hero-stamp-2026-08-22.png" alt="штамп 22.08" width="1344" height="768">
 <p class="kicker"><a href="/">AI Ultra</a> · 22 августа 2026</p>
 <h1>Схема, не фраза</h1>
-<p>После этой страницы пишешь три поля с типами и бракуешь фразу, которая выглядит как JSON.</p>
+<p class="lead">После этой страницы пишешь три поля с типами и бракуешь фразу, которая выглядит как JSON.</p>
+</header>
 
 <h2>Зачем это сейчас</h2>
 <p>Вечер записи в поликлинике «Северная». Бот отвечает коду: можно ли слот в воскресенье после 19:00.</p>
@@ -41,13 +59,37 @@ img{display:block;width:100%;height:auto;margin:1rem 0;border:1px solid var(--li
 <p><code>ok</code> это строка. <code>slot</code> без кавычек. Поля <code>reason</code> нет.</p>
 <p>Эта страница не про кэш, не про окно, не про роли.</p>
 
-<img src="schema-figura-2026-08-22.png" alt="схема ответа: ok, slot, reason" width="840" height="307">
+<h2>Схема полей</h2>
+<img class="fig" src="schema-figura-2026-08-22.png" alt="схема ответа: ok, slot, reason" width="840" height="307">
+<div class="fields">
 <p><code>ok</code> — boolean, обязательно</p>
 <p><code>slot</code> — string или null, можно пусто</p>
 <p><code>reason</code> — string, обязательно</p>
+</div>
 
-<img src="schema-ok-vs-bad-2026-08-22.png" alt="брак и ок" width="1344" height="768">
-<p>Выглядит как JSON. Этого мало. Схему держать.</p>
+<div class="compare">
+<div class="brak">
+<p class="name">Брак</p>
+<pre>{"ok": "да", "slot": 19:00, "note": "если врач свободен"}</pre>
+<ul>
+<li>ok — строка, не boolean</li>
+<li>slot без кавычек</li>
+<li>поля reason нет</li>
+<li>лишнее note</li>
+</ul>
+</div>
+<div class="ok">
+<p class="name">Ок</p>
+<pre>{"ok": true, "slot": "19:00", "reason": "окно есть"}</pre>
+<ul>
+<li>ok — boolean</li>
+<li>slot — строка</li>
+<li>reason на месте</li>
+<li>лишних полей нет</li>
+</ul>
+</div>
+</div>
+<p class="note">Выглядит как JSON. Этого мало. Схему держать.</p>
 
 <h2>Как это устроено</h2>
 <p>Схему клади в поле API, не в фразу промпта. «ответь в JSON» это не схема [1].</p>
@@ -106,6 +148,7 @@ img{display:block;width:100%;height:auto;margin:1rem 0;border:1px solid var(--li
 </ol>
 </details>
 
+<div class="sources">
 <h2>Источники</h2>
 <p>[1] OpenAI. Structured model outputs. Даты на странице нет. Чтение 22.08.2026. <a href="https://developers.openai.com/api/docs/guides/structured-outputs">https://developers.openai.com/api/docs/guides/structured-outputs</a><br>
 Что взяли: схема в <code>response_format</code> / <code>text.format</code>, не фраза «ответь JSON». JSON mode даёт валидный JSON, схему не держит. «only Structured Outputs ensure schema adherence». Когда можно, Structured Outputs, не JSON mode. Chat Completions: type <code>json_schema</code>, <code>strict</code> true. <code>required</code> + <code>additionalProperties</code> false. Function calling для инструментов, <code>response_format</code> для ответа человеку. Таблица «Adheres to schema»: Structured Outputs Yes, JSON Mode No.</p>
@@ -117,14 +160,15 @@ img{display:block;width:100%;height:auto;margin:1rem 0;border:1px solid var(--li
 Что взяли: схема в <code>response_format</code>, не просьба в тексте. <code>mime_type</code> <code>application/json</code>. Structured Outputs: формат финального ответа. Function Calling: действие по ходу разговора. «always validate values in your application». Стенд Probe не брал. Чисел нет.</p>
 <p>[5] OpenAI. Introducing Structured Outputs. August 6, 2024. <a href="https://openai.com/index/introducing-structured-outputs-in-the-api/">https://openai.com/index/introducing-structured-outputs-in-the-api/</a><br>
 Что взяли: 100% у <code>gpt-4o-2024-08-06</code> на их оценке сложных JSON Schema, меньше 40% у <code>gpt-4-0613</code>. Таблица Prompting Alone / Structured Outputs (strict=false) / Structured Outputs (strict=true). Их стенд, август 2024. Не норма на Claude, не норма на Gemini, не твоя схема сегодня.</p>
+</div>
 
 <h2>Кто собрал</h2>
-<ul>
+<ul class="quiet">
 <li>Sensei: тема и «умеет»: схема полей и типов + брак фразы + нельзя просить ответь в JSON без схемы</li>
 <li>Radar: источники, схема в поле API, JSON mode схему не держит, Gemini механика без стенда</li>
 <li>Probe: OpenAI 100% / меньше 40% их стенд август 2024; Anthropic 20 / 24 / 16; Gemini стенд не брал</li>
 <li>Drill: практика поликлиника «Северная»</li>
-<li>Арт: фигура схемы</li>
+<li>Арт: холст всей страницы</li>
 <li>K.O.: один файл, тон канона, сноски</li>
 <li>Hands: кладёт как есть (сейчас не звать)</li>
 </ul>
