@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20.09 — Что в файл, что не в чат · AI Ultra</title>
+<meta name="description" content="20.09 — Что в файл, что не в чат">
+<style>
+:root {
+  --bg: #0e0f0c;
+  --ink: #ece7d8;
+  --dim: #9a9484;
+  --line: #2a2b24;
+  --acc: #d4a017;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.kicker {
+  font-size: 0.88rem;
+  color: var(--dim);
+  margin-bottom: 0.75rem;
+}
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.leads p {
+  font-size: 1.05rem;
+  color: var(--dim);
+  margin-bottom: 0.65rem;
+}
+.leads p:last-child { margin-bottom: 0; }
+.leads strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.75rem 0;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--ink);
+  font-weight: 700;
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+}
+h2:first-of-type { margin-top: 0; }
+h3 {
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.55rem;
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+a.body-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acc);
+  text-underline-offset: 2px;
+}
+a.body-link:hover { color: var(--acc); }
+.num {
+  font-weight: 700;
+  color: var(--acc);
+}
+.probe {
+  margin: 1.5rem 0 1.75rem;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.probe-who {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--acc);
+  margin-bottom: 0.65rem;
+}
+.probe ul {
+  list-style: disc;
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+.probe li { margin-bottom: 0.4rem; }
+.probe-cap {
+  color: var(--dim);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+.fn {
+  font-size: 0.92rem;
+  color: var(--dim);
+}
+.fn a { color: var(--dim); }
+.okbad p { margin-bottom: 0.55rem; }
+.okbad .label {
+  color: var(--dim);
+  font-size: 0.92rem;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 28rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { color: var(--acc); font-weight: 600; }
+ol.steps {
+  list-style: decimal;
+  padding-left: 1.35rem;
+  margin: 0.75rem 0 1rem;
+}
+ol.steps li { margin-bottom: 0.55rem; }
+ol.steps li:last-child { margin-bottom: 0; }
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  line-height: 1.45;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink);
+  margin: 1rem 0;
+}
+ul.plain {
+  list-style: disc;
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+ul.plain li { margin-bottom: 0.35rem; }
+.passfail h3 {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+.qa { margin-top: 1.5rem; }
+.qa h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.qa ol {
+  list-style: decimal;
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+.qa li { margin-bottom: 0.55rem; }
+details {
+  margin: 1rem 0 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+}
+summary {
+  cursor: pointer;
+  color: var(--acc);
+  font-weight: 700;
+}
+details[open] summary { margin-bottom: 0.55rem; }
+details ol {
+  list-style: decimal;
+  padding-left: 1.35rem;
+  margin: 0.35rem 0 0;
+}
+details li { margin-bottom: 0.4rem; }
+.foot {
+  margin-top: 2.75rem;
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">AI Ultra · 20 сентября 2026 · уровень 2</p>
+<h1>Что в файл, что не в чат</h1>
+<div class="leads">
+<p><strong>О чём.</strong> Правило на завтра нельзя оставлять только в вчерашнем чате.</p>
+<p><strong>Куда.</strong> В работу с моделью: тон, запреты, формат сдачи, что нельзя трогать.</p>
+<p><strong>Зачем.</strong> Новый чат не продолжает вчерашний контекст. Без файла или явной памяти продукта правило пропадает.</p>
+</div>
+
+<hr class="rule">
+
+<h2>1. Крюк</h2>
+<p>Ты в длинном чате сказал: «сдачу пиши одним абзацем». Завтра новый чат. Снова простыня. Правило умерло вместе с сессией. Знал только вчерашний контекст.</p>
+
+<h2>2. Цель</h2>
+<p>После урока ты сможешь: взять одно рабочее правило, положить его в свой файл или в явную память продукта, открыть новый чат и за короткое время проверить — правило сработало только с этой опорой.</p>
+<p>Артефакт проверки: файл или строка в списке памяти + одна строка результата.</p>
+
+<h2>3. Механизм: три разных слоя</h2>
+
+<h3>Слой A — session / context</h3>
+<p>Context window — максимум токенов на один запрос (вход, выход, reasoning). Что не влезло, может обрезаться.</p>
+<p>Источник: <a class="body-link" href="https://developers.openai.com/api/docs/guides/conversation-state">Conversation state — OpenAI</a> (чтение 20.09.2026).</p>
+<p>Продукт может сжимать историю (compaction): несёт «key prior state» меньшим числом токенов, результат «opaque and not intended to be human-interpretable». Это не твой читаемый файл с правилом.</p>
+<p>Источник: <a class="body-link" href="https://developers.openai.com/api/docs/guides/compaction">Compaction — OpenAI</a> (чтение 20.09.2026).</p>
+<p>Anthropic context editing чистит stale tool results внутри окна (<code>clear_tool_uses_20250919</code>). На их internal agentic search eval (блог 29 сентября 2025): memory tool + context editing — <span class="num">+39%</span> к baseline; только context editing — <span class="num">+29%</span>; в 100-turn web search — <span class="num">−84%</span> token consumption и завершение того, что иначе падает от exhaustion. Это метрики Anthropic на их стенде, не закон твоей заметки. Смысл для урока: даже «умный» агент без внешнего store упирается в окно.</p>
+<p>Источник: <a class="body-link" href="https://claude.com/blog/context-management">Context management — Anthropic</a> · <a class="body-link" href="https://platform.claude.com/docs/en/build-with-claude/context-editing">Context editing docs</a> (чтение 20.09.2026).</p>
+
+<div class="probe">
+<p class="probe-who">Чья метрика: Anthropic, internal evaluation (agentic search / token consumption). Не наш замер. URL: <a class="body-link" href="https://claude.com/blog/context-management">https://claude.com/blog/context-management</a> (29 сентября 2025; чтение 20.09.2026).</p>
+<ul>
+<li>memory tool + context editing: <span class="num">+39%</span> к baseline<sup class="fn"><a href="#fn1">[1]</a></sup></li>
+<li>context editing alone: <span class="num">+29%</span><sup class="fn"><a href="#fn1">[1]</a></sup></li>
+<li>100-turn web search: <span class="num">−84%</span> token consumption<sup class="fn"><a href="#fn1">[1]</a></sup></li>
+</ul>
+<p class="probe-cap">Это метрики Anthropic на их стенде, не закон твоей заметки. Не переносить на md как норму.</p>
+<p class="fn" id="fn1">[1] Anthropic. Context management. 29 сентября 2025. <a class="body-link" href="https://claude.com/blog/context-management">https://claude.com/blog/context-management</a> · чтение 20.09.2026. Что взяли: +39% / +29% / −84% с их internal eval.</p>
+</div>
+
+<p>Конец сессии: «Each Managed Agents session starts with a fresh context by default. When a session ends, any state the agent built up is gone.»</p>
+<p>Источник: <a class="body-link" href="https://platform.claude.com/docs/en/managed-agents/memory">Using agent memory — Claude</a> (чтение 20.09.2026).</p>
+
+<h3>Слой B — saved memory продукта</h3>
+<p>OpenAI (апр. 2025): два способа — «saved memories» you’ve asked it to remember и «chat history» insights. Temporary chat — без memory.</p>
+<p>Источник: <a class="body-link" href="https://openai.com/index/memory-and-new-controls-for-chatgpt/">Memory and new controls for ChatGPT</a> (чтение 20.09.2026).</p>
+<p>Help OpenAI: saved memories хранятся отдельно от chat history; удаление исходного чата само не удаляет saved memory; history-derived может меняться; «does not retain every detail»; temporary «do not create or update memories».</p>
+<p>Источник: <a class="body-link" href="https://help.openai.com/en/articles/8590148-memory-in-chatgpt">Memory in ChatGPT</a> · <a class="body-link" href="https://help.openai.com/en/articles/8914046-temporary-chat-in-chatgpt">Temporary Chat</a> (чтение 20.09.2026).</p>
+<p>Dreaming (пост 4 июня 2026): April 2024 — saved memories; April 2025 — first dreaming; June 4, 2026 — текущий пост. Продукт сам синтезирует freshness. Это не твой md.</p>
+<p>Источник: <a class="body-link" href="https://openai.com/index/chatgpt-memory-dreaming/">Dreaming</a> (чтение 20.09.2026).</p>
+<p>Claude: generate memory из чатов; отдельные project memory spaces; pause — не использует и не пишет новую. Topics в настройках — список файлов, которые можно читать, править, удалять (блог 25 авг. 2026).</p>
+<p>Источник: <a class="body-link" href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> · <a class="body-link" href="https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it">Claude's memory works everywhere</a> (чтение 20.09.2026).</p>
+
+<h3>Слой C — file store</h3>
+<p>Anthropic Memory tool: directory of memory files; persist between sessions; without keeping everything in the context window; пишет под <code>/memories</code>; storage у тебя / у приложения.</p>
+<p>Источник: <a class="body-link" href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a> (чтение 20.09.2026).</p>
+<p>Тот же блог 29.09.2025: file-based system вне context window, persist across conversations. Вместе с числами выше: вынос знаний из окна + чистка окна у Anthropic измеримо лучше, чем надежда «чат сам помнит».</p>
+<p>Вывод: чат = сессия · продукт = чужая сводка · файл = твоя опора.</p>
+
+<h2>4. Три worked examples</h2>
+
+<h3>Тон</h3>
+<div class="okbad">
+<p><span class="label">Неправильно.</span> В чате: «пиши коротко, без канцелярии». Новый чат без строки — снова канцелярия.</p>
+<p><span class="label">Правильно.</span> Файл: <code>Тон: коротко, без канцелярии.</code> Новый чат + файл (или строка видна в списке памяти продукта).</p>
+</div>
+
+<h3>Запрет</h3>
+<div class="okbad">
+<p><span class="label">Неправильно.</span> В чате: «клиенту не обещай сроки без моего да». Новый чат — модель ставит срок.</p>
+<p><span class="label">Правильно.</span> Файл: <code>Клиенту не обещать сроки без моего «да».</code> Новый чат с опорой.</p>
+</div>
+
+<h3>Формат сдачи</h3>
+<div class="okbad">
+<p><span class="label">Неправильно.</span> В чате: «сдачу одним абзацем». Завтра снова простыня.</p>
+<p><span class="label">Правильно.</span> Файл: <code>Сдача: один абзац. Файл во вложении, не путь.</code> Новый чат с опорой.</p>
+</div>
+<p>Temporary chat для правила на завтра не подходит: memories не создаёт и не обновляет (<a class="body-link" href="https://help.openai.com/en/articles/8914046-temporary-chat-in-chatgpt">Temporary Chat</a>).</p>
+
+<h2>5. Таблица решения</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Вопрос</th><th>Куда</th></tr>
+</thead>
+<tbody>
+<tr><td>Понадобится в новом чате завтра?</td><td>Файл или явная память продукта</td></tr>
+<tr><td>Разовый черновик / штурм / цифры «только сегодня»?</td><td>Только этот чат (можно temporary)</td></tr>
+<tr><td>Секрет, который нельзя светить снова?</td><td>Никуда (ни чат, ни память продукта)</td></tr>
+<tr><td>Хочу правило под контролем формулировки?</td><td>Свой файл; потом подложить в новый чат</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>6. Умение</h2>
+<p>Записать одно рабочее правило в файл (или в явную память продукта), открыть новый чат и за короткое время проверить: правило сработало только с этой опорой.</p>
+
+<h2>7. Практика · 15 минут</h2>
+<ol class="steps">
+<li>Возьми одно правило из своей работы (тон, запрет или формат). Одна-две строки.</li>
+<li>Запиши в файл — или явно «запомни …» и открой список памяти продукта (строка там есть).</li>
+<li>Открой новый чат: не продолжение вчерашнего; не temporary, если проверяешь память продукта.</li>
+<li>Дай задачу, где правило должно сработать. Файл подложи или положись на память продукта.</li>
+<li>Заполни блок. Стоп.</li>
+</ol>
+
+<p>Артефакт:</p>
+<pre>правило: …
+опора: файл | память продукта (строка в списке: да)
+новый чат (не temporary, если память продукта): да
+задача: …
+результат: сработало с файлом | сработало с памятью продукта | без опоры правило умерло
+нельзя: правило только в старом чате; простыня вместо одного правила; сравнение пяти продуктов</pre>
+
+<div class="passfail">
+<h3>Сдал</h3>
+<ul class="plain">
+<li>Есть одно короткое правило.</li>
+<li>Есть артефакт опоры: файл или строка из списка памяти.</li>
+<li>Есть одна строка результата ровно в формулировке Sensei.</li>
+<li>Строка «нельзя» на месте.</li>
+</ul>
+<h3>Не сдал</h3>
+<ul class="plain">
+<li>Правило только в старом чате.</li>
+<li>Простыня вместо одного правила.</li>
+<li>Сравнение пяти продуктов.</li>
+<li>База на тысячу документов.</li>
+<li>Temporary-чат при проверке памяти продукта.</li>
+<li>История / «почувствовал» без артефакта и строки результата.</li>
+<li>Чужой eval вместо своей проверки.</li>
+</ul>
+</div>
+
+<div class="qa">
+<h3>Три вопроса</h3>
+<ol>
+<li>Правило сказал только вчерашнему чату, сегодня новый чат без файла. Какой результат по Sensei?</li>
+<li>После «запомни» не открыл список памяти. Сдал?</li>
+<li>Хочется сравнить пять продуктов «кто помнит лучше». Можно?</li>
+</ol>
+<details>
+<summary>Ответы</summary>
+<ol>
+<li>Без опоры правило умерло.</li>
+<li>Нет. Нужна видимая строка в списке памяти или файл.</li>
+<li>Нет. Сравнение пяти продуктов — провал.</li>
+</ol>
+</details>
+</div>
+
+<h2>8. Граница</h2>
+<p>Сегодня не сравнивать «кто помнит лучше» и не строить базу на тысячу документов. Одно правило. Одна опора. Одна проверка.</p>
+<p>Числа <span class="num">+39%</span> / <span class="num">+29%</span> / <span class="num">−84%</span> — только internal eval Anthropic на <a class="body-link" href="https://claude.com/blog/context-management">https://claude.com/blog/context-management</a>. Не переносить на свою заметку как закон.</p>
+
+<p class="foot">AI Ultra · 20 сентября 2026 · уровень 2</p>
+
+</main>
+</body>
+</html>
