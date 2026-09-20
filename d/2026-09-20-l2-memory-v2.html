@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20.09 — Что в файл, что не в чат · AI Ultra</title>
+<meta name="description" content="20.09 — Что в файл, что не в чат">
+<link rel="canonical" href="https://ultra.dscff.es/d/2026-09-20-l2-memory-v2.html">
+<style>
+:root {
+  --bg: #0e0f0c;
+  --ink: #ece7d8;
+  --dim: #9a9484;
+  --line: #2a2b24;
+  --acc: #d4a017;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.kicker {
+  font-size: 0.88rem;
+  color: var(--dim);
+  margin-bottom: 0.75rem;
+}
+.kicker a { color: var(--acc); }
+.stamp-date {
+  display: block;
+  color: var(--acc);
+  font-size: 3.2rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  margin: 0.35rem 0 1rem;
+}
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.leads p {
+  font-size: 1.05rem;
+  color: var(--dim);
+  margin-bottom: 0.65rem;
+}
+.leads p:last-child { margin-bottom: 0; }
+.leads strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.25rem 0;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--ink);
+  font-weight: 700;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+h3 {
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+p { margin-bottom: 0.85rem; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--acc); }
+a.body-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acc);
+  text-underline-offset: 2px;
+}
+a.body-link:hover { color: var(--acc); }
+.table-wrap {
+  overflow-x: auto;
+  margin: 0.75rem 0 1rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 28rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+  box-shadow: none;
+}
+th { color: var(--acc); font-weight: 600; }
+.test {
+  color: var(--ink);
+  margin-top: 0.85rem;
+}
+ul, ol {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 0.85rem;
+}
+li { margin-bottom: 0.4rem; }
+li:last-child { margin-bottom: 0; }
+.examples {
+  list-style: disc;
+  margin-top: 0.4rem;
+}
+.forbid {
+  margin-top: 1.75rem;
+  color: var(--ink);
+}
+.block { margin-top: 2.25rem; }
+.metric {
+  margin: 0.55rem 0;
+}
+.metric strong { color: var(--acc); font-weight: 700; }
+.caption {
+  margin-top: 0.85rem;
+  color: var(--dim);
+  font-size: 0.95rem;
+}
+.reading { color: var(--dim); font-size: 0.92rem; }
+sup, .fn {
+  color: var(--acc);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  line-height: 1.45;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink);
+  margin: 1rem 0;
+}
+.check-ex { margin-top: 1.25rem; }
+.qa { margin-top: 1.5rem; }
+.qa dt {
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.35rem;
+}
+.qa dd {
+  color: var(--dim);
+  margin-left: 0;
+  margin-bottom: 0.5rem;
+}
+.fail { margin-top: 1.5rem; }
+.sources {
+  margin-top: 2.25rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--line);
+}
+.sources p {
+  margin-bottom: 0.85rem;
+  font-size: 0.95rem;
+}
+.foot {
+  margin-top: 2.5rem;
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.5;
+}
+@media (max-width: 40rem) {
+  h1 { font-size: 2rem; }
+  .stamp-date { font-size: 2.6rem; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker"><a href="/">AI Ultra</a> · 20 сентября 2026 · уровень 2</p>
+<p class="stamp-date" aria-hidden="true">20.09</p>
+<h1>Что в файл, что не в чат</h1>
+<div class="leads">
+<p><strong>О чём.</strong> Правило, которое нужно завтра, пишешь в файл (или в явную память продукта). Разовое оставляешь в чате.</p>
+<p><strong>Куда.</strong> В работу с моделью: тон, запреты, формат сдачи, что нельзя трогать.</p>
+<p><strong>Зачем.</strong> Новый чат вчерашние указания сам не тащит. Без файла ты каждый раз объясняешь заново.</p>
+</div>
+
+<hr class="rule">
+
+<h2>Правило</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Нужно завтра или через неделю</th>
+<th>Куда</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Тон, формат сдачи, запрет, «этого не трогать»</td>
+<td>Файл у тебя или явная память продукта (список в настройках)</td>
+</tr>
+<tr>
+<td>Черновик на один раз, мозговой штурм, цифры «только сегодня»</td>
+<td>Только этот чат</td>
+</tr>
+<tr>
+<td>Секрет, который нельзя светить снова</td>
+<td>Не в чат и не в память продукта</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="test">Тест на одно предложение: «Это понадобится в новом чате завтра?» Да → файл или явная память. Нет → чат.</p>
+
+<h2>Факты продукта (не вместо файла)</h2>
+<p>OpenAI разделяет два рычага: Reference saved memories и Reference chat history. Saved — то, что явно держат. History — куски прошлых чатов; они могут меняться. ChatGPT «does not retain every detail» из истории. Temporary chat не пишет memories.</p>
+<p>Источник: <a class="body-link" href="https://help.openai.com/en/articles/8590148-memory-in-chatgpt">Memory in ChatGPT</a> (чтение 20.09.2026).</p>
+<p>Пост OpenAI от 4 июня 2026: dreaming собирает память продукта из многих чатов в фоне. Первый шаг reference вне списка saved — апрель 2025. Это не твой файл на диске. Это сводка продукта.</p>
+<p>Источник: <a class="body-link" href="https://openai.com/index/chatgpt-memory-dreaming/">Dreaming</a> (чтение 20.09.2026).</p>
+<p>Claude: chat search + Generate memory (topics); можно править и ставить на паузу. У проектов — отдельная память. Incognito в memory не идёт.</p>
+<p>Источник: <a class="body-link" href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Claude chat search and memory</a> (чтение 20.09.2026).</p>
+<p>Anthropic Memory tool для API: знания в файлах <code>/memories</code> у клиента между сессиями. Принцип тот же: долгое — файл, не окно чата.</p>
+<p>Источник: <a class="body-link" href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a> (чтение 20.09.2026).</p>
+
+<h2>Что писать в файл</h2>
+<p>Одна-две строки. Примеры:</p>
+<ul class="examples">
+<li>Клиенту не обещать сроки без моего «да».</li>
+<li>Сдача — файл во вложении, не путь.</li>
+<li>Тон: коротко, без канцелярии.</li>
+<li>Не трогать: логины, карты, чужие секреты.</li>
+</ul>
+<p>Не писать: простыню вчерашнего чата; «подумай сам»; секрет, который нельзя отправлять модели снова.</p>
+
+<h2>Что делать в новом чате</h2>
+<ol>
+<li>Открой новый чат (не продолжение вчерашнего).</li>
+<li>Подложи файл или проверь, что правило видно в списке памяти продукта.</li>
+<li>Дай задачу, где правило должно сработать.</li>
+<li>Нет правила в опоре — модель ему не обязана следовать.</li>
+</ol>
+
+<h2>Умение</h2>
+<p>Записать одно рабочее правило в файл (или в явную память продукта), открыть новый чат и проверить за короткое время: правило сработало только с этой опорой.</p>
+
+<p class="forbid"><strong>Граница.</strong> Сегодня не сравнивать «кто помнит лучше» и не строить базу на тысячу документов. Одно правило. Одна опора. Одна проверка.</p>
+
+<div class="block">
+<h2>Факт Probe</h2>
+<p>Два замера с одной страницы Anthropic (Managing context on the Claude Developer Platform; September 29, 2025; чтение 20.09.2026). Их внутренний eval agentic search и токены агента — не «насколько лучше правило в md у тебя».</p>
+<p class="metric">memory tool + context editing: <strong>+39%</strong> к baseline<a class="fn" href="#fn1">[1]</a></p>
+<p class="metric">context editing alone: <strong>+29%</strong><a class="fn" href="#fn1">[1]</a></p>
+<p class="metric">100-turn web search: <strong>−84%</strong> токенов<a class="fn" href="#fn1">[1]</a></p>
+<p class="caption">Правило держит файл или store, не окно чата после конца сессии. Чужие +39% / +29% / −84% — не закон твоей полки md.</p>
+<p class="reading">Стенд: <a class="body-link" href="https://claude.com/blog/context-management">claude.com/blog/context-management</a></p>
+</div>
+
+<hr class="rule">
+
+<section class="block" style="margin-top:0">
+<h2>Практика · пятнадцать минут</h2>
+<p>Одно правило из своей реальной работы: тон, запрет или формат сдачи. Одна короткая фраза. Не простыня.</p>
+<p>Два хода подряд. Одно и то же правило. Одна и та же короткая задача для модели.</p>
+
+<h3>Ход А — оставить в чате</h3>
+<p>В любом текущем чате скажи правило модели один раз. Потом открой новый чат без этого правила в файле и без явной памяти продукта. Ту же задачу дай без файла и без «запомни». Запиши, что вышло: правило сработало или умерло.</p>
+
+<h3>Ход Б — в файл (или явную память)</h3>
+<p>То же правило коротко запиши в свой файл — или явно «запомни …» и открой список памяти, убедись, что строка там. Новый чат. Ту же задачу. Файл подложи или положись на память продукта. Запиши, что вышло.</p>
+
+<p>Стоп. Не третий продукт. Не база на тысячу документов.</p>
+<p>Напиши пять строк.</p>
+<pre>правило (одно, из своей работы): …
+ход А (новый чат без файла и без памяти): …
+ход Б (куда положил + новый чат с опорой): …
+сдача: без опоры — …; с файлом/памятью — …
+нельзя: оставлять правило только в чате и надеяться; писать простыню; сравнивать пять продуктов; строить базу на тысячу документов</pre>
+
+<div class="check-ex">
+<h3>Сверка · файл</h3>
+<pre>правило: сдача — один абзац, без пути на диске
+ход А (новый чат без файла и без памяти): снова простыня, путь мелькнул
+ход Б (файл с одним правилом + новый чат, файл подложил): один абзац, пути нет
+сдача: без опоры — умерло; с файлом — сработало
+нельзя: оставлять правило только в чате и надеяться; писать простыню; сравнивать пять продуктов; строить базу на тысячу документов</pre>
+</div>
+
+<div class="check-ex">
+<h3>Сверка · память продукта</h3>
+<pre>правило: не предлагай сравнивать пять инструментов
+ход А (новый чат без файла и без памяти): предложила сравнить три инструмента
+ход Б (явная память, строка в списке есть + новый чат): сравнения нет
+сдача: без опоры — умерло; с памятью продукта — сработало
+нельзя: оставлять правило только в чате и надеяться; писать простыню; сравнивать пять продуктов; строить базу на тысячу документов</pre>
+</div>
+
+<p>Сдал, если на своём правиле есть оба хода и в сдаче видно различие: без опоры vs с файлом или памятью. Нет двух результатов рядом — не сдал.</p>
+
+<div class="qa">
+<h3>Три вопроса</h3>
+<dl>
+<dt>1. Сказал правило в длинном чате, новый чат без файла — снова мимо. Что это доказывает за пятнадцать минут?</dt>
+<dd>Правило в чате само между чатами не держится. Нужна опора снаружи: файл или явная память.</dd>
+<dt>2. После хода А правило умерло, после хода Б с файлом сработало. Что пишешь в сдаче?</dt>
+<dd>Без опоры — умерло; с файлом — сработало.</dd>
+<dt>3. Хочется сравнить пять продуктов «кто помнит лучше» вместо двух ходов. Можно?</dt>
+<dd>Нет. Сравнение продуктов — провал. Два хода на одном правиле.</dd>
+</dl>
+</div>
+
+<div class="fail">
+<p><strong>Провал.</strong> Сделал только один ход. Оставил правило только в старом чате и надеялся. Написал простыню вместо одного правила. Сравнивал пять продуктов. Строил базу на тысячу документов. Рассказал историю без двух проверяемых ответов модели.</p>
+</div>
+</section>
+
+<section class="sources" id="fn1">
+<h2>Источники</h2>
+<p>[1] Anthropic. Managing context on the Claude Developer Platform. September 29, 2025. <a href="https://claude.com/blog/context-management">https://claude.com/blog/context-management</a><br>
+Что взяли: memory tool + context editing +39% к baseline; context editing alone +29%; 100-turn web search −84% токенов. Их внутренний eval agentic search / токены агента. Чтение 20.09.2026.</p>
+</section>
+
+<p class="foot"><a href="/">AI Ultra</a> · 20 сентября 2026 · Что в файл, что не в чат</p>
+
+</main>
+</body>
+</html>
