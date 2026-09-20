@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20.09 — Что в файл, что не в чат · AI Ultra</title>
+<meta name="description" content="20.09 — Что в файл, что не в чат">
+<link rel="canonical" href="https://ultra.dscff.es/d/2026-09-20-l2-memory-v4.html">
+<style>
+:root {
+  --bg: #0e0f0c;
+  --ink: #ece7d8;
+  --dim: #9a9484;
+  --line: #2a2b24;
+  --acc: #d4a017;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.kicker {
+  font-size: 0.88rem;
+  color: var(--dim);
+  margin-bottom: 0.75rem;
+}
+.stamp-date {
+  display: block;
+  color: var(--acc);
+  font-size: 3.2rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  margin: 0.35rem 0 1rem;
+}
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.leads p {
+  font-size: 1.05rem;
+  color: var(--dim);
+  margin-bottom: 0.75rem;
+}
+.leads p:last-child { margin-bottom: 0; }
+.leads strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.75rem 0;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--ink);
+  font-weight: 700;
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.55rem;
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acc);
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--acc); }
+blockquote {
+  margin: 0.85rem 0 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--acc);
+  color: var(--ink);
+  background: transparent;
+}
+blockquote p {
+  margin-bottom: 0.55rem;
+}
+blockquote p:last-child { margin-bottom: 0; }
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  line-height: 1.45;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink);
+  margin: 1rem 0;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 28rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { color: var(--acc); font-weight: 600; }
+ol.steps {
+  list-style: decimal;
+  padding-left: 1.35rem;
+  margin: 0.75rem 0 1.25rem;
+}
+ol.steps li { margin-bottom: 0.65rem; }
+ol.steps li:last-child { margin-bottom: 0; }
+ul.passfail {
+  list-style: disc;
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+ul.passfail li { margin-bottom: 0.35rem; }
+.metric-note {
+  color: var(--dim);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.foot {
+  margin-top: 2.75rem;
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.5;
+}
+.shelf { margin-bottom: 1.25rem; }
+.shelf:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">AI Ultra · 20 сентября 2026 · уровень 2</p>
+<p class="stamp-date" aria-hidden="true">20.09</p>
+<h1>Что в файл, что не в чат</h1>
+
+<div class="leads">
+<p><strong>О чём этот текст.</strong> Модель в новом чате не помнит правила, которые ты вчера сказал только словами внутри старого чата. Если правило нужно завтра — его надо положить куда-то вне этого чата: в свой файл или в явную память продукта, которую ты сам проверил глазами.</p>
+<p><strong>Куда это в твоей работе.</strong> Ты каждый день открываешь чаты с моделью: тон ответа, запреты («клиенту так не пиши»), формат сдачи («одним абзацем, файл во вложении»). Эти вещи повторяются. Без опоры вне чата ты каждый раз заново уговариваешь модель вести себя правильно — и каждый новый чат снова срывается.</p>
+<p><strong>Зачем тебе.</strong> Чтобы один раз записать правило и завтра в новом чате оно сработало без повторного «помни, я же говорил». И чтобы разовое (штурм, цифры только на сегодня) не засоряло память продукта и не всплывало через неделю.</p>
+</div>
+
+<hr class="rule">
+
+<h2>Как это устроено — своими словами</h2>
+<p>Представь три полки, не одну.</p>
+
+<div class="shelf">
+<p><strong>Первая полка — текущий чат.</strong> Пока чат открыт, модель видит то, что влезло в окно этого разговора. Закрыл чат, открыл новый — этой полки уже нет. То, что ты вчера сказал только тут, для новой полки не существует. Это не «модель забыла из вредности». Это другой разговор с пустым столом.</p>
+</div>
+
+<div class="shelf">
+<p><strong>Вторая полка — память продукта.</strong> ChatGPT или Claude могут сами тащить куски между чатами: то, что ты явно попросил «запомни», или сводку, которую продукт собрал сам. Это удобно, но это не твой файл. Формулировку ты контролируешь хуже. Временный / инкогнито-чат на эту полку обычно ничего не пишет. Удалить старый чат — не то же самое, что стереть отдельную сохранённую память.</p>
+</div>
+
+<div class="shelf">
+<p><strong>Третья полка — твой файл.</strong> Одна короткая строка правила, которую ты сам написал и сам подкладываешь в новый чат (вложением или вставкой). Или file-memory у API, где знание лежит в файлах вне окна. Это опора, которой ты владеешь: видишь текст, правишь, решаешь, когда класть в разговор.</p>
+</div>
+
+<p>Правило на завтра живёт на второй или третьей полке. На первой — только пока чат не кончился. Разовый штурм и «цифры только сегодня» оставляй на первой. Секрет, который нельзя светить снова, не клади ни на вторую, ни в файл, который потом снова скормишь модели.</p>
+
+<p>До любых ссылок запомни одно предложение: <strong>новый чат не продолжает вчерашний; продолжает только то, что ты явно подложил или что продукт сам держит в своей памяти.</strong></p>
+
+<hr class="rule">
+
+<h2>Кейс 1. Формат сдачи</h2>
+
+<h3>Ситуация</h3>
+<p>Тебе нужен короткий ответ агенту или модели: один абзац, без простыни. Вчера в длинном чате ты это уже сказал. Сегодня открыл новый чат и снова получил стену текста.</p>
+
+<h3>Что написал вчера в чате</h3>
+<blockquote>
+<p>Сдачу пиши одним абзацем. Без длинных списков. Без пути на диске — сам файл.</p>
+</blockquote>
+<p>Модель в том же чате слушалась. Ты успокоился.</p>
+
+<h3>Что написал сегодня в новом чате (без опоры)</h3>
+<blockquote>
+<p>Напиши клиенту итог по встрече: что решили и что дальше.</p>
+</blockquote>
+
+<h3>Что ответила модель (примерно так)</h3>
+<blockquote>
+<p>Конечно! Вот подробный разбор по итогам встречи.</p>
+<p>1. Контекст и участники…</p>
+<p>2. Обсуждённые пункты…</p>
+<p>3. Риски и рекомендации…</p>
+<p>4. Следующие шаги с дедлайнами…</p>
+<p>Если нужно, могу развернуть каждый блок или сохранить в файл по пути…</p>
+</blockquote>
+<p>Правило «один абзац» исчезло. Модель не «предала». В новом чате этого правила просто не было в контексте.</p>
+
+<h3>Почему сломалось</h3>
+<p>Правило жило только на первой полке — в старом чате. Новый чат начал с пустого стола.</p>
+
+<h3>Что положить в файл</h3>
+<p>Одна строка, своими словами:</p>
+<pre>Сдача: один абзац. Файл во вложении, не путь на диске.</pre>
+
+<h3>Новый чат с тем же правилом</h3>
+<p>Ты открываешь новый чат, подкладываешь файл (или вставляешь строку) и пишешь:</p>
+<blockquote>
+<p>Работай по правилу в файле. Напиши клиенту итог по встрече: что решили и что дальше.</p>
+</blockquote>
+
+<h3>Что вышло</h3>
+<blockquote>
+<p>По встрече решили зафиксировать объём и срок. Дальше — черновик договора до пятницы и созвон на проверку цифр. Файл с кратким итогом во вложении.</p>
+</blockquote>
+<p>Правило сработало, потому что оно лежало вне вчерашнего чата и попало в сегодняшний.</p>
+
+<hr class="rule">
+
+<h2>Кейс 2. Запрет клиенту</h2>
+
+<h3>Ситуация</h3>
+<p>Ты не хочешь, чтобы модель сама обещала клиенту сроки. Вчера в чате сказал запрет. Сегодня в новом чате модель снова пишет «сделаем к пятнице».</p>
+
+<h3>Что написал вчера в чате</h3>
+<blockquote>
+<p>Клиенту никогда не обещай сроки и даты без моего явного «да». Если не уверен — пиши, что срок согласуем отдельно.</p>
+</blockquote>
+<p>В том чате модель слушалась.</p>
+
+<h3>Что написал сегодня в новом чате (без опоры)</h3>
+<blockquote>
+<p>Ответь клиенту: мы приняли задачу по лендингу, что дальше.</p>
+</blockquote>
+
+<h3>Что ответила модель (примерно так)</h3>
+<blockquote>
+<p>Здравствуйте! Задачу по лендингу приняли. Черновик будет готов к пятнице, правки — в понедельник. Можем созвониться завтра в 11:00.</p>
+</blockquote>
+<p>Срок и время созвона модель выдумала сама. Запрета в этом чате не было.</p>
+
+<h3>Почему сломалось</h3>
+<p>Снова первая полка. Вчерашний запрет не переехал сам.</p>
+
+<h3>Что положить в файл</h3>
+<pre>Клиенту: не обещать сроки и даты без моего «да». Если срок неизвестен — написать «срок согласуем отдельно».</pre>
+<p>Либо явно попросить продукт «запомни …» этой же формулировкой и <strong>открыть список памяти</strong>, чтобы строка там реально была. Если строки нет — правило не записалось.</p>
+
+<h3>Новый чат с опорой</h3>
+<blockquote>
+<p>Работай по правилу в файле. Ответь клиенту: мы приняли задачу по лендингу, что дальше.</p>
+</blockquote>
+
+<h3>Что вышло</h3>
+<blockquote>
+<p>Здравствуйте! Задачу по лендингу приняли. Дальше согласуем объём и срок отдельно — напишу, когда будет «да» по датам.</p>
+</blockquote>
+<p>Запрет сработал, потому что он лежал на второй или третьей полке и попал в новый разговор.</p>
+
+<hr class="rule">
+
+<h2>Когда что куда</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Нужно завтра в новом чате?</th>
+<th>Куда</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Да, точная формулировка важна</td>
+<td>Свой файл + подложить в новый чат</td>
+</tr>
+<tr>
+<td>Да, и ок, что продукт держит своими словами</td>
+<td>Явная память продукта — и проверить список глазами</td>
+</tr>
+<tr>
+<td>Нет, только этот штурм / эти цифры</td>
+<td>Только текущий чат; для «без следа» — temporary / incognito</td>
+</tr>
+<tr>
+<td>Секрет, который нельзя светить снова</td>
+<td>Ни в чат «запомни», ни в файл, который снова скормишь</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<hr class="rule">
+
+<h2>Опора вендоров</h2>
+<p>Не вместо объяснения — проверка, что полки реальные.</p>
+
+<p><strong>Конец сессии обнуляет состояние чата.</strong> В доке Anthropic по Managed Agents: каждая сессия стартует со свежим контекстом; когда сессия кончается, накопленное состояние пропадает. Между сессиями знание несут memory stores, не «тот же чат».</p>
+<p>Источник: <a href="https://platform.claude.com/docs/en/managed-agents/memory">Using agent memory — Claude</a> (чтение 20.09.2026).</p>
+
+<p><strong>Окно контекста — лимит на один запрос</strong>, не «помнит всё вчерашнее». OpenAI: context window = максимум токенов на один запрос (вход, выход, reasoning); лишнее может обрезаться. Compaction сжимает историю меньшим числом токенов, но это не твой читаемый файл с правилом.</p>
+<p>Источник: <a href="https://developers.openai.com/api/docs/guides/conversation-state">Conversation state</a> · <a href="https://developers.openai.com/api/docs/guides/compaction">Compaction</a> (чтение 20.09.2026).</p>
+
+<p><strong>Память продукта ≠ чат.</strong> OpenAI (апр. 2025): два способа — saved memories, которые ты попросил запомнить, и insights из chat history. Temporary chat memories не создаёт и не обновляет. Saved memories хранятся отдельно от истории чата; удаление исходного чата само по себе не удаляет отдельный saved memory. Memory «does not retain every detail from every conversation».</p>
+<p>Источник: <a href="https://openai.com/index/memory-and-new-controls-for-chatgpt/">Memory and new controls</a> · <a href="https://help.openai.com/en/articles/8590148-memory-in-chatgpt">Memory in ChatGPT</a> · <a href="https://help.openai.com/en/articles/8914046-temporary-chat-in-chatgpt">Temporary Chat</a> (чтение 20.09.2026).</p>
+
+<p><strong>У Claude память продукта — редактируемые Topics.</strong> Всё, что помнит, лежит списком файлов в настройках Memory: можно читать, править, удалять. Project memory — отдельное пространство. Pause — не использует и не пишет новую.</p>
+<p>Источник: <a href="https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it">Claude's memory works everywhere</a> (25 авг. 2026) · <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> (чтение 20.09.2026).</p>
+
+<p><strong>Долгое знание — в файлы вне окна.</strong> Anthropic Memory tool: directory of memory files; persist between sessions; without keeping everything in the context window; пишет под <code>/memories</code>. Анонс file-based memory: 29 сентября 2025. Смысл простой: вынос знания из окна лучше, чем надежда «чат сам помнит».</p>
+<p>Источник: <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a> · <a href="https://claude.com/blog/context-management">Context management</a> (чтение 20.09.2026).</p>
+
+<hr class="rule">
+
+<h2>Умение</h2>
+<p>Взять одно своё рабочее правило, записать его в файл (или в явную память продукта и проверить список), открыть <strong>новый</strong> чат, подложить опору, дать задачу — и увидеть, что правило сработало. Без опоры в контрольном чате правило не живёт.</p>
+
+<hr class="rule">
+
+<h2>Практика · примерно 15 минут</h2>
+<p>Один твой реальный кейс. Не пять продуктов. Не сравнение «кто лучше помнит».</p>
+<ol class="steps">
+<li>Выбери одно правило из своей работы: тон, запрет или формат сдачи. Запиши его одной короткой строкой на бумаге или в заметке.</li>
+<li>Положи строку в свой файл <strong>или</strong> скажи продукту «запомни …» той же формулировкой и открой список памяти — строка должна быть видна.</li>
+<li>Открой <strong>новый</strong> чат (не продолжение вчерашнего). Если проверяешь память продукта — не temporary / не incognito.</li>
+<li>Подложи файл или убедись, что память продукта включена и строка на месте. Напиши задачу, где правило обязано сработать. Пример задачи: «Ответь клиенту коротко: задачу приняли, что дальше» — если правило про запрет сроков или про один абзац.</li>
+<li>Прочитай ответ. Правило сработало или нет?</li>
+<li>Контроль (по желанию, 2 минуты): ещё один новый чат <strong>без</strong> файла и без памяти — та же задача. Если без опоры правило умерло, а с опорой жило — механизм понял.</li>
+</ol>
+
+<p><strong>Сдал.</strong> Есть артефакт (файл или скрин/текст строки из списка памяти), цитата того, что ты написал в новом чате с опорой, цитата ответа модели и одна фраза результата: «сработало с файлом» / «сработало с памятью продукта». Если делал контроль — вторая фраза: «без опоры правило умерло» и две цитаты контроля.</p>
+
+<p><strong>Не сдал.</strong> Правило только в старом чате. Простыня вместо одной строки. Сравнивал пять продуктов. Temporary chat при проверке памяти продукта. Нет артефакта. Нет цитат из чата. Чужой eval вместо своей проверки.</p>
+<p>нельзя: правило только в старом чате; простыня вместо одной строки; сравнение пяти продуктов; temporary при проверке памяти продукта</p>
+
+<hr class="rule">
+
+<h2>Граница</h2>
+<p>Сегодня модели не пиши: «сравни, кто лучше помнит — ChatGPT или Claude» и не проси построить базу на тысячу документов. Одно правило. Одна опора. Одна проверка в новом чате.</p>
+
+<p class="foot">20 сентября 2026 · Что в файл, что не в чат</p>
+
+</main>
+</body>
+</html>
