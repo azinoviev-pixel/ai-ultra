@@ -3,24 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>20.09 — Память агента: Memory, CLAUDE.md, AGENTS.md, handoff · AI Ultra</title>
+<title>Память агента: Memory, CLAUDE.md, AGENTS.md, handoff</title>
 <meta name="description" content="Память агента между сессиями: Memory продукта, CLAUDE.md, AGENTS.md, handoff и hooks">
 <style>
 :root {
-  --bg: #0e0f0c;
-  --ink: #ece7d8;
-  --dim: #9a9484;
-  --line: #2a2b24;
-  --acc: #d4a017;
+  --fon: #faf8f3;
+  --bumaga: #ffffff;
+  --tekst: #1a1916;
+  --tihiy: #6b6560;
+  --liniya: #e0d9cc;
+  --akcent: #b45309;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--bg); }
+html { background: var(--fon); }
 body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  background: var(--fon);
+  color: var(--tekst);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 main {
   max-width: 42rem;
@@ -28,54 +29,48 @@ main {
   padding: 2rem 1.25rem 4rem;
 }
 .kicker {
-  font-size: 0.88rem;
-  color: var(--dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--akcent);
+  font-weight: 600;
   margin-bottom: 0.75rem;
 }
-.stamp-date {
-  display: block;
-  color: var(--acc);
-  font-size: 3.2rem;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  font-weight: 700;
-  margin: 0.35rem 0 1rem;
-}
 h1 {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   line-height: 1.15;
   letter-spacing: -0.03em;
-  color: var(--ink);
+  color: var(--tekst);
   font-weight: 700;
   margin-bottom: 1.25rem;
 }
+.leads { margin-bottom: 0; }
 .leads p {
-  font-size: 1.05rem;
-  color: var(--dim);
+  color: var(--tihiy);
   margin-bottom: 0.65rem;
 }
 .leads p:last-child { margin-bottom: 0; }
 .leads strong {
-  color: var(--ink);
+  color: var(--tekst);
   font-weight: 600;
 }
 .rule {
   border: 0;
-  border-top: 1px solid var(--line);
-  margin: 2.75rem 0;
+  border-top: 1px solid var(--liniya);
+  margin: 2.25rem 0;
 }
 h2 {
   font-size: 1.25rem;
   line-height: 1.3;
-  color: var(--ink);
+  color: var(--tekst);
   font-weight: 700;
-  margin-top: 2.75rem;
+  margin-top: 2.25rem;
   margin-bottom: 0.75rem;
 }
 h3 {
   font-size: 1.05rem;
   line-height: 1.35;
-  color: var(--ink);
+  color: var(--tekst);
   font-weight: 600;
   margin-top: 1.75rem;
   margin-bottom: 0.55rem;
@@ -88,18 +83,16 @@ ul, ol {
 }
 ul li, ol li { margin-bottom: 0.45rem; }
 ul li:last-child, ol li:last-child { margin-bottom: 0; }
-.pass-block {
-  margin: 1rem 0 0;
-  padding: 0;
-}
+.pass-block { margin: 1rem 0 0; }
 .pass-block p { margin-bottom: 0.5rem; }
 .pass-block p:last-child { margin-bottom: 0; }
-.pass-label { font-weight: 600; color: var(--ink); }
+.pass-label { font-weight: 600; color: var(--tekst); }
 blockquote {
   margin: 1rem 0;
   padding: 0.85rem 1rem;
-  border-left: 2px solid var(--acc);
-  color: var(--ink);
+  background: var(--bumaga);
+  border-left: 3px solid var(--akcent);
+  color: var(--tekst);
 }
 blockquote p { margin-bottom: 0.55rem; }
 blockquote p:last-child { margin-bottom: 0; }
@@ -108,15 +101,15 @@ pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.88em;
   line-height: 1.45;
-  background: transparent;
-  border: 1px solid var(--line);
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
   border-radius: 0;
   box-shadow: none;
   padding: 1rem 1.1rem;
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-word;
-  color: var(--ink);
+  color: var(--tekst);
   margin: 1rem 0;
 }
 code {
@@ -132,51 +125,214 @@ table {
   border-collapse: collapse;
   font-size: 0.92rem;
   line-height: 1.45;
+  background: var(--bumaga);
 }
 th, td {
-  border: 1px solid var(--line);
+  border: 1px solid var(--liniya);
   padding: 0.65rem 0.7rem;
   text-align: left;
   vertical-align: top;
 }
 th {
-  color: var(--acc);
+  color: var(--akcent);
   font-weight: 600;
 }
 td code { font-size: 0.88em; }
 .one-line {
   margin: 1.25rem 0;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--tekst);
 }
-a.body-link {
-  color: var(--ink);
+.vendor-block { margin: 1.5rem 0; }
+.vendor-block h3 { margin-top: 1.25rem; }
+.vendor-block a {
+  color: var(--akcent);
   text-decoration: underline;
-  text-decoration-color: var(--acc);
   text-underline-offset: 2px;
 }
-a.body-link:hover { color: var(--acc); }
-.reading { color: var(--dim); font-size: 0.92rem; }
-.vendor-block { margin-top: 1.5rem; }
-.vendor-block h3 { margin-top: 1.5rem; }
-.step { margin-top: 1.5rem; }
-.step .pass-block { margin-top: 0.65rem; }
-.practice-forbid {
-  margin-top: 1.75rem;
+.vendor-block a:hover { opacity: 0.85; }
+.border-note {
+  margin-top: 2.25rem;
+  padding: 0.85rem 0 0.85rem 1rem;
+  border-left: 3px solid var(--akcent);
+  color: var(--tihiy);
 }
-.foot {
-  margin-top: 2.75rem;
-  font-size: 0.88rem;
-  color: var(--dim);
-  line-height: 1.5;
+.border-note strong { color: var(--tekst); }
+.practice-step {
+  margin: 1.25rem 0;
+  padding-bottom: 0.25rem;
+}
+.practice-step > p:first-child { margin-bottom: 0.65rem; }
+.cannot {
+  margin-top: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+/* ——— Схемы (живой HTML) ——— */
+.schema {
+  margin: 1.5rem 0 2rem;
+}
+.schema-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--akcent);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.schema-caption {
+  font-size: 0.92rem;
+  color: var(--tihiy);
+  margin-bottom: 0.85rem;
+}
+.schema-three {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.65rem;
+}
+.schema-three .cell {
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  padding: 0.9rem 0.75rem;
+  text-align: center;
+}
+.schema-three .cell-title {
+  color: var(--akcent);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.45rem;
+}
+.schema-three .cell-note {
+  color: var(--tihiy);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.schema-three .cell-note code {
+  color: var(--tekst);
+  font-size: 0.8em;
+}
+.schema-paths {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.schema-paths .row {
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  padding: 0.7rem 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: baseline;
+}
+.schema-paths .row code {
+  color: var(--tekst);
+  font-weight: 700;
+  font-size: 0.9em;
+}
+.schema-paths .row .hint {
+  color: var(--tihiy);
+  font-size: 0.9rem;
+}
+.schema-handoff {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.55rem;
+}
+.schema-handoff .cell {
+  background: var(--bumaga);
+  border: 1px solid var(--akcent);
+  padding: 0.85rem 0.65rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--tekst);
+  font-size: 0.9rem;
+}
+.schema-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0.4rem;
+  align-items: stretch;
+}
+.schema-flow .step {
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  padding: 0.85rem 0.65rem;
+  text-align: center;
+}
+.schema-flow .step-title {
+  color: var(--akcent);
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
+}
+.schema-flow .step-note {
+  color: var(--tihiy);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+.schema-flow .step-note code {
+  color: var(--tekst);
+  font-size: 0.85em;
+}
+.schema-flow .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--akcent);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0 0.1rem;
+}
+.schema-when {
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+}
+.schema-when .row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--liniya);
+  align-items: baseline;
+}
+.schema-when .row:last-child { border-bottom: 0; }
+.schema-when .need {
+  color: var(--tekst);
+  font-size: 0.92rem;
+}
+.schema-when .where {
+  color: var(--akcent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.schema-when .where code {
+  color: var(--akcent);
+  font-weight: 600;
+  font-size: 0.88em;
+}
+@media (max-width: 560px) {
+  .schema-three { grid-template-columns: 1fr; }
+  .schema-handoff { grid-template-columns: 1fr; }
+  .schema-flow {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .schema-flow .arrow {
+    transform: rotate(90deg);
+    padding: 0.15rem 0;
+  }
+  .schema-when .row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
 }
 </style>
 </head>
 <body>
 <main>
 
-<p class="kicker">AI Ultra · 20 сентября 2026 · уровень 2</p>
-<p class="stamp-date" aria-hidden="true">20.09</p>
+<p class="kicker">Урок · память агента</p>
 <h1>Память агента: Memory, CLAUDE.md, AGENTS.md, handoff</h1>
 
 <div class="leads">
@@ -188,45 +344,84 @@ a.body-link:hover { color: var(--acc); }
 <hr class="rule">
 
 <h2>Цель</h2>
+
 <p>Ты сможешь: выбрать, куда класть правило или состояние работы — Memory продукта, project <code>CLAUDE.md</code> / <code>AGENTS.md</code>, global <code>~/.claude/CLAUDE.md</code> / <code>~/.codex/AGENTS.md</code>, <code>CLAUDE.local.md</code>, handoff-файл — и проверить это на живом артефакте в новом сеансе агента.</p>
+
 <p>Как видно. В репо есть файл с именем (<code>CLAUDE.md</code> или <code>AGENTS.md</code> или <code>HANDOFF.md</code>); новая сессия без вчерашнего чата следует правилу; для Claude Code — <code>/context</code> показывает файл в Memory files (или hook SessionStart <code>compact</code> печатает handoff).</p>
+
+<p>Проверка заранее (то, чем закончишь практику):</p>
 <div class="pass-block">
 <p><span class="pass-label">Сдал:</span> живой md на диске + новая сессия цитирует/следует правилу без повторной речи в чате.</p>
 <p><span class="pass-label">Не сдал:</span> правило только фразой в старом чате или только «запомни» без md в репо.</p>
 <p><span class="pass-label">Нельзя:</span> говорить «положи в файл» без имени пути; путать product Memory с <code>CLAUDE.md</code>/<code>AGENTS.md</code>; считать compact безопасным без handoff или reinject.</p>
 </div>
 
+<hr class="rule">
+
 <h2>Механизм своими словами</h2>
+
 <p>Четыре реальных места — с именами файлов, не «абстрактный файл».</p>
 
-<h3>1. Текущая сессия (окно контекста)</h3>
-<p>Пока сессия жива, агент видит то, что влезло в context window. Новый чат / конец сессии — этого окна нет. Compaction сжимает длинную историю: summary остаётся, детали (решение спринта, запрет) могут выпасть. Сказанное только словами в чате сюда не переживает.</p>
+<p><strong>1. Текущая сессия (окно контекста).</strong> Пока сессия жива, агент видит то, что влезло в context window. Новый чат / конец сессии — этого окна нет. Compaction сжимает длинную историю: summary остаётся, детали (решение спринта, запрет) могут выпасть. Сказанное только словами в чате сюда не переживает.</p>
 
-<h3>2. Memory продукта</h3>
-<p>«Запомни…» в ChatGPT/Claude или auto memory в Claude Code. Ок для личных привычек («короче»). Плохо: формулировку часто пишет продукт; команда в git не видит; версий нет; может всплыть не то. Это не замена <code>CLAUDE.md</code> / <code>AGENTS.md</code> в репо.</p>
+<p><strong>2. Memory продукта.</strong> «Запомни…» в ChatGPT/Claude или auto memory в Claude Code. Ок для личных привычек («короче»). Плохо: формулировку часто пишет продукт; команда в git не видит; версий нет; может всплыть не то. Это не замена <code>CLAUDE.md</code> / <code>AGENTS.md</code> в репо.</p>
 
-<h3>3. Файлы инструкций, которые инструмент читает сам при старте</h3>
+<p><strong>3. Файлы инструкций, которые инструмент читает сам при старте.</strong></p>
 <ul>
 <li>Claude Code project: <code>./CLAUDE.md</code> или <code>./.claude/CLAUDE.md</code> (в git, на команду).</li>
 <li>Claude Code global: <code>~/.claude/CLAUDE.md</code> (ты, все проекты).</li>
 <li>Claude Code личное в репо: <code>./CLAUDE.local.md</code> + <code>.gitignore</code>.</li>
 <li>Команды Claude Code: <code>/init</code> (черновик), <code>/memory</code> (список/правка), <code>/context</code> (что реально загрузилось).</li>
-<li>Codex: <code>~/.codex/AGENTS.override.md</code> иначе <code>~/.codex/AGENTS.md</code>; в проекте от корня вниз до cwd — в каждой папке override затем <code>AGENTS.md</code>; ближе к cwd сильнее; ~32 KiB суммарно по умолчанию.</li>
+<li>Codex: <code>~/.codex/AGENTS.override.md</code> иначе <code>~/.codex/AGENTS.md</code>; в проекте от корня вниз до cwd — в каждой папке override затем <code>AGENTS.md</code>; ближе к cwd сильнее.</li>
 <li>Cursor: <code>AGENTS.md</code> в корне и nested; или <code>.cursor/rules/*.mdc</code> с frontmatter.</li>
 </ul>
+
 <p>И <code>CLAUDE.md</code>, и auto memory грузятся в старте сессии как <strong>контекст</strong>, не как жёсткий ban. Жёстко запретить действие (<code>rm -rf</code>, push в main) — hook <code>PreToolUse</code>, не строка в md.</p>
 
-<h3>4. Handoff-файл</h3>
-<p>Часто <code>HANDOFF.md</code>. Снимок работы для следующей сессии / после compact: Goal, Done, Open, Decisions, Files touched, Next command. Не «вечная норма проекта», а где остановились.</p>
+<p><strong>4. Handoff-файл</strong> (часто <code>HANDOFF.md</code>). Снимок работы для следующей сессии / после compact: Goal, Done, Open, Decisions, Files touched, Next command. Не «вечная норма проекта», а где остановились.</p>
 
-<h3>Hooks (Claude Code), когда без них механизм врёт</h3>
+<p><strong>Hooks (Claude Code), когда без них механизм врёт:</strong></p>
 <ul>
 <li><code>SessionStart</code> с matcher <code>compact</code> — после compaction stdout снова в контекст (перечитать <code>HANDOFF.md</code>).</li>
 <li><code>PreCompact</code> — до сжатия: дописать handoff / заархивировать transcript. Project-root <code>CLAUDE.md</code> после compact reinject с диска; nested — пока снова не зайдут в ту папку.</li>
 </ul>
 
 <p class="one-line">Одно предложение: новая сессия и compact продолжают диск (и проверенную Memory), а не вчерашний чат.</p>
+
+<!-- Схема 1: Три места памяти -->
+<figure class="schema" aria-label="Схема 1. Три места памяти">
+<p class="schema-kicker">1 · Три места памяти</p>
+<p class="schema-caption">Блок «Механизм»: сессия ≠ Memory продукта ≠ файл на диске.</p>
+<div class="schema-three">
+<div class="cell">
+<div class="cell-title">Сессия</div>
+<div class="cell-note">окно чата, умерла с чатом</div>
+</div>
+<div class="cell">
+<div class="cell-title">Memory продукта</div>
+<div class="cell-note">«запомни…», не твой git</div>
+</div>
+<div class="cell">
+<div class="cell-title">Файл на диске</div>
+<div class="cell-note"><code>./CLAUDE.md</code> / <code>AGENTS.md</code> / <code>HANDOFF.md</code></div>
+</div>
+</div>
+</figure>
+
 <p>Сейчас сделаешь то же на своём репо — сначала разбор двух готовых примеров.</p>
+
+<!-- Схема 2: Куда класть правило -->
+<figure class="schema" aria-label="Схема 2. Куда класть правило команды">
+<p class="schema-kicker">2 · Куда класть правило команды</p>
+<p class="schema-caption">Пути целиком. Перед кейсом pnpm.</p>
+<div class="schema-paths">
+<div class="row"><code>./CLAUDE.md</code><span class="hint">— проект, в git</span></div>
+<div class="row"><code>./.claude/CLAUDE.md</code><span class="hint">— то же, другой путь</span></div>
+<div class="row"><code>~/.claude/CLAUDE.md</code><span class="hint">— глобально</span></div>
+<div class="row"><code>./CLAUDE.local.md</code><span class="hint">— личное + gitignore</span></div>
+<div class="row"><code>./AGENTS.md</code><span class="hint">— Codex / Cursor / общий</span></div>
+</div>
+</figure>
 
 <hr class="rule">
 
@@ -250,7 +445,7 @@ a.body-link:hover { color: var(--acc); }
 <p>Правила «pnpm» в контексте нет. Агент не «забыл из вредности» — в новой сессии этого правила просто не было в контексте сессии.</p>
 
 <h3>Почему сломалось</h3>
-<p>Правило жило только в окне той сессии. Новая сессия = пустой стол. Product Memory ты не просил «запомни». В <code>./CLAUDE.md</code> строки не было.</p>
+<p>Правило жило только в окне той сессии. Новая сессия началась без вчерашнего контекста. Product Memory ты не просил «запомни». В <code>./CLAUDE.md</code> строки не было.</p>
 
 <h3>Какой файл</h3>
 <p>В корне репо <code>./CLAUDE.md</code> (или <code>./.claude/CLAUDE.md</code> — один из двух; оба валидны для project scope):</p>
@@ -299,6 +494,21 @@ a.body-link:hover { color: var(--acc); }
 
 <h3>Какой файл + hook</h3>
 <p><code>./HANDOFF.md</code> (или <code>docs/HANDOFF.md</code> — имя на вкус, главное одно и то же место):</p>
+
+<!-- Схема 3: HANDOFF шесть блоков -->
+<figure class="schema" aria-label="Схема 3. HANDOFF.md — шесть блоков">
+<p class="schema-kicker">3 · HANDOFF.md — шесть блоков</p>
+<p class="schema-caption">Кейс compact. Состояние спринта, не вечная норма.</p>
+<div class="schema-handoff">
+<div class="cell">Goal</div>
+<div class="cell">Done</div>
+<div class="cell">Open</div>
+<div class="cell">Decisions</div>
+<div class="cell">Files touched</div>
+<div class="cell">Next command</div>
+</div>
+</figure>
+
 <pre><code>## Goal
 Auth refactor: JWT only via httpOnly cookie.
 
@@ -348,7 +558,31 @@ pnpm test src/auth &amp;&amp; continue refresh endpoint</code></pre>
     ]
   }
 }</code></pre>
+
 <p>(PreCompact: matcher <code>manual</code> или <code>auto</code> — по тому, что сработало; можно без узкого matcher, если хочешь на любой compact. Смысл — напомнить/дописать handoff <strong>до</strong> сжатия.)</p>
+
+<!-- Схема 4: Compact → hooks -->
+<figure class="schema" aria-label="Схема 4. Compact → hooks">
+<p class="schema-kicker">4 · Compact → hooks</p>
+<p class="schema-caption">Кейс 2: до сжатия → сжатие → reinject.</p>
+<div class="schema-flow">
+<div class="step">
+<div class="step-title">PreCompact</div>
+<div class="step-note">дописать <code>HANDOFF.md</code></div>
+</div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="step">
+<div class="step-title">compact</div>
+<div class="step-note">история сжата</div>
+</div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="step">
+<div class="step-title">SessionStart</div>
+<div class="step-note">matcher <code>compact</code> — <code>cat HANDOFF.md</code> в контекст</div>
+</div>
+</div>
+</figure>
+
 <p>Дополнительно одну строку решения можно продублировать в <code>./CLAUDE.md</code>, если это уже норма проекта на месяцы, не только на этот спринт.</p>
 
 <h3>Новая сессия с опорой</h3>
@@ -363,6 +597,20 @@ pnpm test src/auth &amp;&amp; continue refresh endpoint</code></pre>
 <hr class="rule">
 
 <h2>Таблица: куда класть</h2>
+
+<!-- Схема 5: Когда что -->
+<figure class="schema" aria-label="Схема 5. Когда что">
+<p class="schema-kicker">5 · Когда что (решение)</p>
+<p class="schema-caption">Таблица решения — читаемые строки, не dashboard. Ниже — полная таблица решения.</p>
+<div class="schema-when">
+<div class="row"><span class="need">Личная привычка</span><span class="where">Memory или <code>~/.claude/CLAUDE.md</code></span></div>
+<div class="row"><span class="need">Правило команды + git</span><span class="where"><code>./CLAUDE.md</code> или <code>./AGENTS.md</code></span></div>
+<div class="row"><span class="need">Где остановились</span><span class="where"><code>./HANDOFF.md</code></span></div>
+<div class="row"><span class="need">Жёсткий ban</span><span class="where">PreToolUse hook — не md</span></div>
+<div class="row"><span class="need">После compact</span><span class="where">HANDOFF + SessionStart compact</span></div>
+</div>
+</figure>
+
 <div class="table-wrap">
 <table>
 <thead>
@@ -432,46 +680,52 @@ pnpm test src/auth &amp;&amp; continue refresh endpoint</code></pre>
 <p>Когда Memory <strong>врёт / неконтролируем</strong>: «запомни» расплывчатое; продукт сам додумал; команде нужна одна строка в PR; нужна история изменений; после смены аккаунта/машины память пропала.</p>
 <p>Когда нужен <strong>md в репо</strong>: shared, точная формулировка, versioned, review в PR, одинаково у всех агентов на стенде.</p>
 
-<h2>Что пишут вендоры</h2>
-<p class="reading">Чтение 20.09.2026. После механизма — опоры, не вместо него. Замера задачи «файл vs чат» на живых страницах нет — цифрой урок не подменяю.</p>
+<hr class="rule">
+
+<h2>Что пишут вендоры (чтение 20.09.2026)</h2>
+
+<p>После механизма — опоры, не вместо него.</p>
 
 <div class="vendor-block">
 <h3>Claude Code — memory / CLAUDE.md</h3>
-<p><a class="body-link" href="https://code.claude.com/docs/en/memory">Memory</a> · <a class="body-link" href="https://code.claude.com/docs/en/claude-md">то же по claude-md</a></p>
-<p>CLAUDE.md пишешь ты; auto memory пишет Claude. Оба грузятся в старте сессии; это context, не enforced config. Жёсткий блок — PreToolUse. Пути: project <code>./CLAUDE.md</code> или <code>./.claude/CLAUDE.md</code>; user <code>~/.claude/CLAUDE.md</code>; local <code>CLAUDE.local.md</code> (gitignore). <code>/memory</code>, <code>/context</code>, <code>/init</code>.</p>
+<p><a href="https://code.claude.com/docs/en/memory">Memory</a> · <a href="https://code.claude.com/docs/en/claude-md">то же по claude-md</a><br>
+CLAUDE.md пишешь ты; auto memory пишет Claude. Оба грузятся в старте сессии; это context, не enforced config. Жёсткий блок — PreToolUse. Пути: project <code>./CLAUDE.md</code> или <code>./.claude/CLAUDE.md</code>; user <code>~/.claude/CLAUDE.md</code>; local <code>CLAUDE.local.md</code> (gitignore). <code>/memory</code>, <code>/context</code>, <code>/init</code>.</p>
 
-<h3>Context window / compaction</h3>
-<p><a class="body-link" href="https://code.claude.com/docs/en/context-window">Context window</a></p>
-<p>После compact: project-root CLAUDE.md и unscoped rules — reinject с диска; auto memory — с диска; nested CLAUDE.md и rules с <code>paths:</code> — снова, когда агент читает matching файлы; SessionStart с source <code>compact</code> — stdout хука снова в контекст.</p>
+<h3>Граница сессии / окно</h3>
+<p><a href="https://developers.openai.com/api/docs/guides/conversation-state">Conversation state</a> · <a href="https://developers.openai.com/api/docs/guides/compaction">Compaction</a> (чтение 20.09.2026)<br>
+Context window — лимит токенов на один запрос. Compaction сжимает историю меньшим числом токенов; результат «opaque» — это не твой читаемый <code>CLAUDE.md</code> / <code>AGENTS.md</code>. Новый чат или сжатое окно не продолжают вчерашние слова сами по себе.</p>
 
 <h3>Hooks</h3>
-<p><a class="body-link" href="https://code.claude.com/docs/en/hooks">Hooks reference</a> · <a class="body-link" href="https://code.claude.com/docs/en/hooks-guide">Hooks guide</a></p>
-<p>SessionStart matcher включает <code>compact</code> (reinject после сжатия). PreCompact — до compaction (<code>manual</code> / <code>auto</code>). Guide прямо показывает пример «Re-inject context after compaction» через SessionStart + <code>compact</code>.</p>
+<p><a href="https://code.claude.com/docs/en/hooks">Hooks</a> (чтение 20.09.2026)<br>
+SessionStart — когда сессия начинается или resumes; полезен, чтобы догрузить контекст (issues, недавние изменения); stdout hook может добавить то, что агент увидит. PreCompact — до compaction; PostCompact — после. Для handoff: до сжатия дописать файл, при старте/после compact — снова подложить.</p>
 
 <h3>Codex — AGENTS.md</h3>
-<p><a class="body-link" href="https://developers.openai.com/codex/guides/agents-md">Custom instructions with AGENTS.md</a></p>
-<p>Глобально: <code>~/.codex/AGENTS.override.md</code> иначе <code>AGENTS.md</code>. Проект: от корня вниз до cwd, в каждой директории override затем AGENTS.md; ближе = later = сильнее; default cap ~32 KiB (<code>project_doc_max_bytes</code>) — лимит продукта, не замер урока.</p>
+<p><a href="https://developers.openai.com/codex/guides/agents-md">Custom instructions with AGENTS.md</a><br>
+Глобально: <code>~/.codex/AGENTS.override.md</code> иначе <code>AGENTS.md</code>. Проект: от корня вниз до cwd, в каждой директории override затем AGENTS.md; ближе = later = сильнее.</p>
 
 <h3>Cursor — rules / AGENTS.md</h3>
-<p><a class="body-link" href="https://cursor.com/docs/rules.md">Rules</a></p>
-<p><code>AGENTS.md</code> в корне и nested; альтернатива — <code>.cursor/rules/*.mdc</code> с frontmatter. Plain <code>.md</code> в <code>.cursor/rules</code> без frontmatter система rules игнорирует.</p>
+<p><a href="https://cursor.com/docs/rules.md">Rules</a><br>
+<code>AGENTS.md</code> в корне и nested; альтернатива — <code>.cursor/rules/*.mdc</code> с frontmatter. Plain <code>.md</code> в <code>.cursor/rules</code> без frontmatter система rules игнорирует.</p>
 </div>
 
+<hr class="rule">
+
 <h2>Граница</h2>
+<div class="border-note">
 <p>Урок не про: навыки/skills как пакеты процедур; MCP; полный каталог всех hook events; org-managed CLAUDE.md через MDM; «научить модель помнить без файлов». Не обещает 100% следование строке в md — это context.</p>
+</div>
 
 <h2>Практика</h2>
-<p>Один свой репо, где ты реально гоняешь Claude Code, Codex или Cursor. Примерно 15 минут.</p>
 
-<div class="step">
-<p><strong>1.</strong> В одном своём репо открой или создай <code>./CLAUDE.md</code> (или <code>./.claude/CLAUDE.md</code>). Одна конкретная норма команды (пакетный менеджер, тест-команда, ветка). Если основной инструмент Codex/Cursor — ту же норму можно сразу в корневой <code>AGENTS.md</code>.</p>
+<div class="practice-step">
+<p><strong>1.</strong> В одном своём репо открой или создай <code>./CLAUDE.md</code> (или <code>./.claude/CLAUDE.md</code>). Одна конкретная норма команды (пакетный менеджер, тест-команда, ветка).</p>
 <div class="pass-block">
-<p><span class="pass-label">Сдал:</span> файл на диске + в новой сессии агент следует норме без повторной речи «помни, я говорил»; для Claude Code <code>/context</code> показывает файл в Memory files.</p>
+<p><span class="pass-label">Сдал:</span> файл на диске + в новой сессии Claude Code <code>/context</code> показывает его в Memory files.</p>
 <p><span class="pass-label">Не сдал:</span> правило только в чате или только «запомни» без файла в репо.</p>
 </div>
 </div>
 
-<div class="step">
+<div class="practice-step">
 <p><strong>2.</strong> Рядом заведи <code>HANDOFF.md</code> с шестью блоками: Goal, Done, Open, Decisions, Files touched, Next command. Заполни по реальной текущей задаче (можно коротко).</p>
 <div class="pass-block">
 <p><span class="pass-label">Сдал:</span> все шесть заголовков есть, Next command — одна копируемая команда.</p>
@@ -479,16 +733,15 @@ pnpm test src/auth &amp;&amp; continue refresh endpoint</code></pre>
 </div>
 </div>
 
-<div class="step">
+<div class="practice-step">
 <p><strong>3.</strong> (Claude Code) Добавь SessionStart hook с matcher <code>compact</code>, который печатает содержимое <code>HANDOFF.md</code> в stdout. Опционально PreCompact — напоминание дописать handoff.</p>
 <div class="pass-block">
 <p><span class="pass-label">Сдал:</span> запись в <code>.claude/settings.json</code> (или user settings), <code>/hooks</code> видит SessionStart.</p>
 <p><span class="pass-label">Не сдал:</span> «потом руками вставлю» без hook.</p>
-<p><span class="pass-label">Пропустил:</span> основной инструмент Codex/Cursor — шаг 1 на <code>AGENTS.md</code> обязателен, шаг 3 можно пропустить.</p>
 </div>
 </div>
 
-<div class="step">
+<div class="practice-step">
 <p><strong>4.</strong> Если основной инструмент — Codex или Cursor: положи ту же командную норму в <code>AGENTS.md</code> (корень; для Cursor можно nested). Для Codex проверь, что нет мешающего <code>AGENTS.override.md</code> не там.</p>
 <div class="pass-block">
 <p><span class="pass-label">Сдал:</span> агент в новом запуске цитирует правило без твоей повторной речи в чате.</p>
@@ -496,11 +749,9 @@ pnpm test src/auth &amp;&amp; continue refresh endpoint</code></pre>
 </div>
 </div>
 
-<div class="practice-forbid">
+<div class="cannot">
 <p><span class="pass-label">Нельзя:</span> оставлять командное правило только фразой в чате; путать product Memory с <code>CLAUDE.md</code>/<code>AGENTS.md</code>; писать «положи в файл» без имени пути; считать compact безопасным без handoff или reinject; ждать, что md = жёсткий ban (для ban — PreToolUse).</p>
 </div>
-
-<p class="foot">AI Ultra · 20 сентября 2026 · уровень 2</p>
 
 </main>
 </body>
