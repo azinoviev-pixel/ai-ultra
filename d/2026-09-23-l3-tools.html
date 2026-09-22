@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Инструменты модели: одно действие, результат снаружи</title>
+<meta name="description" content="Одно действие через tool / connector: почта, таблица или браузер — результат виден снаружи чата">
+<style>
+:root {
+  --fon: #faf8f3;
+  --bumaga: #ffffff;
+  --tekst: #1a1916;
+  --tihiy: #6b6560;
+  --liniya: #e0d9cc;
+  --akcent: #b45309;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--fon); }
+body {
+  background: var(--fon);
+  color: var(--tekst);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--akcent);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+h1 {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--tekst);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.leads { margin-bottom: 0; }
+.leads p {
+  color: var(--tihiy);
+  margin-bottom: 0.65rem;
+}
+.leads p:last-child { margin-bottom: 0; }
+.leads strong {
+  color: var(--tekst);
+  font-weight: 600;
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--liniya);
+  margin: 2.25rem 0;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--tekst);
+  font-weight: 700;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--tekst);
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.55rem;
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+ul, ol {
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+ul li, ol li { margin-bottom: 0.45rem; }
+ul li:last-child, ol li:last-child { margin-bottom: 0; }
+.pass-block { margin: 1rem 0 0; }
+.pass-block p { margin-bottom: 0.5rem; }
+.pass-block p:last-child { margin-bottom: 0; }
+.pass-label { font-weight: 600; color: var(--tekst); }
+blockquote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  background: var(--bumaga);
+  border-left: 3px solid var(--akcent);
+  color: var(--tekst);
+}
+blockquote p { margin-bottom: 0.55rem; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { font-weight: 600; }
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  line-height: 1.45;
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--tekst);
+  margin: 1rem 0;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  background: var(--bumaga);
+}
+th, td {
+  border: 1px solid var(--liniya);
+  padding: 0.65rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  color: var(--akcent);
+  font-weight: 600;
+}
+td code { font-size: 0.88em; }
+.vendor-block { margin: 1.5rem 0; }
+.vendor-block h3 { margin-top: 1.25rem; }
+.vendor-block a {
+  color: var(--akcent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.vendor-block a:hover { opacity: 0.85; }
+.probe-note {
+  margin: 1.25rem 0 0;
+  padding: 0.85rem 1rem;
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  color: var(--tihiy);
+  font-size: 0.95rem;
+}
+.probe-note strong { color: var(--tekst); }
+.schema {
+  margin: 1.5rem 0 0.5rem;
+}
+.schema-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--akcent);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.schema-caption {
+  font-size: 0.92rem;
+  color: var(--tihiy);
+  margin-bottom: 0.85rem;
+}
+.schema img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--liniya);
+  background: var(--bumaga);
+}
+.border-note {
+  margin-top: 2.25rem;
+  padding: 0.85rem 0 0.85rem 1rem;
+  border-left: 3px solid var(--akcent);
+  color: var(--tihiy);
+}
+.border-note strong { color: var(--tekst); }
+.practice-step {
+  margin: 1.25rem 0;
+  padding-bottom: 0.25rem;
+}
+.cannot {
+  margin-top: 1.5rem;
+  padding-top: 0.25rem;
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">L3 · модуль 9 · Инструменты</p>
+<h1>Инструменты модели: одно действие, результат снаружи</h1>
+
+<div class="leads">
+<p><strong>О чём.</strong> Модель в чате умеет не только писать текст. Через подключённый инструмент она может тронуть мир снаружи: почту, таблицу, браузер. Пока ты не увидел результат там — не в ответе чата — действия ещё нет.</p>
+<p><strong>Куда.</strong> В твой обычный чат с моделью, где уже есть (или ты сейчас включишь) один внешний инструмент: почта, таблица или браузер. Не в оркестрацию своей уже собранной команды агентов.</p>
+<p><strong>Зачем.</strong> Иначе день уходит на красивые «сделал» в чате, а в ящике / таблице / на странице пусто. Ты сильный практик агентов — тебе нужно одно проверяемое касание инструмента, не лекция «что такое AI».</p>
+</div>
+
+<hr class="rule">
+
+<h2>Цель</h2>
+<p>Ты сможешь: в своём чате с моделью дать <strong>одно</strong> конкретное действие через подключённый инструмент (почта <strong>или</strong> таблица <strong>или</strong> браузер) и <strong>сам</strong> увидеть результат снаружи чата.</p>
+<p>Как видно. В чате есть вызов инструмента (не только абзац «сделала» словами). Снаружи: письмо появилось / изменилось в ящике, либо ячейка в таблице изменилась, либо страница / снимок / цитата со страницы совпала с тем, что ты открыл сам.</p>
+<div class="pass-block">
+<p><span class="pass-label">Сдал:</span> одно действие через инструмент + ты сам открыл почту / таблицу / страницу и увидел тот же результат.</p>
+<p><span class="pass-label">Не сдал:</span> модель только написала текст «сделала» без вызова инструмента; или вызов был, а снаружи ничего не изменилось / не совпало.</p>
+<p><span class="pass-label">Нельзя:</span> гонять сразу три инструмента «заодно»; просить собрать конвейер из нескольких агентов; принимать слово модели вместо проверки снаружи.</p>
+</div>
+
+<hr class="rule">
+
+<h2>Механизм своими словами</h2>
+<p>Раздели два канала.</p>
+<p><strong>1. Текст в чате.</strong> Модель отвечает словами. Она может честно описать план, может уверенно выдумать («в ящике три письма от X»). Слова сами по себе ничего не меняют во внешнем сервисе.</p>
+<p><strong>2. Вызов инструмента (<code>tool_use</code> / connector / computer use / browse).</strong> Модель запрашивает действие у подключённого сервиса: прочитать inbox, записать ячейку, открыть URL. Сервис возвращает данные или делает side effect. Ты видишь в интерфейсе чата не только абзац, а шаг инструмента (имя инструмента, аргументы, результат). Потом проверяешь тот же факт в самом сервисе.</p>
+<p>Без подключённого инструмента модель <strong>не</strong> может реально тронуть почту / таблицу / браузер. Она может только имитировать. Если коннектора нет — сначала подключи один (Gmail / Google Sheets / browsing / computer use — что у тебя уже есть в продукте), потом практика.</p>
+<p>Одно действие сегодня — значит один инструмент и один проверяемый исход:</p>
+<ul>
+<li>почта: одно письмо отправлено / одно письмо найдено с видимой темой;</li>
+<li>таблица: одна ячейка или одна строка изменилась;</li>
+<li>браузер: одна страница открыта, и ты сверяешь заголовок / цифру / фразу сам.</li>
+</ul>
+<p>Не путай с прошлым модулем про память. Сегодня не про <code>CLAUDE.md</code> / <code>AGENTS.md</code> / handoff. Сегодня про внешний сервис через tool call.</p>
+<p>Не путай со следующим модулем про «агента с целью и шагами». Сегодня не цепочка из десяти шагов. Один вызов — один внешний факт.</p>
+
+<figure class="schema" aria-label="Схема: текст в чате → tool_use / connector → сервис → сверка">
+<p class="schema-kicker">Схема механизма</p>
+<p class="schema-caption">Текст в чате → <code>tool_use</code> / connector → сервис снаружи (Gmail / Sheets / страница) → сверка в самом сервисе.</p>
+<img src="schema-l3-tools-2026-09-23.png" width="1400" height="720" alt="Схема: текст в чате → tool_use / connector → сервис снаружи (Gmail / Sheets / страница) → сверка">
+</figure>
+
+<p>Сейчас — два готовых разбора. Потом ты сделаешь свой за четверть часа.</p>
+
+<hr class="rule">
+
+<h2>Кейс 1. «Проверь почту» без инструмента</h2>
+
+<h3>Ситуация</h3>
+<p>Тебе нужно знать, есть ли непрочитанные от конкретного отправителя. В чате с моделью <strong>нет</strong> подключённой почты (или ты не дал ей доступ).</p>
+
+<h3>Диалог без инструмента</h3>
+<blockquote>
+<p><strong>Ты:</strong> Посмотри мой ящик. Сколько непрочитанных от billing@example.com за сегодня?</p>
+<p><strong>Модель:</strong> В ящике три непрочитанных от billing@example.com: счёт за август, напоминание и акция. Могу набросать ответы.</p>
+</blockquote>
+<p>Звучит уверенно. Инструмента не было. Это догадка или шаблон, не чтение ящика.</p>
+
+<h3>Почему сломалось</h3>
+<p>Запрос был про внешний мир. Ответ остался текстом в чате. Ты не открыл inbox и «поверил абзацу». Снаружи факта нет.</p>
+
+<h3>Какой инструмент</h3>
+<p>Подключаешь почту (например Gmail connector / «подключить Google» в продукте, где ты работаешь) и просишь <strong>одно</strong> чтение.</p>
+
+<h3>Новый чат с инструментом</h3>
+<blockquote>
+<p><strong>Ты:</strong> Через инструмент почты: покажи непрочитанные от billing@example.com за сегодня. Не сочиняй — только то, что вернул инструмент. В ответе: число и темы.</p>
+<p><strong>Модель:</strong> [вызов инструмента почты → список]<br>
+Инструмент вернул 1 письмо. Тема: «Invoice August». Других непрочитанных от этого адреса нет.</p>
+</blockquote>
+
+<h3>Результат</h3>
+<p>Ты открываешь свой ящик — видишь то же одно письмо с той же темой. Сдал. Если модель снова ответила абзацем без вызова инструмента — не сдал, даже если цифры «похожи».</p>
+
+<hr class="rule">
+
+<h2>Кейс 2. «Запиши в таблицу» — сказала «сделала», ячейка пустая</h2>
+
+<h3>Ситуация</h3>
+<p>Нужно зафиксировать число в Google Sheets: сегодняшняя выручка в ячейке <code>B2</code> листа <code>Daily</code>.</p>
+
+<h3>Диалог без проверки снаружи</h3>
+<blockquote>
+<p><strong>Ты:</strong> Запиши в таблицу Daily, ячейка B2, число 1840.</p>
+<p><strong>Модель:</strong> Готово. В B2 теперь 1840. Могу добавить формулу суммы по неделе.</p>
+</blockquote>
+<p>Ты не открыл таблицу. Через час смотришь — <code>B2</code> пустая или старое значение. Модель не вызывала Sheets (или вызов упал, а она всё равно написала «сделала» словами).</p>
+
+<h3>Почему сломалось</h3>
+<p>Ты принял слово модели за side effect. Критерий модуля — результат <strong>снаружи</strong> чата.</p>
+
+<h3>Какой инструмент</h3>
+<p>Sheets / табличный connector. Один write в одну ячейку. Без «заодно сделай дашборд».</p>
+
+<h3>Новый чат с инструментом и проверкой</h3>
+<blockquote>
+<p><strong>Ты:</strong> Через инструмент таблицы: в лист Daily ячейка B2 поставь 1840. Потом прочитай B2 обратно тем же инструментом и покажи, что вернул.</p>
+<p><strong>Модель:</strong> [write → read]<br>
+Записал 1840 в <code>Daily!B2</code>. Повторное чтение: 1840.</p>
+</blockquote>
+<p>Ты сам открываешь таблицу в браузере — видишь 1840 в <code>B2</code>. Сдал.</p>
+
+<h3>Вариант с браузером (если почты и таблицы нет)</h3>
+<p>Тот же закон: одно открытие URL через browse / computer use, модель цитирует заголовок или конкретную фразу, ты открываешь ту же страницу и сверяешь. «Я знаю этот сайт» без вызова браузера — не сдал.</p>
+
+<hr class="rule">
+
+<h2>Таблица решения: какой инструмент сегодня</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Нужен внешний факт</th>
+<th>Инструмент</th>
+<th>Что увидишь снаружи</th>
+<th>Сегодня не делай</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Что лежит в ящике / отправить одно письмо</td>
+<td>Почта (Gmail / почтовый connector)</td>
+<td>Письмо в inbox / sent</td>
+<td>Папку «навести порядок во всём ящике»</td>
+</tr>
+<tr>
+<td>Число или строка в учёте</td>
+<td>Таблица (Sheets и т.п.)</td>
+<td>Ячейка / строка изменилась</td>
+<td>«Построй всю аналитику»</td>
+</tr>
+<tr>
+<td>Что написано на живой странице сейчас</td>
+<td>Браузер / computer use / browse</td>
+<td>Та же страница у тебя в окне</td>
+<td>Десять вкладок и отчёт «по всему интернету»</td>
+</tr>
+<tr>
+<td>Только сформулировать текст</td>
+<td>Никакой инструмент</td>
+<td>Черновик в чате</td>
+<td>Притворяться, что текст = действие вовне</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Выбор на практику: <strong>один</strong> ряд таблицы. Не три сразу.</p>
+
+<hr class="rule">
+
+<h2>Что пишут вендоры</h2>
+<p>После механизма — куда смотреть за формулировками. Числа и лимиты не выдумывать: нет явной строки на странице вендора — числа в тексте нет.</p>
+
+<div class="vendor-block">
+<h3>1. Tool use / function calling</h3>
+<p>Модель не «магически» трогает сервисы; она вызывает объявленный инструмент с аргументами, сервис отвечает. Первичная документация — <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview">Tool use with Claude</a>.</p>
+
+<h3>2. Computer use / browse</h3>
+<p>Отдельный класс: модель управляет экраном или ходит по URL; проверка = то, что на экране / на странице, не пересказ из памяти модели. Документация — <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">Computer use tool</a>.</p>
+
+<h3>3. Connectors продукта</h3>
+<p>Почта, диск, таблицы в продукте: без подключённого аккаунта вызова нет; «я посмотрел почту» без connector = только текст. Справка — <a href="https://support.claude.com/en/articles/10166901-use-google-workspace-connectors">Use Google Workspace connectors</a>.</p>
+</div>
+
+<div class="probe-note">
+<p><strong>Опора · Anthropic computer use (не цель практики).</strong> На странице Computer use tool (чтение 23.09.2026): порог <strong>20</strong> images (screenshots) в одном API request; в client toolset <code>computer_toolset_20260801</code> — <strong>17</strong> member tools. Чья метрика: Anthropic API docs. Это квоты их computer-use loop, не норма «одного действия» в твоём Gmail / Sheets и <strong>не цель практики</strong> этого модуля.</p>
+</div>
+
+<hr class="rule">
+
+<h2>Практика · одно действие · ~15 минут</h2>
+<p>Один реально подключённый инструмент: почта <strong>или</strong> таблица <strong>или</strong> браузер. Если ни одного нет — подключи один и сделай одно чтение. Не три заодно.</p>
+<ol class="practice-step">
+<li>Открой <strong>новый</strong> чат с моделью, у которой этот инструмент доступен.</li>
+<li>Одним сообщением попроси <strong>одно</strong> действие через инструмент. В сообщении скажи: только то, что вернул инструмент; ты сам откроешь сервис и сверишь.</li>
+<li>Дождись в чате <strong>вызова инструмента</strong> (имя / аргументы / ответ инструмента), не только абзаца «сделала».</li>
+<li>Сам открой ящик / таблицу / ту же страницу. Сверь факт.</li>
+</ol>
+<p>Шаблоны одного сообщения (выбери один ряд):</p>
+<ul>
+<li>почта: «Через инструмент почты: … Только то, что вернул инструмент. Я потом открою ящик и сверю.»</li>
+<li>таблица: «Через инструмент таблицы: запиши … в … Потом прочитай обратно. Я открою таблицу сам.»</li>
+<li>браузер: «Через инструмент браузера открой URL … Верни заголовок / эту фразу. Я открою тот же URL сам.»</li>
+</ul>
+
+<h3>Артефакт</h3>
+<pre>инструмент (один): почта | таблица | браузер
+
+что написал в новом чате:
+&gt; …
+
+вызов инструмента виден в чате: да / нет
+что вернул инструмент (кратко): …
+
+что увидел снаружи (сам открыл сервис): …
+
+нельзя: три инструмента за один заход; просить собрать команду агентов / конвейер; принимать ответ модели без открытия сервиса</pre>
+
+<div class="pass-block">
+<p><span class="pass-label">Сдал:</span> вызов инструмента виден в чате, и снаружи в сервисе тот же факт (письмо / ячейка / заголовок или фраза на странице).</p>
+<p><span class="pass-label">Не сдал:</span> модель только написала «сделала» без вызова инструмента; или вызов был, а снаружи пусто / другое; или сверка только по словам модели без открытия сервиса.</p>
+</div>
+<div class="cannot">
+<p><span class="pass-label">Нельзя:</span> гонять сразу три инструмента заодно. Просить оркестрацию команды агентов или весь конвейер. Принимать слово модели вместо проверки снаружи.</p>
+</div>
+
+<div class="border-note">
+<p><strong>Граница.</strong> Сегодня модели не пиши: «соберите мне оркестрацию из нескольких агентов / роли / конвейер». Это уже собранный навык другого модуля. Сегодня — одно касание внешнего инструмента и твоя проверка снаружи.</p>
+</div>
+
+</main>
+</body>
+</html>
