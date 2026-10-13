@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Агент повторяет упавший вызов: где рвать петлю</title>
+<style>
+:root {
+  --fon: #faf8f3;
+  --bumaga: #ffffff;
+  --tekst: #1a1916;
+  --tihiy: #6b6560;
+  --liniya: #e0d9cc;
+  --akcent: #b45309;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--fon); }
+body {
+  background: var(--fon);
+  color: var(--tekst);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--akcent);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+h1 {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.leads p { margin-bottom: 0.75rem; }
+.leads p:last-child { margin-bottom: 0; }
+.rule {
+  border: 0;
+  border-top: 1px solid var(--liniya);
+  margin: 2.25rem 0;
+}
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+h3.fork {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+ul, ol {
+  padding-left: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+li { margin-bottom: 0.45rem; }
+li:last-child { margin-bottom: 0; }
+a {
+  color: var(--akcent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+sup.fn { font-size: 0.72em; line-height: 0; margin-left: 0.1em; }
+sup.fn a { text-decoration: none; font-weight: 700; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  background: var(--bumaga);
+  border-left: 3px solid var(--akcent);
+}
+blockquote p { margin-bottom: 0.6rem; }
+blockquote p:last-child { margin-bottom: 0; }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  padding: 0 0.25em;
+  overflow-wrap: anywhere;
+}
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  line-height: 1.5;
+  background: var(--bumaga);
+  border: 1px solid var(--liniya);
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 1rem 0;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  background: var(--bumaga);
+}
+th, td {
+  border: 1px solid var(--liniya);
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { font-weight: 700; }
+td code, th code { font-size: 0.86em; }
+.schema { margin: 1.5rem 0 2rem; }
+.schema img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--liniya);
+  background: var(--bumaga);
+}
+.schema figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--tihiy);
+}
+ol.vendors li { margin-bottom: 0.85rem; }
+p.pass { margin-bottom: 0.6rem; }
+.border-note {
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--akcent);
+}
+.border-note h2 { margin-bottom: 0.5rem; }
+details { margin: 1rem 0; }
+details > summary { font-weight: 700; color: var(--tekst); cursor: pointer; list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: "▸ "; }
+details[open] > summary::before { content: "▾ "; }
+details > summary + * { margin-top: 0.75rem; }
+.razvilka svg { display: block; width: 100%; height: auto; }
+.razvilka text { font-family: system-ui, sans-serif; font-size: 15px; fill: var(--tekst); }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">Агент</p>
+<h1>Агент повторяет упавший вызов: где рвать петлю</h1>
+<h2>Сначала догадка</h2>
+<p>Прежде чем читать дальше, запиши ответ на листке или в заметке. Не подглядывай.</p>
+<blockquote><p>Агент ищет ответ через инструмент поиска. Пять результатов подряд он сам, своими словами, назвал бесполезными. <strong>В какой доле таких случаев, в процентах, агент после этого перестанет звать инструмент и ответит?</strong> (Это наш вопрос, не цифра из статьи.)</p></blockquote>
+<p>Запиши число. Первое, что приходит в голову, — что-то вроде 70–90: агент же сам сказал, что толку нет, значит остановится.</p>
+<details><summary>Открыть ответ</summary><div>
+<p>Теперь открой статью <a href="https://arxiv.org/html/2610.06191">Judged Useless, Queried Anyway</a> (arXiv 2610.06191, 5 октября 2026), раздел <strong>1 Introduction</strong>, первый абзац под рисунком 1. Он начинается словами «Tools often fail silently». Там написано:</p>
+<ul><li>после пяти подряд результатов, которые агент сам назвал бесполезными, пять агентов из семи отвечают <strong>не больше чем на 7%</strong> вопросов (это доля вопросов, где агент вообще ответил, а не доля верных ответов);</li><li>Claude Haiku 4.5 сам по себе ответил в <strong>одном</strong> таком случае из 284, хотя, если его заставить ответить в этот момент, он прав в <strong>114</strong> из этих 284.</li></ul>
+<p>А в аннотации (<a href="https://arxiv.org/abs/2610.06191">abs-страница</a>) сказано, что суждение при этом верное: там, где суждения записаны, семь агентов называют результаты сломанного источника бесполезными в <strong>97–100%</strong> случаев.</p>
+<p>То есть агент знает, что вызов не помогает, и всё равно вызывает снова. Знание в голове модели и следующий вызов — две разные вещи.</p>
+<p><strong>Оговорка, без которой факт врёт.</strong> В этом эксперименте инструмент не падал. Поиск отвечал без ошибки, только вместо нужного абзаца подсовывал абзац из чужого вопроса. Настоящие сбои инструментов авторы не проверяли и сами пишут об этом в разделе Limitations. Перенос на упавший вызов — наш. Мы считаем, что с ошибками будет похоже, и дальше в уроке это проверяешь ты сам, по своему журналу.</p>
+</div></details>
+<hr class="rule">
+<div class="leads">
+<p><strong>О чём.</strong> Одна развилка цикла агента. Инструмент вернул ошибку, и агент выбирает: повторить тот же вызов или поменять что-то до следующего. Догадка выше показывает, почему этот выбор нельзя оставлять модели. Здесь разбираем, куда его вынести и как увидеть по журналу вызовов, что петля оборвана.</p>
+<p><strong>Куда.</strong> В твои агентные сессии с инструментами: Claude Code в репо, Codex, свой MCP-сервер или скрипт, который агент зовёт как инструмент. Особенно туда, где вызов что-то стоит: деньги, квота, письмо клиенту, выкладка в прод.</p>
+<p><strong>Зачем.</strong> Ты уже пишешь в бриф «если не работает — остановись». В похожем эксперименте выше правило остановки в промпте агенты выполняли в лучшем случае частично. Работает другое: ошибка, по которой видно, что делать дальше, и стоп, который ставит обвязка, а не модель.</p>
+</div>
+<hr class="rule">
+<h2>Умение</h2>
+<p><strong>После урока ты умеешь:</strong> на развилке «повторить упавший вызов или поменять его» вынести стоп из брифа в обвязку (пара hook в Claude Code) и переписать текст ошибки своего инструмента так, чтобы в нём был следующий шаг. И проверить по журналу вызовов, а не по словам агента, что третьего такого же упавшего вызова нет.</p>
+<p>Что модель «послушается» брифа, мы не обещаем: источник говорит обратное, и то про бесполезные ответы, а не про ошибки. Обещание здесь твоё: стоп держит программа, результат ты видишь в журнале.</p>
+<hr class="rule">
+<h2>Факты, на которых всё стоит</h2>
+<ol><li><strong>Правило стопа в промпте держится частично.</strong> В той же статье <a href="https://arxiv.org/abs/2610.06191">arXiv 2610.06191</a> (аннотация): подсказки в промпте меняют, <em>когда</em> агент остановится, но не <em>на чём</em>; правило остановки или цена вызова в промпте выполняются в лучшем случае частично («followed at most partly»). Остановка следует за фактами, только когда обвязка навязывает шаг: заставляет агента ответить после пяти подряд результатов, которые он счёл бесполезными. Оговорка та же: инструмент не падал, настоящие сбои не проверены (раздел Limitations). Перенос на упавший вызов — наш.</li><li><strong>Ошибка — часть промпта.</strong> Anthropic в <a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for agents</a> пишет, что ответы инструментов попадают в контекст агента и направляют его следующие вызовы, и советует писать ошибку так, чтобы в ней было конкретное и выполнимое исправление, а не голый код.</li><li><strong>Стоп снаружи сильнее разрешения.</strong> В Claude Code [hook <code>PreToolUse</code>](https://code.claude.com/docs/en/hooks) с кодом выхода 2 блокирует вызов, и его stderr модель видит. Блокировка срабатывает ещё до проверки разрешений (<a href="https://code.claude.com/docs/en/permissions">Permissions</a>). При коде 0 stderr модель не видит. Hook <code>PostToolUseFailure</code> срабатывает после вызова, который начал выполняться и упал; на вызов, отклонённый до запуска (нет разрешения, неверный ввод), он не срабатывает.</li><li><strong>Предел повторов — ворота к человеку.</strong> OpenAI в <a href="https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf">A practical guide to building agents</a> советует ставить предел повторов и действий и при превышении звать человека. Конкретного числа в гайде нет.</li></ol>
+<hr class="rule">
+<h2>Механизм</h2>
+<p>Повтор упавшего вызова кажется бесплатным: упал — попробуем ещё. Он бесплатный, только пока вызов ничего не меняет в мире. Как только инструмент списывает деньги, шлёт письмо или выкатывает сборку, у повтора появляется цена. А ошибка не всегда значит «ничего не произошло»: таймаут говорит только, что ответ не дошёл.</p>
+<p>У ошибки два свойства, и от них зависит следующий шаг.</p>
+<p><strong>Видно ли по тексту, что делать.</strong> <code>504 upstream timeout</code> не говорит ничего: прошло списание или нет, неизвестно. Агенту нечем поменять вызов, и он повторяет тот же. <code>504 timeout: charge status unknown. Do not retry. Check get_charge(...) first</code> говорит, какой вызов следующий.</p>
+<p><strong>Кто держит стоп.</strong> Если стоп в брифе, его держит модель, а догадка в начале урока показывает, как она держит. Если стоп в обвязке, его держит программа: вызов не уйдёт, что бы модель ни решила.</p>
+<p>Порядок действий:</p>
+<ol><li><strong>Первым чинишь текст ошибки, если инструмент твой.</strong> В ошибку кладёшь следующий шаг: что проверить, какой формат ждать, когда можно повторять, а когда нельзя. Это работает во всех будущих сессиях, потому что ответ инструмента модель читает при каждом вызове.</li><li><strong>Вторым ставишь стоп снаружи.</strong> Программа запоминает каждый упавший вызов (тот же инструмент, те же аргументы). Если такой вызов уже упал дважды, третий раз она его не пропускает и возвращает текст: «этот вызов с теми же аргументами уже упал дважды, поменяй аргументы или верни человеку ошибку и что пробовал». Удачные вызовы она не считает: третий <code>git status</code> подряд пройдёт.</li><li><strong>Бриф — последним.</strong> Строка в брифе или <code>CLAUDE.md</code> объясняет, <em>зачем</em> стоп, но держит его не она.</li></ol>
+<p>Если инструмент не твой (чужой API, чужой MCP), шаг 1 недоступен. Тогда то, что ты знаешь про его ошибки, кладёшь в бриф или <code>AGENTS.md</code> как факт про этот инструмент, а стоп — в обвязку.</p>
+<figure class="schema razvilka" aria-label="Ошибка → Видно, что делать? да → Меняем вызов; нет → Стоп обвязки">
+<svg viewBox="0 0 340 340" role="img"><title>Ошибка → Видно, что делать? да → Меняем вызов; нет → Стоп обвязки</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6560"/></marker></defs>
+<rect x="110" y="10" width="120" height="48" fill="#ffffff" stroke="#1a1916"/><text x="170" y="39" text-anchor="middle">Ошибка</text>
+<line x1="170" y1="58" x2="170" y2="96" stroke="#6b6560" stroke-width="1.5" marker-end="url(#ar)"/>
+<polygon points="170,98 260,158 170,218 80,158" fill="#ffffff" stroke="#1a1916"/><text x="170" y="154" text-anchor="middle">Видно, что</text><text x="170" y="173" text-anchor="middle">делать?</text>
+<path d="M80,158 L45,158 L45,266" fill="none" stroke="#6b6560" stroke-width="1.5" marker-end="url(#ar)"/><text x="53" y="214" style="fill:#b45309;font-weight:700">да</text>
+<rect x="10" y="268" width="150" height="50" fill="#ffffff" stroke="#1a1916"/><text x="85" y="298" text-anchor="middle">Меняем вызов</text>
+<path d="M260,158 L295,158 L295,266" fill="none" stroke="#6b6560" stroke-width="1.5" marker-end="url(#ar)"/><text x="253" y="214" style="fill:#6b6560">нет</text>
+<rect x="180" y="268" width="150" height="50" fill="#ffffff" stroke="#1a1916"/><text x="255" y="298" text-anchor="middle">Стоп обвязки</text>
+</svg></figure>
+<p>Развилка одна: видно ли по тексту ошибки, что делать. Если да, следующий вызов должен отличаться. Если нет, следующего такого же вызова быть не должно, и держит это обвязка.</p>
+<hr class="rule">
+<h2>Случай 1. Списание клиенту: таймаут, и агент жмёт ещё раз</h2>
+<p><strong>Что агент пытается сделать.</strong> В конце месяца агент списывает оплату подписки через твой MCP-инструмент <code>charge_customer(customer, amount_cents, currency)</code>. Клиент <code>cus_481</code>, 49 €.</p>
+<p><strong>Ставка.</strong> Каждый лишний вызов может оказаться лишним списанием. Клиент видит в банке два или три платежа по 49 €, пишет в поддержку, ты делаешь возврат и теряешь доверие. Если сервер платежей сам не отсекает повтор, повтор после таймаута — это не «попробовать ещё», а «заплати ещё».</p>
+<p><strong>Ошибка.</strong> Сервер платежей ответил медленно, инструмент вернул <code>504 upstream timeout</code>. Списание на той стороне при этом прошло, но агент этого не знает.</p>
+<blockquote><p><strong>Ты:</strong> Спиши у cus_481 подписку за октябрь, 49 евро.</p><p><strong>Агент:</strong> Вызываю <code>charge_customer(customer="cus_481", amount_cents=4900, currency="EUR")</code>.<br>Ошибка: <code>504 upstream timeout</code>.<br>Похоже на временный сбой, повторяю: <code>charge_customer(customer="cus_481", amount_cents=4900, currency="EUR")</code> — <code>504 upstream timeout</code>.<br>Ещё раз — прошло. Списание выполнено.</p></blockquote>
+<p>В журнале три одинаковых вызова. В кабинете платежей у <code>cus_481</code> три списания по 49 €. В брифе стояло «если не работает — остановись».</p>
+<p><strong>Почему так.</strong> Таймаут не говорит, прошёл платёж или нет. Агент выбрал повтор, потому что текст ошибки ничего другого не предлагал. Правило в брифе модель держит частично: так было в похожем эксперименте из начала урока, и мы переносим это на ошибки.</p>
+<p><strong>Что поменял.</strong> Два хода. Текст ошибки в инструменте:</p>
+<pre><code>504 timeout: charge status unknown for cus_481. Do not retry charge_customer.
+Check get_charge(customer="cus_481", period="2026-10") first.</code></pre>
+<p>И пара hook из случая 2: тот же упавший вызов третий раз не уйдёт.</p>
+<figure class="schema"><a href="2026-10-13-l3-agent-v3.png" target="_blank"><img src="2026-10-13-l3-agent-v3.png" width="1600" height="2174" alt="Пара hook: упавший вызов — PostToolUseFailure дописывает отпечаток — PreToolUse: отпечаток уже есть дважды? нет — вызов пройдёт; да — код 2 блокирует вызов, stderr уходит модели" style="max-width:100%;height:auto"></a><figcaption><a href="2026-10-13-l3-agent-v3.png" target="_blank">Открыть схему в полном размере</a></figcaption></figure>
+<p><strong>Новая сессия, тот же запрос, тот же таймаут.</strong></p>
+<blockquote><p><strong>Агент:</strong> Вызываю <code>charge_customer(customer="cus_481", amount_cents=4900, currency="EUR")</code>.<br>Ошибка: <code>504 timeout: charge status unknown for cus_481. Do not retry charge_customer. Check get_charge(...) first</code>.<br>Вызываю <code>get_charge(customer="cus_481", period="2026-10")</code> — найдено списание 49 €, статус succeeded.<br>Списание уже прошло, повторять не буду.</p></blockquote>
+<p><strong>Результат в журнале.</strong> Два вызова, второй — другой инструмент. В кабинете одно списание.</p>
+<p>Где ломается: hook пропускает два упавших вызова, поэтому без исправленного текста ошибки второе списание всё равно могло случиться. Для денег главный ход — текст ошибки (и на стороне сервера ключ, по которому повтор не спишет второй раз, но это уже не сегодняшняя развилка). Hook — страховка на случай, когда текст не помог.</p>
+<hr class="rule">
+<h2>Случай 2. Выкладка в прод: ошибка понятная, а агент всё равно давит</h2>
+<p><strong>Что агент пытается сделать.</strong> Claude Code после правки выкатывает сайт командой <code>vercel deploy --prod</code> и хочет увидеть живой URL.</p>
+<p><strong>Ставка.</strong> Каждая сборка — несколько минут и минуты сборки по тарифу. Пока агент крутит одну и ту же упавшую сборку, релиз стоит, а ты думаешь, что он идёт.</p>
+<p><strong>Ошибка.</strong> <code>Error: Missing required environment variable DATABASE_URL</code>. Ошибка понятная, но повтором её не исправить: переменной нет в проекте.</p>
+<blockquote><p><strong>Агент:</strong> <code>vercel deploy --prod</code> — <code>Missing required environment variable DATABASE_URL</code>.<br>Повторяю <code>vercel deploy --prod</code> — то же.<br>Повторяю <code>vercel deploy --prod</code> — то же.<br>Попробую <code>vercel deploy --prod --force</code>… то же.</p></blockquote>
+<p><strong>Что поменял.</strong> Два hook на все инструменты (matcher <code>*</code>), оба по <a href="https://code.claude.com/docs/en/hooks">документации hooks</a>. Отпечаток вызова — имя инструмента и его аргументы (<code>tool_name</code> и <code>tool_input</code> из JSON, который hook получает на вход, сжатые <code>jq -cS</code>: ключи сортируются, так что порядок аргументов не мешает). Поля <code>description</code> и <code>timeout</code> у Bash из отпечатка выкинуты: описание модель пишет каждый раз своими словами, и без этого тот же deploy с новым описанием прошёл бы как новый вызов. Ловится не только Bash, но и любой другой инструмент, в том числе MCP-инструменты вроде <code>mcp__billing__charge_customer</code>.</p>
+<ul><li><code>PostToolUseFailure</code> срабатывает, когда вызов уже начал выполняться и упал: команда вышла с ненулевым кодом или MCP-инструмент вернул ошибку. Hook дописывает отпечаток в файл упавших вызовов сессии (<code>session_id</code> из входа).</li><li><code>PreToolUse</code> срабатывает перед каждым вызовом. Если такой отпечаток в файле упавших уже есть дважды, hook выходит с кодом 2 и пишет в stderr: «Этот вызов с теми же аргументами уже упал дважды. Поменяй аргументы или верни человеку ошибку и что пробовал». Код 2 блокирует вызов до проверки разрешений, а stderr уходит модели. С кодом 0 этот текст модель не увидела бы.</li></ul>
+<p>Удачный вызов в файл не попадает, поэтому третий <code>git status</code> подряд пройдёт, и модели никто не скажет, что он упал. Вызов, отклонённый ещё до запуска, <code>PostToolUseFailure</code> не вызывает и тоже не считается.</p>
+<pre><code>#!/usr/bin/env bash
+# .claude/hooks/record-fail.sh — PostToolUseFailure: записывает отпечаток упавшего вызова
+in=$(cat)
+key=$(printf '%s' "$in" | jq -cS '[.tool_name, (.tool_input | del(.description, .timeout))]')
+dir="${CLAUDE_PROJECT_DIR:-.}/.claude"; mkdir -p "$dir"
+printf '%s\n' "$key" &gt;&gt; "$dir/.fails-$(printf '%s' "$in" | jq -r '.session_id').log"
+exit 0</code></pre>
+<pre><code>#!/usr/bin/env bash
+# .claude/hooks/block-third.sh — PreToolUse: блокирует вызов, который уже упал дважды
+in=$(cat)
+key=$(printf '%s' "$in" | jq -cS '[.tool_name, (.tool_input | del(.description, .timeout))]')
+log="${CLAUDE_PROJECT_DIR:-.}/.claude/.fails-$(printf '%s' "$in" | jq -r '.session_id').log"
+n=$(grep -cxF -- "$key" "$log" 2&gt;/dev/null); n=${n:-0}
+if [ "$n" -ge 2 ]; then
+  echo "Этот вызов с теми же аргументами уже упал дважды. Поменяй аргументы или верни человеку ошибку и что пробовал." &gt;&amp;2
+  exit 2
+fi
+exit 0</code></pre>
+<p>В <code>.claude/settings.json</code>:</p>
+<pre><code>{
+  "hooks": {
+    "PostToolUseFailure": [
+      { "matcher": "*", "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/record-fail.sh" } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "*", "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-third.sh" } ] }
+    ]
+  }
+}</code></pre>
+<p><strong>Новая сессия.</strong></p>
+<blockquote><p><strong>Агент:</strong> <code>vercel deploy --prod</code> — <code>Missing required environment variable DATABASE_URL</code>.<br><code>vercel deploy --prod</code> — то же.<br>Третий запуск заблокирован hook: этот вызов с теми же аргументами уже упал дважды.<br>В проекте нет <code>DATABASE_URL</code>. Запускал выкладку дважды. Добавить переменную через <code>vercel env add DATABASE_URL production</code>, или ты добавишь сам?</p></blockquote>
+<p><strong>Результат в журнале.</strong> Два одинаковых упавших вызова, затем запись о блокировке. Третьей сборки нет.</p>
+<p>Где ломается: отпечаток по точным аргументам не ловит перебор с мелкими отличиями (<code>--force</code>, другой флаг). Это осознанный выбор: hook рвёт буквальный повтор, а перебор лечит текст ошибки из случая 1. Порог «дважды» выбран здесь, источник числа не даёт.</p>
+<hr class="rule">
+<h2>Таблица решения</h2>
+<div class="table-wrap"><table><thead><tr><th>Ошибка</th><th>Инструмент твой</th><th>Инструмент чужой</th></tr></thead><tbody><tr><th scope="row">Текст молчит, что делать (<code>504 upstream timeout</code>, <code>400</code> без формата)</th><td>Следующий шаг в текст ошибки: что проверить, можно ли повторять</td><td>Что знаешь про ошибку — в бриф / <code>AGENTS.md</code>, стоп в обвязке</td></tr><tr><th scope="row">Текст подсказывает</th><td>Ничего не менять; в журнале смотреть, что вызов поменялся</td><td>То же</td></tr><tr><th scope="row">Причина вне аргументов (нет переменной, база лежит, нет прав)</th><td>Стоп в обвязке и текст «верни человеку»</td><td>Стоп в обвязке</td></tr><tr><th scope="row">Вызов меняет мир (деньги, письмо, выкладка) и статус неизвестен</th><td>Сначала проверка статуса, повтор только после неё</td><td>Проверка статуса в бриф, стоп в обвязке</td></tr></tbody></table></div>
+<hr class="rule">
+<h2>Практика (~15 минут): твоя догадка против твоего журнала</h2>
+<p><strong>Сцена.</strong> В начале урока ты записал число: в какой доле случаев, в процентах, агент остановится сам, если пять раз подряд назвал результат бесполезным. Теперь то же самое на твоём агенте и твоём инструменте, только с ошибкой. Агент получает ошибку, по которой не видно, что делать дальше, и выбирает: послать тот же вызов ещё раз или поменять его. Что он сделает, ты смотришь не в его ответе, а в журнале вызовов. Списание и выкладку из урока не бери: нужен твой инструмент.</p>
+<ol><li><strong>Догадка (1 минута).</strong> Перепиши свою долю в процентах из начала урока. Под ним запиши догадку про своего агента: остановится ли он сам, когда тот же вызов упадёт дважды, или пошлёт его в третий раз. Пиши до прогона, даже если ответ статьи уже видел.</li><li><strong>Инструмент и ошибка (2 минуты).</strong> Возьми инструмент, который агент реально зовёт: MCP-сервер, скрипт или команду. Нужна ошибка, которая приходит сразу и не говорит, что делать дальше: голый код, нет формата, не хватает поля. Таймаут не бери, его прогон дольше. Инструмент не должен менять живые данные. Если он списывает деньги или шлёт письма, работай в тестовом режиме или на копии.</li><li><p><strong>Прогон «до» (4 минуты, из них 3 ждёшь агента).</strong> Новая сессия. Отправь задачу на один вызов, которая упирается в эту ошибку, например:</p><blockquote><p>Открой отчёт <code>reports/q3.csv</code> через <code>read_file</code>.</p></blockquote><p>В чате увидишь что-то вроде:</p><blockquote><p><code>read_file(path="reports/q3.csv")</code> — <code>404: not found</code><br>Похоже на сбой, повторяю: <code>read_file(path="reports/q3.csv")</code> — <code>404: not found</code><br>Ещё раз…</p></blockquote><p>Открой журнал вызовов сессии (в Claude Code это транскрипт с вызовами инструментов, в Codex лента команд). Выпиши ошибку дословно и посчитай, сколько раз после неё ушёл вызов с теми же аргументами. Это счёт «до».</p></li><li><strong>Стоп и текст ошибки (4 минуты).</strong> Подключи готовую пару hook из случая 2 урока, оба скрипта и кусок настроек оттуда. Первый hook запоминает каждый упавший вызов. Второй не пускает вызов, который с теми же аргументами уже упал дважды. Удачные повторы проходят. Потом одна строка: если инструмент твой, допиши в текст ошибки следующий шаг (<code>404: not found "reports/q3.csv". Call list_files("reports/") and pick an existing path</code>). Если чужой, положи ту же строку в <code>AGENTS.md</code> или <code>CLAUDE.md</code> как факт про этот инструмент.</li><li><strong>Прогон «после» (3 минуты, из них 2 ждёшь агента).</strong> Новая сессия, та же задача, то же неверное значение. Открой журнал вызовов. Посчитай упавшие вызовы с теми же аргументами и выпиши одно из двух: вызов, где аргумент поменялся (было → стало), или запись о том, что hook заблокировал вызов. Это счёт «после».</li><li><strong>Сверка с фактом (1 минута).</strong> Положи рядом три вещи: долю в процентах и догадку из шага 1, счёт «до» из журнала и абзац из статьи, которую ты открывал в начале урока (<a href="https://arxiv.org/html/2610.06191">arXiv 2610.06191</a>, раздел 1 Introduction, абзац под рисунком 1). Напиши одну фразу: доля, которую ты угадал, ближе к тому, что видно в журнале, или к цифрам статьи. В статье инструмент не падал, а отдавал бесполезный ответ, так что твой журнал и есть проверка, переносится ли это на ошибки.</li></ol>
+<p class="pass"><strong>Сдал:</strong> догадка записана до прогона «до»; в журнале прогона «до» ты посчитал вызовы с теми же аргументами после ошибки и записал счёт; в журнале прогона «после» нет третьего выполненного упавшего вызова с теми же аргументами, и ты выписал место: вызов, где аргумент поменялся, или запись о блокировке hook; в журнале твой инструмент и твоя ошибка, не из урока; есть фраза, где догадка стоит рядом со счётом «до» из журнала и с абзацем статьи (<a href="https://arxiv.org/html/2610.06191">arxiv.org/html/2610.06191</a>, раздел 1 Introduction, абзац под рисунком 1).</p>
+<p class="pass"><strong>Не сдал:</strong> догадку записал после прогона; счёт «до» или «после» взял из ответа агента в чате, а журнал не открыл; в журнале «после» третий такой же упавший вызов выполнен, а ты записал «сдал»; стоп оставил только в брифе, и в журнале «после» нет ни смены аргумента, ни записи о блокировке; фразы сверки с журналом и статьёй нет.</p>
+<p class="pass"><strong>Нельзя:</strong> проверять на инструменте, который меняет живые данные (боевое списание, отправка клиенту, удаление, выкладка в прод); переделывать hook так, чтобы он блокировал все вызовы подряд или удачные повторы.</p>
+<h3>Три вопроса на применение</h3>
+<ol><li>В журнале «после» три вызова: <code>"reports/q3.csv"</code> упал, <code>"reports/q3.csv"</code> упал, <code>"reports/2026-q3.csv"</code> прошёл. Сдал или нет, и что выписываешь?</li><li>Агент три раза подряд вызывает <code>git status</code>, и все три проходят. Пара hook его остановит? Почему так и задумано?</li><li>Твой инструмент списывает деньги и отвечает таймаутом. Hook пропускает два упавших вызова. Какой из двух сегодняшних ходов здесь главный и почему?</li></ol>
+<hr class="rule">
+<section class="border-note">
+<h2>Граница</h2><p>Сегодня модели не пиши «заодно перепланируй всю задачу». Работаем только со следующим вызовом после ошибки.</p></section>
+</main>
+</body>
+</html>
